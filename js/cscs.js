@@ -48,6 +48,16 @@ function cscs_setup_site_content(navbarfile, sidebarfile) {
 
   });
 
+  try {
+    if(remark != null) {
+      $('#start-cscs-presenter-mode').show();
+    } else {
+      $('#start-cscs-presenter-mode').hide();
+    }
+  } catch(msg) {
+    $('#start-cscs-presenter-mode').hide();
+  }
+  
   var presenterMode = document.getElementById('start-cscs-presenter-mode');
   presenterMode.click(function(e){e.preventDefault();});
   presenterMode.onclick = __cscs_show_in_presenter_mode;
@@ -74,7 +84,6 @@ function cscs_setup_markdown_page_content(markdownFile)
       if (err) throw err;
       document.getElementById("cscs-markdown-content").innerHTML = content;
     });
-
   });
   __cscs_mouseover_link();
   __cscs_create_toc();
@@ -104,25 +113,58 @@ function cscs_setup_index_page_content(newsfile)
   __cscs_change_table_layout();
 }
 
+// function cscs_get_perftools_module(link, header)
+// {
+//   cscs_read_file_contents(link, function __populate_site_content(argument) {
+//     var pattern = /perftools-cscs\S*/gmi;
+//     var parsed_module = "";
+  
+//     var result = pattern.exec(argument);
+//     while (result) {
+//       var holder = result + '';
+//       holder = holder.replace('.eb', '');
+//       var splitter = holder.split('-');
+//       holder = "";
+//       cat = '-';
+//       for (var i = 0; i < splitter.length; i++) {
+//         if(i == 1) {
+//           cat = '/';
+//         } else if(i == splitter.length -1){
+//           cat = '';
+//         } else {
+//           cat = '-';
+//         }
+//         holder += splitter[i] + cat;
+//       }
+//       parsed_module += holder + '\n';
+//       result = pattern.exec(argument);
+//     }
+//     document.getElementById("cscs-markdown-content").innerHTML += header + '<pre>' + parsed_module + '</pre>';
+//   });
+// }
 
 function __cscs_show_in_presenter_mode() {
   document.getElementById("cscs-body-container").innerHTML = null;
 
-  var slideshow = remark.create({sourceUrl: __cscsMarkDown});
+  try {
+    var slideshow = remark.create({sourceUrl: __cscsMarkDown});
 
-  // the click blocks, so forcing full page reload for the click
-  var presenterMode = document.getElementById('start-cscs-presenter-mode');
-  presenterMode.style.display = 'none';
-  var exitMode = document.getElementById('exit-cscs-presenter-mode');
-  exitMode.style.display = 'block';
+    // the click blocks, so forcing full page reload for the click
+    var presenterMode = document.getElementById('start-cscs-presenter-mode');
+    presenterMode.style.display = 'none';
+    var exitMode = document.getElementById('exit-cscs-presenter-mode');
+    exitMode.style.display = 'block';
 
-  // workaround to work for local and non local servers
-  if(document.location.domain == null)
-    exitMode.href = document.location.pathname;
-  else
-    exitMode.href = document.location.domain+document.location.pathname;
+    // workaround to work for local and non local servers
+    if(document.location.domain == null)
+      exitMode.href = document.location.pathname;
+    else
+      exitMode.href = document.location.domain+document.location.pathname;
 
-  slideshow.on();
+    slideshow.on();
+  } catch(msg) {
+    $('#start-cscs-presenter-mode').hide();
+  }
 }
 
 
