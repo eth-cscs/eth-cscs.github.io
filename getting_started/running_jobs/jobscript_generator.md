@@ -2,7 +2,7 @@
 
 <form>
   <div class="form-group">
-    <label for="selectMachine">Cmputing system</label>
+    <label for="selectMachine">Computing system</label>
     <p class="help-block">Select the computing system on which you want to submit your job</p>
     <select class="form-control" id="selectMachine">
       <option>Daint Hybrid</option>
@@ -92,5 +92,5 @@
 <div class="form-group">
 <div class="alert alert-info" role="alert" id="partitionwebsite"></div>
   <div class="alert alert-success" role="alert" id="jobscriptalert"></div>
-  <textarea class="form-control" id="jobscript" rows="15" readonly style="resize:none"></textarea>
+  <textarea class="form-control" id="jobscript" rows="16" readonly style="resize:none"></textarea>
 </div>
