@@ -65,15 +65,15 @@
     <label for="numberTasksPerCore">Number of tasks per core</label>
     <p class="help-block" id="numberTasksPerCoreText">Specify the number of tasks per core. Values greater than one turn on hyperthreading.</p>
     <input type="number" class="form-control" id="numberTasksPerCore" min="1" max="4" value="1" onchange="cscs_print_jobscript()" onkeyup="cscs_print_jobscript()" onkeydown="cscs_print_jobscript()" onkeypress='return event.charCode in [46, 8, 9, 27, 13, 110, 190] || (event.charCode >= 48 && event.charCode <= 57)'>
-  </div> 
+  </div>
   <div class="form-group" id="numberOfTasksPerNodeGroup">
     <label for="numberOfTasksPerNode">Number of tasks per node</label>
     <p class="help-block" id="numberOfTasksPerNodeText">Specify the number of tasks per node, e.g. number of MPI ranks per node.</p>
     <input type="number" class="form-control" id="numberOfTasksPerNode" max="1000" min="1" value="1" onchange="cscs_print_jobscript()" onkeyup="cscs_print_jobscript()" onkeydown="cscs_print_jobscript()" onkeypress='return event.charCode in [46, 8, 9, 27, 13, 110, 190] || (event.charCode >= 48 && event.charCode <= 57)'>
-  </div>  
+  </div>
   <div class="form-group" id="numberOfCpusPerTaskGroup">
     <label for="numberOfCpusPerTask">Number of cpus per task</label>
-    <p class="help-block" id="numberOfCpusPerTaskText">Specify the number of cups per task, e.g. number of OpenMP threads per MPI rank.</p>
+    <p class="help-block" id="numberOfCpusPerTaskText">Specify the number of cpus per task, e.g. number of OpenMP threads per MPI rank.</p>
     <input type="number" class="form-control" id="numberOfCpusPerTask" max="1000" min="1" value="1" onchange="cscs_print_jobscript()" onkeyup="cscs_print_jobscript()" onkeydown="cscs_print_jobscript()" onkeypress='return event.charCode in [46, 8, 9, 27, 13, 110, 190] || (event.charCode >= 48 && event.charCode <= 57)'>
   </div>
   <div class="form-group" id="bigMemoryGroup">

@@ -108,7 +108,7 @@ var Partition = function() {
     this.NumGpusPerNodesDirective  = "--ntasks-per-node=";
     this.NumTasksPerNodesDirective = "--ntasks-per-node=";
     this.NumCpusPerTaskDirective   = "--cpus-per-task=";
-    this.NumTasksPerCoreDirective  = "--ntask-per-core=";
+    this.NumTasksPerCoreDirective  = "--ntasks-per-core=";
     this.MemoryDirective           = "--mem=";
     this.EMailDirective            = "--mail-user=";
     this.NameDirective             = "--job-name=";
@@ -950,7 +950,7 @@ function cscs_populate_form() {
         var max_tasks_per_node = $('#numberOfTasksPerNode').attr("max");
         var max_cpus_per_task = $('#numberOfCpusPerTask').attr("max");
         $('#numberOfTasksPerNodeText').text('Specify the number of tasks per node. Defines the number of MPI ranks per node. The maximum value depends on the number of cpus per task. Current maximum: ' + max_tasks_per_node + '.');
-        $('#numberOfCpusPerTaskText').text('Specify the number of cups per task. Defines the number of OpenMP threads per MPI rank. The maximum value depends on the number of tasks per node. Current maximum: ' + max_cpus_per_task + '.');
+        $('#numberOfCpusPerTaskText').text('Specify the number of cpus per task. Defines the number of OpenMP threads per MPI rank. The maximum value depends on the number of tasks per node. Current maximum: ' + max_cpus_per_task + '.');
 
         cscs_print_jobscript();
     });
@@ -1014,7 +1014,7 @@ function cscs_populate_form() {
         $('#numberOfTasksPerNodeText').text('Specify the number of tasks per node. Defines the number of MPI ranks per node. The maximum value depends on the number of cpus per task. Current maximum: ' + value_allowed_at_this_point + '.');
         value_allowed_at_this_point = Math.floor(Number(max_threads) / Number(ntasks));
         obj_num_cpus_per_task.attr({"max" : value_allowed_at_this_point});
-        $('#numberOfCpusPerTaskText').text('Specify the number of cups per task. Defines the number of OpenMP threads per MPI rank. The maximum value depends on the number of tasks per node. Current maximum: ' + value_allowed_at_this_point + '.');
+        $('#numberOfCpusPerTaskText').text('Specify the number of cpus per task. Defines the number of OpenMP threads per MPI rank. The maximum value depends on the number of tasks per node. Current maximum: ' + value_allowed_at_this_point + '.');
         cscs_print_jobscript();
     });
 
@@ -1045,7 +1045,7 @@ function cscs_populate_form() {
         $('#numberOfTasksPerNodeText').text('Specify the number of tasks per node. Defines the number of MPI ranks per node. The maximum value depends on the number of cpus per task. Current maximum: ' + value_allowed_at_this_point + '.');
         value_allowed_at_this_point = Math.floor(Number(max_threads) / Number(ntasks));
         obj_num_cpus_per_task.attr({"max" : value_allowed_at_this_point});
-        $('#numberOfCpusPerTaskText').text('Specify the number of cups per task. Defines the number of OpenMP threads per MPI rank. The maximum value depends on the number of tasks per node. Current maximum: ' + value_allowed_at_this_point + '.');
+        $('#numberOfCpusPerTaskText').text('Specify the number of cpus per task. Defines the number of OpenMP threads per MPI rank. The maximum value depends on the number of tasks per node. Current maximum: ' + value_allowed_at_this_point + '.');
         cscs_print_jobscript();
     });
 
@@ -1075,7 +1075,7 @@ function cscs_populate_form() {
             this.max = value_allowed_at_this_point;
             this.value = value_allowed_at_this_point;
         }
-        $('#numberOfCpusPerTaskText').text('Specify the number of cups per task. Defines the number of OpenMP threads per MPI rank. The maximum value depends on the number of tasks per node. Current maximum: ' + value_allowed_at_this_point + '.');
+        $('#numberOfCpusPerTaskText').text('Specify the number of cpus per task. Defines the number of OpenMP threads per MPI rank. The maximum value depends on the number of tasks per node. Current maximum: ' + value_allowed_at_this_point + '.');
         value_allowed_at_this_point = Math.floor(Number(max_threads) / Number(ntasks));
         obj_num_tasks_per_node.attr({"max" : value_allowed_at_this_point});
         $('#numberOfTasksPerNodeText').text('Specify the number of tasks per node. Defines the number of MPI ranks per node. The maximum value depends on the number of cpus per task. Current maximum: ' + value_allowed_at_this_point + '.');
@@ -1107,7 +1107,7 @@ function cscs_populate_form() {
             this.max = value_allowed_at_this_point;
             this.value = value_allowed_at_this_point;
         }
-        $('#numberOfCpusPerTaskText').text('Specify the number of cups per task. Defines the number of OpenMP threads per MPI rank. The maximum value depends on the number of tasks per node. Current maximum: ' + value_allowed_at_this_point + '.');
+        $('#numberOfCpusPerTaskText').text('Specify the number of cpus per task. Defines the number of OpenMP threads per MPI rank. The maximum value depends on the number of tasks per node. Current maximum: ' + value_allowed_at_this_point + '.');
         value_allowed_at_this_point = Math.floor(Number(max_threads) / Number(ntasks));
         obj_num_tasks_per_node.attr({"max" : value_allowed_at_this_point});
         $('#numberOfTasksPerNodeText').text('Specify the number of tasks per node. Defines the number of MPI ranks per node. The maximum value depends on the number of cpus per task. Current maximum: ' + value_allowed_at_this_point + '.');
