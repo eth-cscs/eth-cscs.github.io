@@ -1,5 +1,13 @@
 # Latest News
 
+
+## 31.03.2017 - SLURM Jobscript Generator
+
+[All Systems] We are happy to announce a new tool to help generate valid SLURM batch scripts to our systems.
+
+* [SLURM Jobscript Generator](getting_started/running_jobs/jobscript_generator.html)
+
+
 ## 07.03.2017 - New supported applications
 
 [Piz Daint] We are happy to announce that we are now able to support two new scientific applications in our software stack.
