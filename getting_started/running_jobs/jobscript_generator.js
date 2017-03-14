@@ -86,7 +86,7 @@ var _cscs_get_GUI_PropertyValue = function(element) {
 
     if(isVisible == false) {
         return null;
-    } 
+    }
     return value;
 };
 
@@ -125,6 +125,8 @@ var Partition = function() {
     this.default_executable = {};
 
     this.has_constraints = {};
+
+    this.env_variables_ntasks = {};
 
     this.max_num_nodes = {
         "normal"  : 1
@@ -191,9 +193,12 @@ Partition.prototype.getMaxNumberOfThreads = function() {
 
     var max_threads = this.getValue(this.max_num_tasks_per_node);
     var max_tasks_per_core = this.getValue(this.max_num_tasks_per_core);
-    if(max_threads == null) {
+    if(max_threads == null || max_threads == "") {
         max_threads = 1;
     } else if(has_hyperthreading == true) {
+        if(max_tasks_per_core == null || max_tasks_per_core == "") {
+            max_tasks_per_core = 1;
+        }
         max_threads *= max_tasks_per_core;
     }
     return max_threads;
@@ -369,7 +374,7 @@ Partition.prototype.printNumNodes = function() {
         if(value == "" || value == "undefined") {
             value = 1;
         }
-        return this.directive + this.NumNodesDirective + value + "\n";        
+        return this.directive + this.NumNodesDirective + value + "\n";
     }
     return "";
 };
@@ -380,7 +385,7 @@ Partition.prototype.printNumTasksPerCore = function() {
         if(value == "" || value == "undefined") {
             value = 1;
         }
-        return this.directive + this.NumTasksPerCoreDirective + value + "\n";        
+        return this.directive + this.NumTasksPerCoreDirective + value + "\n";
     }
     return "";
 };
@@ -388,7 +393,10 @@ Partition.prototype.printNumTasksPerCore = function() {
 Partition.prototype.printNumTasksPerNodes = function() {
     var value = _cscs_get_GUI_PropertyValue('#numberOfTasksPerNode');
     if(value != null) {
-        return this.directive + this.NumTasksPerNodesDirective + value + "\n";        
+        if(value == "" || value == "undefined") {
+            value = 1;
+        }
+        return this.directive + this.NumTasksPerNodesDirective + value + "\n";
     }
     return "";
 };
@@ -396,14 +404,25 @@ Partition.prototype.printNumTasksPerNodes = function() {
 Partition.prototype.printNumCpusPerTask = function() {
     var value = _cscs_get_GUI_PropertyValue('#numberOfCpusPerTask');
     if(value != null) {
-        return this.directive + this.NumCpusPerTaskDirective + value + "\n";        
+        if(value == "" || value == "undefined") {
+            value = 1;
+        }
+        return this.directive + this.NumCpusPerTaskDirective + value + "\n";
     }
     return "";
 };
 
 Partition.prototype.printEnvironmentVariables = function() {
     var toPrint = "";
-    toPrint += "export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\n";        
+    toPrint += "export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\n";
+
+    var env_variables = this.getValue(this.env_variables_ntasks);
+    var ntasks = _cscs_get_GUI_PropertyValue('#numberOfTasksPerNode');
+
+    if(env_variables != null && Number(ntasks) > 1) {
+        toPrint += env_variables + "\n";
+    }
+
     return toPrint;
 };
 
@@ -476,6 +495,16 @@ Partition.prototype.printJobScriptMessage = function(element) {
     var num_tasks_per_node = _cscs_get_GUI_PropertyValue('#numberOfTasksPerNode');
     var num_cpus_per_task = _cscs_get_GUI_PropertyValue('#numberOfCpusPerTask');
 
+    if(num_tasks_per_core == "") {
+        num_tasks_per_core = 1;
+    }
+    if(num_tasks_per_node == "") {
+        num_tasks_per_node = 1;
+    }
+    if(num_cpus_per_task == "") {
+        num_cpus_per_task = 1;
+    }
+
     var has_hyperthreading = this.hasHyperThreading();
 
 
@@ -508,9 +537,9 @@ Partition.prototype.printJobScriptMessage = function(element) {
         if(alertBox.hasClass('alert-success') == true) {
             alertBox.removeClass('alert-success');
         }
-        if(alertBox.hasClass('alert-danger') == true) {
-            alertBox.removeClass('alert-danger');
-        }
+        // if(alertBox.hasClass('alert-danger') == true) {
+        //     alertBox.removeClass('alert-danger');
+        // }
         alertBox.addClass('alert-warning');
 
         element.innerHTML += "<h4>Warning</h4>";
@@ -527,7 +556,7 @@ Partition.prototype.printJobScriptMessage = function(element) {
         for (x in arrayOfNodeInfo) {
             counter = Number(counter) + 1;
             element.innerHTML += '<b>' + arrayOfNodeInfo[x] + '</b>';
-            
+
             if(counter == (size - 1)) {
                 element.innerHTML += " and ";
             } else if(counter != size) {
@@ -539,64 +568,62 @@ Partition.prototype.printJobScriptMessage = function(element) {
         element.innerHTML += " <p>The maximum parallel processes is <b>" + max_num_threads + "</b> but you have selected only <b>" + current_num_threads + "</b>.</p>";
 
         if(has_hyperthreading) {
-            element.innerHTML += " <p>Note: <b>HyperThreading</b> is <b>on</b>.</p>";    
+            element.innerHTML += " <p>Note: <b>HyperThreading</b> is <b>on</b>.</p>";
         } else {
-            element.innerHTML += " <p>Note: <b>HyperThreading</b> is <b>off</b>.</p>";    
-        }
-        
-    } else if (error_state){
-        var alertBox = $('#jobscriptalert');
-        alertBox.show();
-
-        if(alertBox.hasClass('alert-warning') == true) {
-            alertBox.removeClass('alert-warning');    
-        }
-        if(alertBox.hasClass('alert-success') == true) {
-            alertBox.removeClass('alert-success');
-        }
-        alertBox.addClass('alert-danger');
-
-        arrayOfNodeInfo = [];
-        if(num_tasks_per_core == "") {
-            // current_num_threads *= num_tasks_per_core;
-            arrayOfNodeInfo.push('tasks per core');
-        }
-        if(num_tasks_per_node == "") {
-            arrayOfNodeInfo.push('tasks per node');
-        }
-        if(num_cpus_per_task == "") {
-            arrayOfNodeInfo.push('cpus per task');
+            element.innerHTML += " <p>Note: <b>HyperThreading</b> is <b>off</b>.</p>";
         }
 
-        element.innerHTML += "<h4>Error</h4>";
-        element.innerHTML += "Wrong value for ";
+    // } else if (error_state){
+    //     var alertBox = $('#jobscriptalert');
+    //     alertBox.show();
 
-        var x;
-        var counter = 0;
-        var size = arrayOfNodeInfo.length;
-        var x;
-        for (x in arrayOfNodeInfo) {
-            counter = Number(counter) + 1;
-            element.innerHTML += '<b>' + arrayOfNodeInfo[x] + '</b>';
-            
-            if(counter == (size - 1)) {
-                element.innerHTML += " and ";
-            } else if(counter != size) {
-                element.innerHTML += ", ";
-            }
-        }
+    //     if(alertBox.hasClass('alert-warning') == true) {
+    //         alertBox.removeClass('alert-warning');
+    //     }
+    //     if(alertBox.hasClass('alert-success') == true) {
+    //         alertBox.removeClass('alert-success');
+    //     }
+    //     alertBox.addClass('alert-danger');
 
-    
+    //     arrayOfNodeInfo = [];
+    //     if(num_tasks_per_core == "") {
+    //         // current_num_threads *= num_tasks_per_core;
+    //         arrayOfNodeInfo.push('tasks per core');
+    //     }
+    //     if(num_tasks_per_node == "") {
+    //         arrayOfNodeInfo.push('tasks per node');
+    //     }
+    //     if(num_cpus_per_task == "") {
+    //         arrayOfNodeInfo.push('cpus per task');
+    //     }
+
+    //     element.innerHTML += "<h4>Error</h4>";
+    //     element.innerHTML += "Wrong value for ";
+
+    //     var x;
+    //     var counter = 0;
+    //     var size = arrayOfNodeInfo.length;
+    //     var x;
+    //     for (x in arrayOfNodeInfo) {
+    //         counter = Number(counter) + 1;
+    //         element.innerHTML += '<b>' + arrayOfNodeInfo[x] + '</b>';
+
+    //         if(counter == (size - 1)) {
+    //             element.innerHTML += " and ";
+    //         } else if(counter != size) {
+    //             element.innerHTML += ", ";
+    //         }
+    //     }
     } else if (current_num_threads != 1){
         var alertBox = $('#jobscriptalert');
         alertBox.show();
 
         if(alertBox.hasClass('alert-warning') == true) {
-            alertBox.removeClass('alert-warning');    
+            alertBox.removeClass('alert-warning');
         }
-        if(alertBox.hasClass('alert-danger') == true) {
-            alertBox.removeClass('alert-danger');
-        }
+        // if(alertBox.hasClass('alert-danger') == true) {
+        //     alertBox.removeClass('alert-danger');
+        // }
 
         alertBox.addClass('alert-success');
 
@@ -605,9 +632,9 @@ Partition.prototype.printJobScriptMessage = function(element) {
         element.innerHTML += "<p>For a hybrid MPI + OpenMP program you have selected: </p>";
         element.innerHTML += "<p><b>" + num_tasks_per_node + "</b> MPI ranks and <b>" + num_cpus_per_task + "</b> OpenMP threads </p>";
         if(has_hyperthreading) {
-            element.innerHTML += " <p>Note: <b>HyperThreading</b> is <b>on</b>.</p>";    
+            element.innerHTML += " <p>Note: <b>HyperThreading</b> is <b>on</b>.</p>";
         } else {
-            element.innerHTML += " <p>Note: <b>HyperThreading</b> is <b>off</b>.</p>";    
+            element.innerHTML += " <p>Note: <b>HyperThreading</b> is <b>off</b>.</p>";
         }
 
     } else {
@@ -686,6 +713,13 @@ var DaintGPUPartition = function(name) {
         "xfer"    : "http://user.cscs.ch/storage/data_transfer/internal_transfer/index.html",
         "prepost" : "MISSING WEBSITE",
         "debug"   : "MISSING WEBSITE"
+    };
+
+    this.env_variables_ntasks = {
+        "normal"  : "export CRAY_CUDA_MPS=1",
+        "low"     : "export CRAY_CUDA_MPS=1",
+        "high"    : "export CRAY_CUDA_MPS=1",
+        "debug"   : "export CRAY_CUDA_MPS=1",
     };
 
     this.list_of_partitions = [ "normal", "low", "high", "xfer", "prepost", "debug" ];
@@ -900,11 +934,12 @@ function cscs_populate_form() {
         } else {
             max_tasks_per_core = 1;
         }
+
         if(Number(this.value) > Number(this.max)) {
             this.value = this.max;
         } else if(Number(this.value) > Number(max_tasks_per_core)) {
             this.value = max_tasks_per_core;
-        } 
+        }
         else if(Number(this.value) < Number(this.min)) {
             this.value = this.min;
         }
@@ -929,11 +964,16 @@ function cscs_populate_form() {
         } else {
             max_tasks_per_core = 1;
         }
+
+        if(this.value == "") {
+            this.value = 1;
+        }
+
         if(Number(this.value) > Number(this.max)) {
             this.value = this.max;
         } else if(Number(this.value) > Number(max_tasks_per_core)) {
             this.value = max_tasks_per_core;
-        } 
+        }
         else if(Number(this.value) < 0) {
             this.value = this.min;
         }
@@ -941,7 +981,7 @@ function cscs_populate_form() {
         __cscs_partition.setNumTasksPerNodeAndNumCpusPerNodeValues(this.value);
         $('#numberTasksPerCoreText').text('Specify the number of tasks per core. Values greater than one turn hyperthreading on.  Maximum value: ' + max_tasks_per_core + '.');
         cscs_print_jobscript();
-    });    
+    });
 
     // TODO
     // add here the validation of ntasks per node
@@ -960,13 +1000,19 @@ function cscs_populate_form() {
         if(num_cpus_per_task == null) {
             num_cpus_per_task = 1;
         }
+
+        var ntasks = this.value;
+        if(ntasks == "") {
+            ntasks = 1;
+        }
+
         var value_allowed_at_this_point = Math.floor(Number(max_threads) / Number(num_cpus_per_task));
         if (Number(this.value) > Number(value_allowed_at_this_point)) {
             this.max = value_allowed_at_this_point;
             this.value = value_allowed_at_this_point;
         }
         $('#numberOfTasksPerNodeText').text('Specify the number of tasks per node. Defines the number of MPI ranks per node. The maximum value depends on the number of cpus per task. Current maximum: ' + value_allowed_at_this_point + '.');
-        value_allowed_at_this_point = Math.floor(Number(max_threads) / Number(this.value));
+        value_allowed_at_this_point = Math.floor(Number(max_threads) / Number(ntasks));
         obj_num_cpus_per_task.attr({"max" : value_allowed_at_this_point});
         $('#numberOfCpusPerTaskText').text('Specify the number of cups per task. Defines the number of OpenMP threads per MPI rank. The maximum value depends on the number of tasks per node. Current maximum: ' + value_allowed_at_this_point + '.');
         cscs_print_jobscript();
@@ -983,6 +1029,11 @@ function cscs_populate_form() {
             this.value = this.min;
         }
 
+        var ntasks = this.value;
+        if(ntasks == "") {
+            ntasks = 1;
+        }
+
         if(num_cpus_per_task == null) {
             num_cpus_per_task = 1;
         }
@@ -992,7 +1043,7 @@ function cscs_populate_form() {
             this.value = value_allowed_at_this_point;
         }
         $('#numberOfTasksPerNodeText').text('Specify the number of tasks per node. Defines the number of MPI ranks per node. The maximum value depends on the number of cpus per task. Current maximum: ' + value_allowed_at_this_point + '.');
-        value_allowed_at_this_point = Math.floor(Number(max_threads) / Number(this.value));
+        value_allowed_at_this_point = Math.floor(Number(max_threads) / Number(ntasks));
         obj_num_cpus_per_task.attr({"max" : value_allowed_at_this_point});
         $('#numberOfCpusPerTaskText').text('Specify the number of cups per task. Defines the number of OpenMP threads per MPI rank. The maximum value depends on the number of tasks per node. Current maximum: ' + value_allowed_at_this_point + '.');
         cscs_print_jobscript();
@@ -1013,13 +1064,19 @@ function cscs_populate_form() {
         if(num_tasks_per_node == null) {
             num_tasks_per_node = 1;
         }
+
+        var ntasks = this.value;
+        if(ntasks == "") {
+            ntasks = 1;
+        }
+
         var value_allowed_at_this_point = Math.floor(Number(max_threads) / Number(num_tasks_per_node));
         if (Number(this.value) > Number(value_allowed_at_this_point)) {
             this.max = value_allowed_at_this_point;
             this.value = value_allowed_at_this_point;
         }
         $('#numberOfCpusPerTaskText').text('Specify the number of cups per task. Defines the number of OpenMP threads per MPI rank. The maximum value depends on the number of tasks per node. Current maximum: ' + value_allowed_at_this_point + '.');
-        value_allowed_at_this_point = Math.floor(Number(max_threads) / Number(this.value));
+        value_allowed_at_this_point = Math.floor(Number(max_threads) / Number(ntasks));
         obj_num_tasks_per_node.attr({"max" : value_allowed_at_this_point});
         $('#numberOfTasksPerNodeText').text('Specify the number of tasks per node. Defines the number of MPI ranks per node. The maximum value depends on the number of cpus per task. Current maximum: ' + value_allowed_at_this_point + '.');
         cscs_print_jobscript();
@@ -1039,16 +1096,22 @@ function cscs_populate_form() {
         if(num_tasks_per_node == null) {
             num_tasks_per_node = 1;
         }
+
+        var ntasks = this.value;
+        if(ntasks == "") {
+            ntasks = 1;
+        }
+
         var value_allowed_at_this_point = Math.floor(Number(max_threads) / Number(num_tasks_per_node));
         if (Number(this.value) > Number(value_allowed_at_this_point)) {
             this.max = value_allowed_at_this_point;
             this.value = value_allowed_at_this_point;
         }
         $('#numberOfCpusPerTaskText').text('Specify the number of cups per task. Defines the number of OpenMP threads per MPI rank. The maximum value depends on the number of tasks per node. Current maximum: ' + value_allowed_at_this_point + '.');
-        value_allowed_at_this_point = Math.floor(Number(max_threads) / Number(this.value));
+        value_allowed_at_this_point = Math.floor(Number(max_threads) / Number(ntasks));
         obj_num_tasks_per_node.attr({"max" : value_allowed_at_this_point});
         $('#numberOfTasksPerNodeText').text('Specify the number of tasks per node. Defines the number of MPI ranks per node. The maximum value depends on the number of cpus per task. Current maximum: ' + value_allowed_at_this_point + '.');
-        cscs_print_jobscript();    
+        cscs_print_jobscript();
     });
 
 }
