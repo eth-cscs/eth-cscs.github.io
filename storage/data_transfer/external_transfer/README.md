@@ -17,7 +17,6 @@ $ globus-url-copy -p 4 \
 ```
 
 The GridFTP server at CSCS has access to the following filesystems:
- * /scratch/snx2000
  * /scratch/snx3000
  * /project
  * /store
