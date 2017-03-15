@@ -529,7 +529,7 @@ Partition.prototype.printJobScriptMessage = function(element) {
         warning_state = true;
         error_state = false;
     }
-    element.innerHTML = null;
+    element.innerHTML = "";
 
     if(warning_state) {
         var alertBox = $('#jobscriptalert');
@@ -537,9 +537,6 @@ Partition.prototype.printJobScriptMessage = function(element) {
         if(alertBox.hasClass('alert-success') == true) {
             alertBox.removeClass('alert-success');
         }
-        // if(alertBox.hasClass('alert-danger') == true) {
-        //     alertBox.removeClass('alert-danger');
-        // }
         alertBox.addClass('alert-warning');
 
         element.innerHTML += "<h4>Warning</h4>";
@@ -572,48 +569,6 @@ Partition.prototype.printJobScriptMessage = function(element) {
         } else {
             element.innerHTML += " <p>Note: <b>HyperThreading</b> is <b>off</b>.</p>";
         }
-
-    // } else if (error_state){
-    //     var alertBox = $('#jobscriptalert');
-    //     alertBox.show();
-
-    //     if(alertBox.hasClass('alert-warning') == true) {
-    //         alertBox.removeClass('alert-warning');
-    //     }
-    //     if(alertBox.hasClass('alert-success') == true) {
-    //         alertBox.removeClass('alert-success');
-    //     }
-    //     alertBox.addClass('alert-danger');
-
-    //     arrayOfNodeInfo = [];
-    //     if(num_tasks_per_core == "") {
-    //         // current_num_threads *= num_tasks_per_core;
-    //         arrayOfNodeInfo.push('tasks per core');
-    //     }
-    //     if(num_tasks_per_node == "") {
-    //         arrayOfNodeInfo.push('tasks per node');
-    //     }
-    //     if(num_cpus_per_task == "") {
-    //         arrayOfNodeInfo.push('cpus per task');
-    //     }
-
-    //     element.innerHTML += "<h4>Error</h4>";
-    //     element.innerHTML += "Wrong value for ";
-
-    //     var x;
-    //     var counter = 0;
-    //     var size = arrayOfNodeInfo.length;
-    //     var x;
-    //     for (x in arrayOfNodeInfo) {
-    //         counter = Number(counter) + 1;
-    //         element.innerHTML += '<b>' + arrayOfNodeInfo[x] + '</b>';
-
-    //         if(counter == (size - 1)) {
-    //             element.innerHTML += " and ";
-    //         } else if(counter != size) {
-    //             element.innerHTML += ", ";
-    //         }
-    //     }
     } else if (current_num_threads != 1){
         var alertBox = $('#jobscriptalert');
         alertBox.show();
@@ -621,16 +576,12 @@ Partition.prototype.printJobScriptMessage = function(element) {
         if(alertBox.hasClass('alert-warning') == true) {
             alertBox.removeClass('alert-warning');
         }
-        // if(alertBox.hasClass('alert-danger') == true) {
-        //     alertBox.removeClass('alert-danger');
-        // }
-
         alertBox.addClass('alert-success');
 
         element.innerHTML += "<h4>Success</h4>";
 
         element.innerHTML += "<p>For a hybrid MPI + OpenMP program you have selected: </p>";
-        element.innerHTML += "<p><b>" + num_tasks_per_node + "</b> MPI ranks and <b>" + num_cpus_per_task + "</b> OpenMP threads </p>";
+        element.innerHTML += "<p><b>" + num_tasks_per_node + "</b> MPI rank(s) and <b>" + num_cpus_per_task + "</b> OpenMP thread(s) </p>";
         if(has_hyperthreading) {
             element.innerHTML += " <p>Note: <b>HyperThreading</b> is <b>on</b>.</p>";
         } else {
@@ -810,6 +761,7 @@ var DaintMCPartition = function(name) {
         "debug"  : 36
     };
 
+    this.env_variables_ntasks = {};
 };
 _bindPrototypeMethods(DaintMCPartition, DaintGPUPartition);
 
@@ -923,6 +875,9 @@ function cscs_populate_form() {
         cscs_print_jobscript();
     });
 
+//
+// TASKS PER CORE
+//
     var obj_tasks_per_core = $('#numberTasksPerCore');
     obj_tasks_per_core.change(function() {
         var max_tasks_per_core = __cscs_partition.getValue(__cscs_partition.max_num_tasks_per_core);
@@ -974,7 +929,7 @@ function cscs_populate_form() {
         } else if(Number(this.value) > Number(max_tasks_per_core)) {
             this.value = max_tasks_per_core;
         }
-        else if(Number(this.value) < 0) {
+        else if(Number(this.value) <= 0 && this.value != "") {
             this.value = this.min;
         }
 
@@ -983,8 +938,9 @@ function cscs_populate_form() {
         cscs_print_jobscript();
     });
 
-    // TODO
-    // add here the validation of ntasks per node
+//
+// TASKS PER NODE
+//
     var obj_tasks_per_node = $('#numberOfTasksPerNode');
     obj_tasks_per_node.change(function() {
         var max_threads = __cscs_partition.getMaxNumberOfThreads();
@@ -1025,7 +981,7 @@ function cscs_populate_form() {
 
         if(Number(this.value) > Number(this.max)) {
             this.value = this.max;
-        } else if(Number(this.value) < 0) {
+        } else if(Number(this.value) <= 0 && this.value != "") {
             this.value = this.min;
         }
 
@@ -1049,6 +1005,9 @@ function cscs_populate_form() {
         cscs_print_jobscript();
     });
 
+//
+// CPUS PER TASK
+//
     var obj_cpus_per_task = $('#numberOfCpusPerTask');
     obj_cpus_per_task.change(function() {
         var max_threads = __cscs_partition.getMaxNumberOfThreads();
@@ -1061,6 +1020,7 @@ function cscs_populate_form() {
             this.value = this.min;
         }
 
+        console.log('obj_cpus_per_task.change');
         if(num_tasks_per_node == null) {
             num_tasks_per_node = 1;
         }
@@ -1087,9 +1047,10 @@ function cscs_populate_form() {
         var obj_num_tasks_per_node = $('#numberOfTasksPerNode');
         var num_tasks_per_node = obj_num_tasks_per_node.val();
 
+        console.log('obj_cpus_per_task.keyup');
         if(Number(this.value) > Number(this.max)) {
             this.value = this.max;
-        }  else if(Number(this.value) < 0) {
+        }  else if(Number(this.value) <= 0 && this.value != "") {
             this.value = this.min;
         }
 
