@@ -57,7 +57,7 @@ function cscs_setup_site_content(navbarfile, sidebarfile) {
   } catch(msg) {
     $('#start-cscs-presenter-mode').hide();
   }
-  
+
   var presenterMode = document.getElementById('start-cscs-presenter-mode');
   presenterMode.click(function(e){e.preventDefault();});
   presenterMode.onclick = __cscs_show_in_presenter_mode;
@@ -118,7 +118,7 @@ function cscs_setup_index_page_content(newsfile)
 //   cscs_read_file_contents(link, function __populate_site_content(argument) {
 //     var pattern = /perftools-cscs\S*/gmi;
 //     var parsed_module = "";
-  
+
 //     var result = pattern.exec(argument);
 //     while (result) {
 //       var holder = result + '';
@@ -175,7 +175,7 @@ function __cscs_email_protector() {
 
 function __cscs_mouseover_link() {
 
-  $('#cscs-markdown-content').children("h1, h2").each(function(index, element) {
+  $('#cscs-markdown-content').children("h1, h2, h3, h4, h5, h6").each(function(index, element) {
     $(element).hover(
         function() {
             $(this).wrap(function() {
