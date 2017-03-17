@@ -7,8 +7,8 @@
     <select class="form-control" id="selectMachine">
       <option>Daint Hybrid</option>
       <option>Daint MultiCore</option>
-      <!-- <option>Leone</option> -->
-      <!-- <option>Monch</option> -->
+      <option>Monch</option>
+      <option>Leone</option>
       <!-- <option>Tave</option> -->
     </select>
   </div>
