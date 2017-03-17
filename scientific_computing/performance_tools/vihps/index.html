@@ -37,10 +37,17 @@
     <script src="../../../js/cscs.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../../js/viewport-hack-surface-windows8.js"></script>
+    <script src="../js/cscs.modulelist.js"></script>
 
     <script>
       cscs_setup_site_content("../../../html/navbar.html", "../../SIDEBAR.md");
       cscs_setup_markdown_page_content("README.md");
+
+      cscs_get_modulelist2("https://raw.githubusercontent.com/eth-cscs/production/master/jenkins-builds/6.0.UP02-2016.11-gpu", '<h3>Score-P</h3>', /Score-P\S*/gmi);
+
+      cscs_get_modulelist1("https://raw.githubusercontent.com/eth-cscs/production/master/jenkins-builds/6.0.UP02-2016.11-gpu", '<h3>Scalasca</h3>', /Scalasca\S*/gmi);
+
+      cscs_get_modulelist1("https://raw.githubusercontent.com/eth-cscs/production/master/jenkins-builds/common-SLES12-2016.10", '<h3>Vampir</h3>', /vampir\S*/gmi);
     </script>
   </body>
 </html>

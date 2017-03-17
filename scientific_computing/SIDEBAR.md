@@ -25,6 +25,7 @@ Scientific Computing
 ## [Programming Environments](https://eth-cscs.github.io/scientific_computing/compiling_your_code/programming_environments)
 ## [Examples](https://eth-cscs.github.io/scientific_computing/compiling_your_code/examples)
 # [Debugging tools](https://eth-cscs.github.io/scientific_computing/debugging_tools)
+## [DDT](https://eth-cscs.github.io/scientific_computing/debugging_tools/ddt)
 # [Performance tools](https://eth-cscs.github.io/scientific_computing/performance_tools)
 ## [CRAY performance tools](https://eth-cscs.github.io/scientific_computing/performance_tools/craypat/)
 ## [VI-HPS performance tools](https://eth-cscs.github.io/scientific_computing/performance_tools/vihps/)
