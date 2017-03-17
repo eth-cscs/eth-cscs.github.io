@@ -5,6 +5,10 @@ var _cscs_split_time = function (timeString) {
     var minutes = 0;
     var seconds = 0;
 
+    if(timeString == "" || timeString == null) {
+        timeString = ":";
+    }
+
     var array = timeString.split(':');
     if(array.length == 3) {
         // assuming the case where we do not have the day
@@ -296,8 +300,6 @@ Partition.prototype.hideGUIBooleanField = function(fieldid, fieldvalue, referenc
 }
 
 Partition.prototype.updatePartitionsFields = function() {
-    var _self = this;
-
     this.hideGUIBooleanField('#ExclusiveNodeGroup', this.allow_node_sharing, true);
 
     this.hideGUIDataField('#numberOfNodesGroup', this.max_num_nodes);
@@ -675,9 +677,7 @@ var DaintGPUPartition = function(name) {
 
     this.list_of_partitions = [ "normal", "low", "high", "xfer", "prepost", "debug" ];
 
-    this.allow_node_sharing = {
-        "normal" : false
-    }
+    this.allow_node_sharing = {}
 
     this.pre_commands = {
         xfer : "module unload xalt",
@@ -761,6 +761,9 @@ var DaintMCPartition = function(name) {
         "debug"  : 36
     };
 
+    this.max_num_gpus = {};
+
+
     this.env_variables_ntasks = {};
 };
 _bindPrototypeMethods(DaintMCPartition, DaintGPUPartition);
@@ -769,11 +772,108 @@ var MonchPartition = function(name) {
     Partition.call(this);
     this.name = name;
     this.typeName = MonchPartition;
+
     this.Partition = {
-        normal   : "--partition=",
-        largemem : "--partition="
+        "dphys_compute"         : "--partition=",
+        "dphys_largemem"        : "--partition=",
+        "dphys_largemem_wk"     : "--partition=",
+        "dphys_hugemem"         : "--partition=",
+        "dphys_hugemem_wk"      : "--partition=",
+        "fichtner_compute"      : "--partition=",
+        "parrinello_compute"    : "--partition=",
+        "spaldin_compute"       : "--partition=",
+        "express_compute"       : "--partition="
     };
-    this.list_of_partitions = [ "normal", "largemem" ];
+
+    this.env_variables_ntasks = {};
+
+    this.list_of_partitions = [ "dphys_compute", "dphys_largemem", "dphys_largemem_wk",
+        "dphys_hugemem", "dphys_hugemem_wk", "fichtner_compute", "parrinello_compute",
+        "spaldin_compute", "express_compute" ];
+
+
+    this.max_wall_time = {
+        "dphys_compute"         : "24:00:00",
+        "dphys_largemem"        : "24:00:00",
+        "dphys_largemem_wk"     : "168:00:00",
+        "dphys_hugemem"         : "24:00:00",
+        "dphys_hugemem_wk"      : "168:00:00",
+        "fichtner_compute"      : "24:00:00",
+        "parrinello_compute"    : "24:00:00",
+        "spaldin_compute"       : "24:00:00",
+        "express_compute"       : "02:00:00"
+    };
+
+    this.partition_website = {
+        "dphys_compute"         : "http://eth-cscs.github.io/getting_started/running_jobs/monch",
+        "dphys_largemem"        : "http://eth-cscs.github.io/getting_started/running_jobs/monch",
+        "dphys_largemem_wk"     : "http://eth-cscs.github.io/getting_started/running_jobs/monch",
+        "dphys_hugemem"         : "http://eth-cscs.github.io/getting_started/running_jobs/monch",
+        "dphys_hugemem_wk"      : "http://eth-cscs.github.io/getting_started/running_jobs/monch",
+        "fichtner_compute"      : "http://eth-cscs.github.io/getting_started/running_jobs/monch",
+        "parrinello_compute"    : "http://eth-cscs.github.io/getting_started/running_jobs/monch",
+        "spaldin_compute"       : "http://eth-cscs.github.io/getting_started/running_jobs/monch",
+        "express_compute"       : "http://eth-cscs.github.io/getting_started/running_jobs/monch"
+    };
+
+    this.max_num_nodes = {
+        "dphys_compute"         : "310",
+        "dphys_largemem"        : "40",
+        "dphys_largemem_wk"     : "12",
+        "dphys_hugemem"         : "24",
+        "dphys_hugemem_wk"      : "8",
+        "fichtner_compute"      : "310",
+        "parrinello_compute"    : "310",
+        "spaldin_compute"       : "310",
+        "express_compute"       : "2"
+    };
+
+    this.max_num_gpus = {};
+
+    this.max_num_tasks_per_node = {
+        "dphys_compute"         : "20",
+        "dphys_largemem"        : "20",
+        "dphys_largemem_wk"     : "20",
+        "dphys_hugemem"         : "20",
+        "dphys_hugemem_wk"      : "20",
+        "fichtner_compute"      : "20",
+        "parrinello_compute"    : "20",
+        "spaldin_compute"       : "20",
+        "express_compute"       : "20"
+    };
+
+    this.max_num_cpus_per_tasks = {
+        "dphys_compute"         : "20",
+        "dphys_largemem"        : "20",
+        "dphys_largemem_wk"     : "20",
+        "dphys_hugemem"         : "20",
+        "dphys_hugemem_wk"      : "20",
+        "fichtner_compute"      : "20",
+        "parrinello_compute"    : "20",
+        "spaldin_compute"       : "20",
+        "express_compute"       : "20"
+    };
+
+    this.max_num_tasks_per_core = {
+        "dphys_compute"         : "2",
+        "dphys_largemem"        : "2",
+        "dphys_largemem_wk"     : "2",
+        "dphys_hugemem"         : "2",
+        "dphys_hugemem_wk"      : "2",
+        "fichtner_compute"      : "2",
+        "parrinello_compute"    : "2",
+        "spaldin_compute"       : "2",
+        "express_compute"       : "2"
+    };
+
+    this.has_constraints = {
+        "dphys_largemem"        : "--mem=620GB",
+        "dphys_largemem_wk"     : "--mem=620GB",
+        "dphys_hugemem"         : "--mem=2500GB",
+        "dphys_hugemem_wk"      : "--mem=2500GB"
+    };
+
+
 };
 _bindPrototypeMethods(MonchPartition, Partition);
 
@@ -782,10 +882,53 @@ var LeonePartition = function(name) {
     this.name = name;
     this.typeName = LeonePartition;
     this.Partition = {
-        normal   : "--partition=",
-        largemem : "--partition="
+        "normal"  : "--partition=",
+        "longrun" : "--partition=",
+        "debug"   : "--partition="
     };
-    this.list_of_partitions = [ "normal", "debug", "longrun" ];
+    this.list_of_partitions = [ "normal", "longrun", "debug" ];
+
+    this.env_variables_ntasks = {};
+
+    this.max_wall_time = {
+        "normal"  : "24:00:00",
+        "longrun" : "168:00:00",
+        "debug"   : "00:30:00"
+    };
+
+    this.partition_website = {
+        "normal"  : "http://eth-cscs.github.io/getting_started/running_jobs/monte_leone",
+        "longrun" : "http://eth-cscs.github.io/getting_started/running_jobs/monte_leone",
+        "debug"   : "http://eth-cscs.github.io/getting_started/running_jobs/monte_leone"
+    };
+
+    this.max_num_nodes = {
+        "normal"  : "2",
+        "longrun" : "2",
+        "debug"   : "1"
+    };
+
+    this.max_num_gpus = {};
+
+    this.max_num_tasks_per_node = {
+        "normal"  : "16",
+        "longrun" : "16",
+        "debug"   : "16"
+    };
+
+    this.max_num_cpus_per_tasks = {
+        "normal"  : "16",
+        "longrun" : "16",
+        "debug"   : "16"
+    };
+
+    this.max_num_tasks_per_core = {
+        "normal"  : "2",
+        "longrun" : "2",
+        "debug"   : "2"
+    };
+
+    this.has_constraints = {};
 };
 _bindPrototypeMethods(LeonePartition, Partition);
 
@@ -831,7 +974,7 @@ function cscs_populate_form() {
             __cscs_partition.updateGUI();
         } else if ($(this).val() == "Monch") {
             _cscs_clean_fields();
-            __cscs_partition = new MonchPartition("normal");
+            __cscs_partition = new MonchPartition("dphys_compute");
             __cscs_partition.updateGUI();
         } else if ($(this).val() == "Leone") {
             _cscs_clean_fields();
