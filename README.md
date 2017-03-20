@@ -5,7 +5,7 @@
 
 [All Systems] We are happy to announce a new tool to help generate valid SLURM batch scripts to our systems.
 
-* [SLURM Jobscript Generator](getting_started/running_jobs/jobscript_generator/jobscript_generator.html)
+* [SLURM Jobscript Generator](getting_started/running_jobs/jobscript_generator)
 
 
 ## 07.03.2017 - New supported applications
