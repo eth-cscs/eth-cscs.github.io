@@ -11,6 +11,6 @@ Storage
 ## [/store](https://eth-cscs.github.io/storage/file_systems/store)
 # [Data Backup](https://eth-cscs.github.io/storage/data_backup)
 # [Data Recovery](https://eth-cscs.github.io/storage/data_recovery)
-# [Data Tranfer](https://eth-cscs.github.io/storage/data_transfer)
+# [Data Transfer](https://eth-cscs.github.io/storage/data_transfer)
 ## [External Tranfer](https://eth-cscs.github.io/storage/data_transfer/external_transfer)
 ## [Internal Tranfer](https://eth-cscs.github.io/storage/data_transfer/internal_transfer)
