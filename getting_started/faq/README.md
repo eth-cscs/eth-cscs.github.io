@@ -393,7 +393,7 @@ You can insert in your code the C or Fortran examples that you find in `/project
 
 The CUDA runtime API provides memory management functions such as `cudaMemGetInfo` which can be called to get the free and total amount of memory available on GPU devices in bytes.
 
-For more details. please have a look at the following HTML file on Piz Daint: `/opt/nvidia/cudatoolkit/default/doc/html/cuda-runtime--pi/group__CUDART__MEMORY.html`
+For more details, please have a look at the cudatoolkit documentation with the command `module help cudatoolkit`.
 
 ---
 
