@@ -1,8 +1,6 @@
 # Access and accounting
 
-## How can I get an account at CSCS? Where can I find the forms?
-
-### Q: I wished to apply for an account at CSCS for me and my collaborators, but I wasn't able to find the forms to be filled in.
+## How to get an account at CSCS?
 
 The forms to be filled in to get and account as Principal Investigator (PI) or new member of a group within an existing project can be found on the [CSCS web site](http://www.cscs.ch), under the __User Lab__ section (__Applying for Accounts__).
 
@@ -10,13 +8,11 @@ The forms to be filled in to get and account as Principal Investigator (PI) or n
 
 ## Can you allow an existing user to charge computing time on my project?
 
-### Q: I would like to have a collaborator, who is already a CSCS user, included in my project. Could you please add him to my project, in order to allow him to charge my allocation?
-
 We will allow the user to charge your allocation as a secondary project, when the request will be approved by the principal investigator of the project.
 
 ---
 
-## I'm not able to login on the systems: `Host key verification failed`
+## I'm not able to login on the systems due to `Host key verification failed`
 
 ### Q: I got a warning message while trying to access your system. Is it safe to pursue as suggested by adding the new host key?
 
@@ -572,7 +568,7 @@ In case you need to transfer a large amount of data from your local platform to 
 
 ## How to check the quota on `/project`
 
-### Q: I can I check my quota on <code>/project?</code>
+### Q: I can I check my quota on `/project?`
 
 You can check your quota on `$HOME=/users/<username>` and `$PROJECT=/project/<project_id>` with the command `quota` on the front-end system Ela (ela.cscs.ch).
 
