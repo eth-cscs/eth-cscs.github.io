@@ -4,7 +4,7 @@
 
 ### Q: I wished to apply for an account at CSCS for me and my collaborators, but I wasn't able to find the forms to be filled in.
 
-The forms to be filled in to get and account as Principal Investigator (PI) or new member of a group within an existing project can be found on [CSCS web site](www.cscs.ch), under the __User Lab__ section (__Applying for Accounts__).
+The forms to be filled in to get and account as Principal Investigator (PI) or new member of a group within an existing project can be found on the [CSCS web site](http://www.cscs.ch), under the __User Lab__ section (__Applying for Accounts__).
 
 ---
 
@@ -110,7 +110,7 @@ You can check the usage of your budget on the systems at CSCS with two scripts:
 
 You can find more details on these two commands under [Compute Budget](../compute_budget).
 
-On the CSCS User Portal you can also check your account after logging in, following the link [My Projects](http://user.cscs.ch/nc/my_projects/index.html#c3248).
+You can also check your account following the links under the section My Projects on the [User Portal](/).
 
 ---
 
@@ -343,7 +343,7 @@ If the post-processing job depends on a production job running on Piz Daint, ple
 
 ### Q: Is there a web page where I can find information and guidelines regarding the machines at CSCS?
 
-You can find the documentation on the systems available at CSCS on the [CSCS web site](www.cscs.ch) and on the [CSCS User Portal](/).
+You can find the documentation on the systems available at CSCS on the [CSCS web site](http://www.cscs.ch) and on the [CSCS User Portal](/).
 
 The different sections listed in the top menu of the pages will guide you through the facilities offered to the users community.
 
@@ -548,7 +548,7 @@ Most performance tools can measure the floating-point rate of execution  of any 
 
 ### Q: I've found today that my files on `/scratch` have been deleted. Is it still possible to get back those files?
 
-Files older than a month are deleted by a cleaning script: please check the cleaning policy on the `/scratch` filesystem on the [Filesystems page](../storage/file_systems).
+Files older than a month are deleted by a cleaning script: please check the cleaning policy on the `/scratch` filesystem on the [Filesystems page](/storage/file_systems).
 
 Unfortunately, once the files on `/scratch` have been deleted, there is no way to recover them. In fact, `/scratch` is meant to keep only the temporary files needed for a run.
 
@@ -569,7 +569,7 @@ The disk space available on each user's `$HOME` is 10 Gb, while the group data u
 
 If you want to copy your output files from a CSCS production system to your local client, outgoing connections will work if your client has a static IP address.
 
-In case you need to transfer a large amount of data from your local platform to your folder under `/project` or `/store` at CSCS or viceversa, then should use the [Data Transfer](../storage/data_trasfer) service offered by CSCS.
+In case you need to transfer a large amount of data from your local platform to your folder under `/project` or `/store` at CSCS or viceversa, then should use the [Data Transfer](/storage/data_trasfer) service offered by CSCS.
 
 ---
 
@@ -589,4 +589,4 @@ Please consider archiving folders with the tar command in order to keep low the 
 
 ### Q: I'm a new user at CSCS. I cannot use ftp to connect to the system and upload files. Could you give some advice?
 
-You should be able to use `rsync`, `scp` or `sftp` instead: please check the availability of these commands using `which` within the terminal. For more information on their usage, please have a look at the corresponding manual pages with the commnad `man`. Large data transfers should use the [Data Transfer](../storage/data_trasfer) service offered by CSCS.
+You should be able to use `rsync`, `scp` or `sftp` instead: please check the availability of these commands using `which` within the terminal. For more information on their usage, please have a look at the corresponding manual pages with the commnad `man`. Large data transfers should use the [Data Transfer](/storage/data_trasfer) service offered by CSCS.
