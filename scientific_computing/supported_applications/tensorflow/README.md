@@ -102,4 +102,4 @@ sbatch test-tf.sbatch
 ```
 
 A more detailed documentation on how to submit a job can be found
-[here](http://user.cscs.ch/getting_started/running_jobs/piz_daint/index.html).
+[here](/getting_started/running_jobs).
