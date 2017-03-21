@@ -1,3 +1,129 @@
+# Access and accounting
+
+## How can I get an account at CSCS? Where can I find the forms?
+
+### Q: I wished to apply for an account at CSCS for me and my collaborators, but I wasn't able to find the forms to be filled in.
+
+The forms to be filled in to get and account as Principal Investigator (PI) or new member of a group within an existing project can be found on [CSCS web site](www.cscs.ch), under the __User Lab__ section (__Applying for Accounts__).
+
+---
+
+## Can you allow an existing user to charge computing time on my project?
+
+### Q: I would like to have a collaborator, who is already a CSCS user, included in my project. Could you please add him to my project, in order to allow him to charge my allocation?
+
+We will allow the user to charge your allocation as a secondary project, when the request will be approved by the principal investigator of the project.
+
+---
+
+## I'm not able to login on the systems: `Host key verification failed`
+
+### Q: I got a warning message while trying to access your system. Is it safe to pursue as suggested by adding the new host key?
+
+```
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED! @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that the RSA host key has just been changed.
+Please contact your system administrator.
+Add correct host key in .ssh/known_hosts to get rid of this message.
+Host key verification failed.
+```
+
+Please proceed as suggested, deleting all the entries wth the name of the system from your `.ssh/known_hosts` file. 
+E.g. for Ela:
+
+```
+sed -i '/^ela/d' ~/.ssh/known_hosts
+```
+
+This command will delete all lines beginning with "ela" from the file `.ssh/known_hosts`, then you should be prompted only once a message like the following:
+
+```
+The authenticity of host 'ela.cscs.ch' can't be established.
+[...] Are you sure you want to continue connecting (yes/no)?
+```
+
+Type `yes`. In case you are prompted similar messages again, delete manually all lines in the `.ssh/known_hosts` file or even the file itself and try again.
+
+---
+
+## I'm not able to login at CSCS after the last configuration change!
+
+### Q: Since the latest changes that you applied to the configuration of the machine that I am using at CSCS, I can't login anymore from my local computer and I get the following message:
+
+```
+@ WARNING: POSSIBLE DNS SPOOFING DETECTED! @
+```
+
+Please, edit the file `.ssh/known_hosts` in your `$HOME` and remove any line containing the name of the machine that you were using at CSCS. Then try to connect again on that machine.
+
+---
+
+## How can I set up a passwordless access to CSCS systems from Ela?
+
+### Q: When I log from Ela onto CSCS systems, I have to type the password each time. Is there a way to avoid typing the password?
+
+You can generate a public/private rsa key pair on the system of your choice:
+
+* `ssh-keygen` You will be asked to Enter file in which to save the key: just confirm the default pressing enter. Then you will be asked to Enter passphrase;
+* `ssh-copy-id -i .ssh/id_rsa.pub ela1` to copy your key on ela1;
+* Follow the instructions printed on screen and try to login: `ssh ela1`. You should be able to log on Ela from the chosen system without typing passwords, and viceversa.
+
+---
+
+## Direct access to CSCS machines from local clients
+
+### How can I connect directly to the systems at CSCS from my local client?
+
+In order to login on CSCS systems you need to access the front-end Ela first.
+
+If you want to copy your output files from a CSCS production system to your local client, outgoing connections will work if your client has a static IP address.
+
+Otherwise, you can configure your local client to forward the connection from Ela to the CSCS system that you wish to access, editing the file `.ssh/config` on your local client.
+
+For instance, you might write the following in `.ssh/config` for Piz Daint:
+```
+host daint
+Hostname daint.cscs.ch
+User <username>
+ForwardAgent yes
+Port 22
+ProxyCommand ssh -q -Y <username>@ela.cscs.ch netcat %h %p -w 10
+```
+
+Then you will be able to run the command `ssh` or `scp` on your local client outside CSCS:
+```
+$ scp daint <path> <localpath>
+```
+Please note that you need to edit `username`, `<path>` and `<localpath>`, since they are user specific.
+
+## How can I check the usage of my budget?
+
+### Q: Is there a way to check how much computing time my group has already consumed?
+
+You can check the usage of your budget on the systems at CSCS with two scripts:
+* `sbucheck` \(per-project usage of the budget allocated quarterly\)
+* `monthly_usage` \(use option `--individual` to see a per-user breakdown\)
+
+You can find more details on these two commands under [Compute Budget](../compute_budget).
+
+On the CSCS User Portal you can also check your account after logging in, following the link [My Projects](http://user.cscs.ch/nc/my_projects/index.html#c3248).
+
+---
+
+## How to write on `/project` when I belong to more than one group
+
+### Q: I would like to store data under a second `/project` folder, since I am a collaborator of that group as well.
+
+If you belong to more than one project, you should see the corresponding group IDs issuing the command `groups` on your shell. You are always logged in as your primary project: therefore, if wish to write on the `/project` folder of a secondary group (e.g. with group ID `sXYZ`), you will need to change project ID using the following command: `newgrp sXYZ`.
+
+Then you will be able to write on `/project/sXYZ` and to check the computing budget of the secondary project with the usual commands `sbucheck` and `monthly_usage`. For further details on the command `newgrp`, please have a look at `man newgrp`.
+
+---
+
 # Queueing system
 
 ## Why my jobs on CSCS machines don't start?
@@ -189,323 +315,25 @@ You can see your jobs in the queue issuing the command `squeue -a -l -u $USER`. 
 
 ---
 
-# Accounting
+## What resources are available for pre- and post-processing?
 
-## How can I check the usage of my budget?
+### Q: I recently obtained an account at CSCS for a production project and I would like to know how to do post-processing of my data.
 
-### Q: Is there a way to check how much computing time my group has already consumed?
-
-You can check the usage of your budget on the systems at CSCS with two scripts:
-* `sbucheck` \(per-project usage of the budget allocated quarterly\)
-* `monthly_usage` \(use option `--individual` to see a per-user breakdown\)
-
-You can find more details on these two commands under [Compute Budget](../compute_budget).
-
-On the CSCS User Portal you can also check your account after logging in, following the link [My Projects](http://user.cscs.ch/nc/my_projects/index.html#c3248).
-
----
-
-## How to write on `/project` when I belong to more than one group
-
-### Q: I would like to store data under a second `/project` folder, since I am a collaborator of that group as well.
-
-If you belong to more than one project, you should see the corresponding group IDs issuing the command `groups` on your shell. You are always logged in as your primary project: therefore, if wish to write on the `/project` folder of a secondary group (e.g. with group ID `sXYZ`), you will need to change project ID using the following command: `newgrp sXYZ`.
-
-Then you will be able to write on `/project/sXYZ` and to check the computing budget of the secondary project with the usual commands `sbucheck` and `monthly_usage`. For further details on the command `newgrp`, please have a look at `man newgrp`.
-
----
-
-# Login
-
-## How can I get an account at CSCS? Where can I find the forms?
-
-### Q: I wished to apply for an account at CSCS for me and my collaborators, but I wasn't able to find the forms to be filled in.
-
-The forms to be filled in to get and account as Principal Investigator (PI) or new member of a group within an existing project can be found on [CSCS web site](www.cscs.ch), under the __User Lab__ section (__Applying for Accounts__).
-
----
-
-## Can you allow an existing user to charge computing time on my project?
-
-### Q: I would like to have a collaborator, who is already a CSCS user, included in my project. Could you please add him to my project, in order to allow him to charge my allocation?
-
-We will allow the user to charge your allocation as a secondary project, when the request will be approved by the principal investigator of the project.
-
----
-
-## I'm not able to login on the systems: `Host key verification failed`
-
-### Q: I got a warning message while trying to access your system. Is it safe to pursue as suggested by adding the new host key?
-
+The system for pre- and post-processing for production projects at CSCS is Piz Daint. 
+Please don't run directly on the login nodes, as they are a shared resource: you should submit your job on the SLURM partition `prepost`, adding the following line in your SLURM batch script:
 ```
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED! @
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
-Someone could be eavesdropping on you right now (man-in-the-middle attack)!
-It is also possible that the RSA host key has just been changed.
-Please contact your system administrator.
-Add correct host key in .ssh/known_hosts to get rid of this message.
-Host key verification failed.
+#SBATCH --partition=prepost
+```
+Alternatively, you can submit using the command
+```
+sbatch --partition=prepost
 ```
 
-Please proceed as suggested, deleting all the entries wth the name of the system from your `.ssh/known_hosts` file. 
-E.g. for Ela:
-
-```
-sed -i '/^ela/d' ~/.ssh/known_hosts
-```
-
-This command will delete all lines beginning with "ela" from the file `.ssh/known_hosts`, then you should be prompted only once a message like the following:
-
-```
-The authenticity of host 'ela.cscs.ch' can't be established.
-[...] Are you sure you want to continue connecting (yes/no)?
-```
-
-Type `yes`. In case you are prompted similar messages again, delete manually all lines in the `.ssh/known_hosts` file or even the file itself and try again.
-
----
-
-## I'm not able to login at CSCS after the last configuration change!
-
-### Q: Since the latest changes that you applied to the configuration of the machine that I am using at CSCS, I can't login anymore from my local computer and I get the following message:
-
-```
-@ WARNING: POSSIBLE DNS SPOOFING DETECTED! @
-```
-
-Please, edit the file `.ssh/known_hosts` in your `$HOME` and remove any line containing the name of the machine that you were using at CSCS. Then try to connect again on that machine.
-
----
-
-## How can I set up a passwordless access to CSCS systems from Ela?
-
-### Q: When I log from Ela onto CSCS systems, I have to type the password each time. Is there a way to avoid typing the password?
-
-You can generate a public/private rsa key pair on the system of your choice:
-
-* `ssh-keygen` You will be asked to Enter file in which to save the key: just confirm the default pressing enter. Then you will be asked to Enter passphrase;
-* `ssh-copy-id -i .ssh/id_rsa.pub ela1` to copy your key on ela1;
-* Follow the instructions printed on screen and try to login: `ssh ela1`. You should be able to log on Ela from the chosen system without typing passwords, and viceversa.
-
----
-
-## Direct access to CSCS machines from local clients
-
-### How can I connect directly to the systems at CSCS from my local client?
-
-In order to login on CSCS systems you need to access the front-end Ela first.
-
-If you want to copy your output files from a CSCS production system to your local client, outgoing connections will work if your client has a static IP address.
-
-Otherwise, you can configure your local client to forward the connection from Ela to the CSCS system that you wish to access, editing the file `.ssh/config` on your local client.
-
-For instance, you might write the following in `.ssh/config` for Piz Daint:
-```
-host daint
-Hostname daint.cscs.ch
-User <username>
-ForwardAgent yes
-Port 22
-ProxyCommand ssh -q -Y <username>@ela.cscs.ch netcat %h %p -w 10
-```
-
-Then you will be able to run the command `ssh` or `scp` on your local client outside CSCS:
-```
-$ scp daint <path> <localpath>
-```
-Please note that you need to edit `username`, `<path>` and `<localpath>`, since they are user specific.
-
----
-
-# Storage and Data Transfer
-
-
-## What is the cleaning policy on `/scratch?`
-
-### Q: I've found today that my files on `/scratch` have been deleted. Is it still possible to get back those files?
-
-Files older than a month are deleted by a cleaning script: please check the cleaning policy on the `/scratch` filesystem on the [Filesystems page](../storage/file_systems).
-
-Unfortunately, once the files on `/scratch` have been deleted, there is no way to recover them. In fact, `/scratch` is meant to keep only the temporary files needed for a run.
-
----
-
-## Could you tell me why I ran out of quota on my `$HOME?`
-
-### Q: I moved several big files to the `/project` filesystem, since I have no more space under my `$HOME`.
-Are the data under `/project` counted in my `$HOME` quota?
-
-The disk space available on each user's `$HOME` is 10 Gb, while the group data under the `/project` filesystem have a separate and bigger quota in general. However the quota on `/project` is shared by all members of the group.
-
----
-
-## How to transfer efficiently data
-
-### Q: How can I move a considerable amount of data efficiently to and from CSCS?
-
-If you want to copy your output files from a CSCS production system to your local client, outgoing connections will work if your client has a static IP address.
-
-In case you need to transfer a large amount of data from your local platform to your folder under `/project` or `/store` at CSCS or viceversa, then should use the [Data Transfer](../storage/data_trasfer) service offered by CSCS.
-
----
-
-## How to check the quota on `/project`
-
-### Q: I can I check my quota on <code>/project?</code>
-
-You can check your quota on `$HOME=/users/<username>` and `$PROJECT=/project/<project_id>` with the command `quota` on the front-end system Ela (ela.cscs.ch).
-
-Please note that on `/project` the number of files as well is listed on the first line in output (`N. FILE USED ON PROJECT`).
-
-Please consider archiving folders with the tar command in order to keep low the number of files owned by your group.
-
----
-
-## File transfer to CSCS machines
-
-### Q: I'm a new user at CSCS. I cannot use ftp to connect to the system and upload files. Could you give some advice?
-
-You should be able to use `rsync`, `scp` or `sftp` instead: please check the availability of these commands using `which` within the terminal. For more information on their usage, please have a look at the corresponding manual pages with the commnad `man`. Large data transfers should use the [Data Transfer](../storage/data_trasfer) service offered by CSCS.
-
----
-
-# Compilation and Optimization
-
-
-## Running executables on different machines
-
-### Q: Does an executable from a machine also run on another one at CSCS?
-
-Not in general. This is mainly because it may happen that the MPI  devices of different machines are different: if this is the case, the  MPI libraries associated with them will be incompatible.
-
----
-
-## I have problems running my executable dynamically linked to shared libraries
-
-### Q: I have to link my application with `libGL` and `libOSMesa`. I want to build a static executable, so I compiled the static version of these libs by myself, since they are not available in `/usr/lib64`. Could you please provide the static versions in `/usr/lib64`? In fact, using the `.so` versions available in `/usr/lib64` doesn't work at runtime, although `ldd` shows the path correctly.
-
-In order to use the available libraries dynamically, you have to add the directory `/usr/lib64` to the path list of the environment variable `$LD_LIBRARY_PATH` before the execution of your job starts, as follows:
-```
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib64
-```
-for bash or
-```
-set LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib64
-```
-for csh
-
----
-
-## I get an error message when loading shared libraries!
-
-### Q: I try to use an executable which I compiled before, it worked then but today I get the following error message: error while loading shared libraries and cannot open shared object file: No such file or directory. What do I need to do?
-
-> If you cannot use static libraries since only the corresponding dynamic libraries are available, then you should always load the system module containing the missing library.
-
-> The appropriate paths to the library will be added to the compiler wrappers \(`ftn` for Frotran codes, `cc` for C, `CC` for C++\). For example, if you are missing the netcdf library, then you should add the corresponding module by typing `module load netcdf` in your shell.
-
----
-
-## Linking FFTW libraries fails
-
-### Q: I was able to compile successfully my code some time ago. Now, even if I load the module fftw I'm not able to do so, because the linker says that the libraries are not found. Could you check if there is any problem with the fftw module?
-
-Your configure script is likely not picking up the fftw: please, examine the file config.log after configure to see where it fails.
-```
-module show fftw
-```
-will print on screen the version and paths of the loaded module, in case you need to add them manually during configuration.
-
-Then the Cray wrapper (`cc`, `CC` or `ftn`) should link the library automatically, if the corresponding module is loaded.
-
----
-
-## Where to find Third Party Scientific Libraries
-
-### Q: Which modules provide optimized scientific libraries?
-
-On Cray systems, please have a look at `module help cray-tpsl` TPSL (Third Party Scientific Libraries) is the name of a module containing a collection of mathematical libraries that can be used with PETSc and Trilinos for solving problems in dense and sparse linear algebra.
-
-The tpsl module is automatically loaded when PETSc or Trilinos is loaded. The libraries included are Hypre, SuperLU, SuperLU_dist, MUMPs, ParMetis, Sundials, and Scotch.
-
----
-
-## How can I check the commands and flags invoked by the compiler wrapper?
-
-### Q: I would like to check which command and flags are invoked by the compiler wrapper of the Programming Environment that I have loaded. Is it possible?
-
-After you load all modules that you need, you can issue one of the following commands to have a list of the flags invoked by the appropriate compiler wrapper: `cc -###` (or `ftn` or `CC` in place of `cc`) or `cc -v` (or `ftn` or `CC` in place of `cc`). Depending on the Programming Environment that you have loaded, you might need to give a filename on the command line, however an empty `foo.c` or `foo.f90` or `foo.C` will be enough (e.g.: the Cray compiler requires a filename with `-v`).
-
----
-
-## Why do I get `Illegal instruction` when running my code?
-
-### Q: I have managed to compile my code, but when I try to run it I get `Illegal Instruction` or even `Fatal error in MPI_Init` and similar error messages. Why?
-
-The system on which you have compiled your code have a different architecture with respect to the compute nodes of the system where you are trying to run your executable.
-
-The Cray compiler wrappers provided by the programming environment on Cray systems will cross-compile your code in order to run on the compute nodes.
-
----
-
-## Where can I find BLAS and SCALAPACK on Cray machines?
-
-### Q: I need to link linear algebra routines to my code, but I can't find the BLAS and SCALAPACK libraries and their headers. Are these available on Cray systems?
-
-BLAS and SCALAPACK functions are provided by the `cray-libsci` module on Cray systems.
-
-The following commands will give you some information on the module:
-```
-module show cray-libsci
-module help cray-libsci
-```
-If you use the flag `-v` when compiling with the wrapper, you will see a verbose list of all the include and library paths called by the compiler driver.
-
----
-
-## Error linking MPI library
-
-### Q: I am compiling a code on a Cray system and when I link I get the following error message:
-```
-fatal error: mpi.h: No such file or directory. Compilation terminated.
-```
-Do I need to explicitly link the MPI library?
-
-On the Cray systems you should compile your code using the compiler wrappers:
-* `cc` for C
-* `CC` for C++
-* `ftn` for Fortran
-Please set the proper compiler driver in your Makefile and the MPI libraries will be linked automatically.
-
----
-
-## How can I find the path to a library?
-
-### I would like to link my code to a specific library. How can I find its path on the system?
-
-In order to compile your code on a machine at CSCS you should load the module of a Programming Environment and of the libraries that you need:
-
-* `module avail` lists of the modules available on the machine
-* `module show "modulename"` lists the variables and paths related to a single module (change modulename with the module of your choice)
-On Cray systems you should use the wrapper to compile (`ftn` for Fortran, `cc` for C or `CC` for C++): the wrapper will add the correct path of the libraries that have been loaded.
-
-For more information on compiling, please have a look at the section _Compiling and Optimizing_ on the top menu.
-
----
-
-## How to measure the performance of an application
-
-### What is the meaning of flop/s?
-
-The flop/s is a rate of execution of 64 bits floating point operations (either addition or multiplication) per second. Its multiples are Mflop/s (millions), Gflop/s (billions), Tflop/s (trillions) and so on...
-
-The theoretical peak performance is the upper bound peak rate of execution of floating point operations for a given processor. It can determined by counting the number of floating-point additions and multiplications (in full precision) that can be completed during the clock time of the processor.
-
-Flop/s can give a measure of&nbsp;application performance: given a processor's theoretical peak performance, one can work out how efficiently the cpu's floating point units are used. An application which runs at 10% of the peak performance has room for optimization, while one that runs over 50% is probably not going to improve much unless the underlying algorithm is rewritten
-
-Most performance tools can measure the floating-point rate of execution  of any given application (for instance, Craypat on Cray systems).
+Please note that the following preference list holds:
+* command line argument (`--partition=`)
+* script directive (`#SBATCH --partition=`)
+
+If the post-processing job depends on a production job running on Piz Daint, please use the SLURM dependency option.
 
 ---
 
@@ -569,30 +397,196 @@ For more details. please have a look at the following HTML file on Piz Daint: `/
 
 ---
 
-## What resources are available for pre- and post-processing?
-
-### Q: I recently obtained an account at CSCS for a production project oand I would like to know how to do post-processing of my data.
-
-Currently the system for pre- and post-processing for production projects at CSCS is Piz Daint. 
-You should use the SLURM partition `prepost` for your job adding the following line in your SLURM batch script:
-```
-#SBATCH --partition=prepost
-```
-Alternatively, you can submit using the command
-```
-sbatch --partition=prepost
-```
-
-Please note that the following preference list holds:
-* command line argument (`--partition=`)
-* script directive (`#SBATCH --partition=`)
-
-If the post-processing job depends on a production job running on Piz Daint, please use the SLURM dependency option.
-
----
+# Compiling and running
 
 ## Useful commands of the module framework
 
 ### Q: Where can I find a list of module commands?
 
 You can have a list of the most useful module commands printed on the screen typing `module`.
+
+---
+
+## How can I check the commands and flags invoked by the compiler wrapper?
+
+### Q: I would like to check which command and flags are invoked by the compiler wrapper of the Programming Environment that I have loaded. Is it possible?
+
+After you load all modules that you need, you can issue one of the following commands to have a list of the flags invoked by the appropriate compiler wrapper: `cc -###` (or `ftn` or `CC` in place of `cc`) or `cc -v` (or `ftn` or `CC` in place of `cc`). Depending on the Programming Environment that you have loaded, you might need to give a filename on the command line, however an empty `foo.c` or `foo.f90` or `foo.C` will be enough (e.g.: the Cray compiler requires a filename with `-v`).
+
+---
+
+## How can I find the path to a library?
+
+### I would like to link my code to a specific library. How can I find its path on the system?
+
+In order to compile your code on a machine at CSCS you should load the module of a Programming Environment and of the libraries that you need:
+
+* `module avail` lists of the modules available on the machine
+* `module show "modulename"` lists the variables and paths related to a single module (change modulename with the module of your choice)
+On Cray systems you should use the wrapper to compile (`ftn` for Fortran, `cc` for C or `CC` for C++): the wrapper will add the correct path of the libraries that have been loaded.
+
+For more information on compiling, please have a look at the corresponding section on the User Portal.
+
+---
+
+## Why do I get `Illegal instruction` when running my code?
+
+### Q: I have managed to compile my code, but when I try to run it I get `Illegal Instruction` or even `Fatal error in MPI_Init` and similar error messages. Why?
+
+The system on which you have compiled your code have a different architecture with respect to the compute nodes of the system where you are trying to run your executable.
+
+The Cray compiler wrappers provided by the programming environment on Cray systems will cross-compile your code in order to run on the compute nodes.
+
+---
+
+## Error linking MPI library
+
+### Q: I am compiling a code on a Cray system and when I link I get the following error message:
+```
+fatal error: mpi.h: No such file or directory. Compilation terminated.
+```
+Do I need to explicitly link the MPI library?
+
+On the Cray systems you should compile your code using the compiler wrappers:
+* `cc` for C
+* `CC` for C++
+* `ftn` for Fortran
+Please set the proper compiler driver in your Makefile and the MPI libraries will be linked automatically.
+
+---
+
+## Linking FFTW libraries fails
+
+### Q: I was able to compile successfully my code some time ago. Now, even if I load the module fftw I'm not able to do so, because the linker says that the libraries are not found. Could you check if there is any problem with the fftw module?
+
+Your configure script is likely not picking up the fftw: please, examine the file config.log after configure to see where it fails.
+```
+module show fftw
+```
+will print on screen the version and paths of the loaded module, in case you need to add them manually during configuration.
+
+Then the Cray wrapper (`cc`, `CC` or `ftn`) should link the library automatically, if the corresponding module is loaded.
+
+---
+
+## Where can I find BLAS and SCALAPACK on Cray machines?
+
+### Q: I need to link linear algebra routines to my code, but I can't find the BLAS and SCALAPACK libraries and their headers. Are these available on Cray systems?
+
+BLAS and SCALAPACK functions are provided by the `cray-libsci` module on Cray systems.
+
+The following commands will give you some information on the module:
+```
+module show cray-libsci
+module help cray-libsci
+```
+If you use the flag `-v` when compiling with the wrapper, you will see a verbose list of all the include and library paths called by the compiler driver.
+
+---
+
+## Where to find Third Party Scientific Libraries
+
+### Q: Which modules provide optimized scientific libraries?
+
+On Cray systems, please have a look at `module help cray-tpsl` TPSL (Third Party Scientific Libraries) is the name of a module containing a collection of mathematical libraries that can be used with PETSc and Trilinos for solving problems in dense and sparse linear algebra.
+
+The tpsl module is automatically loaded when PETSc or Trilinos is loaded. The libraries included are Hypre, SuperLU, SuperLU_dist, MUMPs, ParMetis, Sundials, and Scotch.
+
+---
+
+## Running executables on different machines
+
+### Q: Does an executable from a machine also run on another one at CSCS?
+
+Not in general. This is mainly because it may happen that the MPI  devices of different machines are different: if this is the case, the  MPI libraries associated with them will be incompatible.
+
+---
+
+## I have problems running my executable dynamically linked to shared libraries
+
+### Q: I have to link my application with `libGL` and `libOSMesa`. I want to build a static executable, so I compiled the static version of these libs by myself, since they are not available in `/usr/lib64`. Could you please provide the static versions in `/usr/lib64`? In fact, using the `.so` versions available in `/usr/lib64` doesn't work at runtime, although `ldd` shows the path correctly.
+
+In order to use the available libraries dynamically, you have to add the directory `/usr/lib64` to the path list of the environment variable `$LD_LIBRARY_PATH` before the execution of your job starts, as follows:
+```
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib64
+```
+for bash or
+```
+set LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib64
+```
+for csh
+
+---
+
+## I get an error message when loading shared libraries!
+
+### Q: I try to use an executable which I compiled before, it worked then but today I get the following error message: error while loading shared libraries and cannot open shared object file: No such file or directory. What do I need to do?
+
+> If you cannot use static libraries since only the corresponding dynamic libraries are available, then you should always load the system module containing the missing library.
+
+> The appropriate paths to the library will be added to the compiler wrappers \(`ftn` for Frotran codes, `cc` for C, `CC` for C++\). For example, if you are missing the netcdf library, then you should add the corresponding module by typing `module load netcdf` in your shell.
+
+---
+
+## How to measure the performance of an application
+
+### What is the meaning of flop/s?
+
+The flop/s is a rate of execution of 64 bits floating point operations (either addition or multiplication) per second. Its multiples are Mflop/s (millions), Gflop/s (billions), Tflop/s (trillions) and so on...
+
+The theoretical peak performance is the upper bound peak rate of execution of floating point operations for a given processor. It can determined by counting the number of floating-point additions and multiplications (in full precision) that can be completed during the clock time of the processor.
+
+Flop/s can give a measure of&nbsp;application performance: given a processor's theoretical peak performance, one can work out how efficiently the cpu's floating point units are used. An application which runs at 10% of the peak performance has room for optimization, while one that runs over 50% is probably not going to improve much unless the underlying algorithm is rewritten
+
+Most performance tools can measure the floating-point rate of execution  of any given application (for instance, Craypat on Cray systems).
+
+---
+
+# Storage and Data Transfer
+
+## What is the cleaning policy on `/scratch?`
+
+### Q: I've found today that my files on `/scratch` have been deleted. Is it still possible to get back those files?
+
+Files older than a month are deleted by a cleaning script: please check the cleaning policy on the `/scratch` filesystem on the [Filesystems page](../storage/file_systems).
+
+Unfortunately, once the files on `/scratch` have been deleted, there is no way to recover them. In fact, `/scratch` is meant to keep only the temporary files needed for a run.
+
+---
+
+## Could you tell me why I ran out of quota on my `$HOME?`
+
+### Q: I moved several big files to the `/project` filesystem, since I have no more space under my `$HOME`.
+Are the data under `/project` counted in my `$HOME` quota?
+
+The disk space available on each user's `$HOME` is 10 Gb, while the group data under the `/project` filesystem have a separate and bigger quota in general. However the quota on `/project` is shared by all members of the group.
+
+---
+
+## How to transfer large data efficiently
+
+### Q: How can I move a considerable amount of data efficiently to and from CSCS?
+
+If you want to copy your output files from a CSCS production system to your local client, outgoing connections will work if your client has a static IP address.
+
+In case you need to transfer a large amount of data from your local platform to your folder under `/project` or `/store` at CSCS or viceversa, then should use the [Data Transfer](../storage/data_trasfer) service offered by CSCS.
+
+---
+
+## How to check the quota on `/project`
+
+### Q: I can I check my quota on <code>/project?</code>
+
+You can check your quota on `$HOME=/users/<username>` and `$PROJECT=/project/<project_id>` with the command `quota` on the front-end system Ela (ela.cscs.ch).
+
+Please note that on `/project` the number of files as well is listed on the first line in output (`N. FILE USED ON PROJECT`).
+
+Please consider archiving folders with the tar command in order to keep low the number of files owned by your group.
+
+---
+
+## File transfer to CSCS machines
+
+### Q: I'm a new user at CSCS. I cannot use ftp to connect to the system and upload files. Could you give some advice?
+
+You should be able to use `rsync`, `scp` or `sftp` instead: please check the availability of these commands using `which` within the terminal. For more information on their usage, please have a look at the corresponding manual pages with the commnad `man`. Large data transfers should use the [Data Transfer](../storage/data_trasfer) service offered by CSCS.
