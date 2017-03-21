@@ -1,11 +1,10 @@
-# Queue system
-
+# Queueing system
 
 ## Why my jobs on CSCS machines don't start?
 
 ### Q: My jobs at CSCS do not start at the moment. Why is it so? When can I expect the jobs to start?
 
-Please check the priority of your submitted job: your jobs will have less priority if your are overusing the budget. You can check the usage of your budget against what is expected typing the command `monthly_usage`.
+Please check the priority of your submitted job: your jobs will have less priority if your are overusing the budget and you will likely wait more in the queue if you set a longer wall time. You can check the usage of your budget against what is expected typing the command `monthly_usage`.
 
 Please have a look at the CSCS User Portal for more details on how to check your budget.
 
@@ -22,12 +21,11 @@ If you are a member of the group `gid`, you can use the following directive:
 
 This will tell SLURM to charge the compute budget of the selected group for the current job.
 
-
 ---
 
 ## How can I set automatically a group account when submitting jobs?
 
-### Q: I would like to set automatically one account when I use an interactive session invoked with `salloc -N 1`: how can you do that?
+### Q: I would like to set automatically one account when I allocate nodes: how can you do that?
 
 In case your username belongs to different projects, you can override the default account using the SLURM flag `-A/--account=myaccount` when calling `sbatch` or `salloc`.
 
@@ -48,14 +46,13 @@ or
 export SALLOC_ACCOUNT=myaccount
 ```
 
-
 ---
 
 ## I would like to increase the priority of my runs, I am always standing in the queue!
 
 ### Q: I would like to do some benchmark tests for code development with my code. However, other users submit jobs all the time. Due to their higher priority, their jobs overtake mine in the queue, so I have to wait a very long time until my jobs start to run.
 
-You have already used over 100% of your budget, whereas the other  projects you mention used less: manually adjusting the priorities is not  possible, since it will prevent a fair share of the computing resources  among our users.
+You have likely already used over 100% of your budget, whereas the other projects you mention used less: manually adjusting the priorities is not possible, since it would prevent a fair share of the computing resources among our users.
 
 ---
 
@@ -107,7 +104,7 @@ In order to submit batch jobs, you need to create a SLURM script that contains t
 
 ### Q: I had to reduce the number of tasks per node, since my application was running out of memory. Is there an optimal choice for the number of tasks per node?
 
-Remember that you are charged resources per node: of course when memory becomes an issue, then you need to reduce the number of tasks per node.
+Please remember that you are charged resources per node: of course when memory becomes an issue, then you need to reduce the number of tasks per node.
 
 However you will gain not only the extra memory but also more memory bandwidth, so the code should run a bit faster.
 
@@ -192,33 +189,7 @@ You can see your jobs in the queue issuing the command `squeue -a -l -u $USER`. 
 
 ---
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Accounting
-
-
 
 ## How can I check the usage of my budget?
 
@@ -228,7 +199,7 @@ You can check the usage of your budget on the systems at CSCS with two scripts:
 * `sbucheck` \(per-project usage of the budget allocated quarterly\)
 * `monthly_usage` \(use option `--individual` to see a per-user breakdown\)
 
-You can find more details on these two commands under [Compute Budget](http://user.cscs.ch/getting_started/compute_budget/index.html#c4214).
+You can find more details on these two commands under [Compute Budget](../compute_budget).
 
 On the CSCS User Portal you can also check your account after logging in, following the link [My Projects](http://user.cscs.ch/nc/my_projects/index.html#c3248).
 
@@ -244,38 +215,13 @@ Then you will be able to write on `/project/sXYZ` and to check the computing bud
 
 ---
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Login
-
-
 
 ## How can I get an account at CSCS? Where can I find the forms?
 
 ### Q: I wished to apply for an account at CSCS for me and my collaborators, but I wasn't able to find the forms to be filled in.
 
-The forms to be filled in to get and account as Principal Investigator (PI) or new member of a group within an existing project can be found on [CSCS web site](http://www.cscs.ch/), under the __User Lab__ section __Applying for Accounts__.
+The forms to be filled in to get and account as Principal Investigator (PI) or new member of a group within an existing project can be found on [CSCS web site](www.cscs.ch), under the __User Lab__ section (__Applying for Accounts__).
 
 ---
 
@@ -303,16 +249,17 @@ Add correct host key in .ssh/known_hosts to get rid of this message.
 Host key verification failed.
 ```
 
-Please proceed as suggested, deleting all the entries wth the name of the system from your `.ssh/known_hosts` file. E.g. for Pilatus:
+Please proceed as suggested, deleting all the entries wth the name of the system from your `.ssh/known_hosts` file. 
+E.g. for Ela:
 
 ```
-sed -i '/^pilatus/d' ~/.ssh/known_hosts
+sed -i '/^ela/d' ~/.ssh/known_hosts
 ```
 
-This command will delete all lines beginning with "pilatus" from the file `.ssh/known_hosts`, then you should be prompted only once a message like the following:
+This command will delete all lines beginning with "ela" from the file `.ssh/known_hosts`, then you should be prompted only once a message like the following:
 
 ```
-The authenticity of host 'pilatus.cscs.ch' can't be established.
+The authenticity of host 'ela.cscs.ch' can't be established.
 [...] Are you sure you want to continue connecting (yes/no)?
 ```
 
@@ -331,7 +278,6 @@ Type `yes`. In case you are prompted similar messages again, delete manually all
 Please, edit the file `.ssh/known_hosts` in your `$HOME` and remove any line containing the name of the machine that you were using at CSCS. Then try to connect again on that machine.
 
 ---
-
 
 ## How can I set up a passwordless access to CSCS systems from Ela?
 
@@ -355,9 +301,9 @@ If you want to copy your output files from a CSCS production system to your loca
 
 Otherwise, you can configure your local client to forward the connection from Ela to the CSCS system that you wish to access, editing the file `.ssh/config` on your local client.
 
-For instance, you would write the following in `.ssh/config` for Piz Daint:
+For instance, you might write the following in `.ssh/config` for Piz Daint:
 ```
-host esdaint
+host daint
 Hostname daint.cscs.ch
 User <username>
 ForwardAgent yes
@@ -367,32 +313,11 @@ ProxyCommand ssh -q -Y <username>@ela.cscs.ch netcat %h %p -w 10
 
 Then you will be able to run the command `ssh` or `scp` on your local client outside CSCS:
 ```
-$ scp esdaint <path> <localpath>
+$ scp daint <path> <localpath>
 ```
 Please note that you need to edit `username`, `<path>` and `<localpath>`, since they are user specific.
 
 ---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Storage and Data Transfer
 
@@ -401,7 +326,7 @@ Please note that you need to edit `username`, `<path>` and `<localpath>`, since 
 
 ### Q: I've found today that my files on `/scratch` have been deleted. Is it still possible to get back those files?
 
-Files older than a month are deleted by a cleaning script: please check the cleaning policy on the `/scratch` filesystem on the Filesystems page of the CSCS User Portal.
+Files older than a month are deleted by a cleaning script: please check the cleaning policy on the `/scratch` filesystem on the [Filesystems page](../storage/file_systems).
 
 Unfortunately, once the files on `/scratch` have been deleted, there is no way to recover them. In fact, `/scratch` is meant to keep only the temporary files needed for a run.
 
@@ -422,7 +347,7 @@ The disk space available on each user's `$HOME` is 10 Gb, while the group data u
 
 If you want to copy your output files from a CSCS production system to your local client, outgoing connections will work if your client has a static IP address.
 
-In case you need to transfer a large amount of data from your local platform to your folder under `/project` or `/store` at CSCS or viceversa, you have an alternative that might run faster then `sftp` or `scp`. For further information, please have a look the Data transfer page.
+In case you need to transfer a large amount of data from your local platform to your folder under `/project` or `/store` at CSCS or viceversa, then should use the [Data Transfer](../storage/data_trasfer) service offered by CSCS.
 
 ---
 
@@ -442,25 +367,9 @@ Please consider archiving folders with the tar command in order to keep low the 
 
 ### Q: I'm a new user at CSCS. I cannot use ftp to connect to the system and upload files. Could you give some advice?
 
-You should be able to use `rsync`, `scp` or `sftp` instead: please check the availability of these commands using `which` within the terminal. For more information on their usage, please have a look at the corresponding manual pages with the commnad `man`.
+You should be able to use `rsync`, `scp` or `sftp` instead: please check the availability of these commands using `which` within the terminal. For more information on their usage, please have a look at the corresponding manual pages with the commnad `man`. Large data transfers should use the [Data Transfer](../storage/data_trasfer) service offered by CSCS.
 
 ---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Compilation and Optimization
 
@@ -600,42 +509,15 @@ Most performance tools can measure the floating-point rate of execution  of any 
 
 ---
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Computing systems
 
 ## Where can I find the documentation of the systems available at CSCS?
 
 ### Q: Is there a web page where I can find information and guidelines regarding the machines at CSCS?
 
-You can find the documentation for the systems available at CSCS on the [CSCS User Portal](/).
+You can find the documentation on the systems available at CSCS on the [CSCS web site](www.cscs.ch) and on the [CSCS User Portal](/).
 
-The different sections listed in the top menu of the page will guide you through the facilities offered to the users community.
-
-Please check as well the [list of FAQs](FAQS), where you can find answers to the most general issues.
+The different sections listed in the top menu of the pages will guide you through the facilities offered to the users community.
 
 ---
 
@@ -643,13 +525,14 @@ Please check as well the [list of FAQs](FAQS), where you can find answers to the
 
 ### Q: A job crashed after running for several hours with the following error message:
 ```
-[NID 01490] 2011-12-05 00:20:27 Apid 168352: OOM killer terminated this process.
+OOM killer terminated this process.
 ```
 Jobs of the same size used to run before without errors: could you please check this issue?
 
-The out of memory issue (OOM) might arise from a temporarily low free memory on a node: you can check the free memory on the nodes that you allocate by inserting the following command in your batch script:
+The out of memory issue (OOM) might arise from a temporarily low free memory on a node. 
+You can check the free memory on the nodes that you allocate by inserting the following command in your batch script:
 ```
-aprun -n $SLURM_JOB_NUM_NODES -N 1 free -m
+srun -n $SLURM_JOB_NUM_NODES --ntasks-per-node=1 free -m
 ```
 The free memory per node is usually slightly less than the nominal value, since it is partly used by the filesystem. If the free memory on the nodes where you run is already close to the maximum value, then please try running with more nodes, using fewer tasks per node.
 
@@ -686,137 +569,30 @@ For more details. please have a look at the following HTML file on Piz Daint: `/
 
 ---
 
-## Which HPC system is available for pre- and post-processing?
+## What resources are available for pre- and post-processing?
 
-### Q: I recently obtained an account at CSCS for a production project onMonte Rosa and I would like to get the access rights for a machine to do the post-processing of my data.
+### Q: I recently obtained an account at CSCS for a production project oand I would like to know how to do post-processing of my data.
 
-Currently The system for pre- and post-processing for production projects at CSCS is Pilatus. You can choose Pilatus for your job adding the following line in your SLURM batch script:
+Currently the system for pre- and post-processing for production projects at CSCS is Piz Daint. 
+You should use the SLURM partition `prepost` for your job adding the following line in your SLURM batch script:
 ```
-#SBATCH --cluster=pilatus
+#SBATCH --partition=prepost
 ```
 Alternatively, you can submit using the command
 ```
-sbatch --cluster=pilatus
-```
-or
-```
-sbatch -M pilatus
-```
-or setting the following variable:
-```
-SLURM_CLUSTER=pilatus
+sbatch --partition=prepost
 ```
 
 Please note that the following preference list holds:
-* command line argument (`-M / --cluster=`)
-* environment variable (`$SLURM_CLUSTER`)
-* script directive (`#SBATCH --cluster=pilatus`)
+* command line argument (`--partition=`)
+* script directive (`#SBATCH --partition=`)
 
-If the post-processing job depends on a job running on Piz Daint, add this line at the end of your job script, to submit the next job on Pilatus using the SLURM batch script `post-processing.sbatch`:
-```
-sbatch --cluster=pilatus post-processing.sbatch
-```
+If the post-processing job depends on a production job running on Piz Daint, please use the SLURM dependency option.
 
-
-
-
-
-
-
-
-
-
-
-
-# Software and Modules
+---
 
 ## Useful commands of the module framework
 
 ### Q: Where can I find a list of module commands?
 
 You can have a list of the most useful module commands printed on the screen typing `module`.
-
----
-
-## Where can I run Matlab, do you have a template script?
-
-### Q: I made an executable out of my matlab source file using the command
-```
-mcc -o myexe -m=myfile.m
-```
-Then I tried to execute it, but I wasn't able so far to run it. Is there an easy way to run a matlab code within a batch script?
-
-Matlab is available as a module on daint for post-processing jobs. Therefore you may submit a matlab script (e.g.: `matlab.m`) within a SLURM batch job using the following template script:
-```
-#!/bin/bash -l
-#SBATCH --nodes=1
-#SBATCH --tasks-per-node=12
-#SBATCH --time=01:00:00
-#SBATCH --job-name=matlab
-module load matlab
-matlab -nodisplay < matlab.m
-```
-
-Please have a look at Running jobs to learn how to submit a SLURM batch job.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
