@@ -12,7 +12,7 @@ To use TensorFlow on Piz Daint you have to load the corresponding module:
 
 ```
 module load daint-gpu
-module load TensorFlow/0.11.0-CrayGNU-2016.11-Python-3.5.2
+module load TensorFlow/1.0.0-CrayGNU-2016.11-cuda-8.0-Python-3.5.2
 ```
 
 Note that there is a mor elaborate documentation on the
