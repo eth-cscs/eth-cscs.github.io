@@ -110,7 +110,7 @@ You can check the usage of your budget on the systems at CSCS with two scripts:
 
 You can find more details on these two commands under [Compute Budget](../compute_budget).
 
-You can also check your account following the links under the section My Projects on the [User Portal](/).
+You can also check your account following the links under the section My Projects on the [CSCS User Portal](/).
 
 ---
 
@@ -569,7 +569,7 @@ The disk space available on each user's `$HOME` is 10 Gb, while the group data u
 
 If you want to copy your output files from a CSCS production system to your local client, outgoing connections will work if your client has a static IP address.
 
-In case you need to transfer a large amount of data from your local platform to your folder under `/project` or `/store` at CSCS or viceversa, then should use the [Data Transfer](/storage/data_trasfer) service offered by CSCS.
+In case you need to transfer a large amount of data from your local platform to your folder under `/project` or `/store` at CSCS or viceversa, then should use the [Data Transfer](/storage/data_transfer) service offered by CSCS.
 
 ---
 
@@ -589,4 +589,4 @@ Please consider archiving folders with the tar command in order to keep low the 
 
 ### Q: I'm a new user at CSCS. I cannot use ftp to connect to the system and upload files. Could you give some advice?
 
-You should be able to use `rsync`, `scp` or `sftp` instead: please check the availability of these commands using `which` within the terminal. For more information on their usage, please have a look at the corresponding manual pages with the commnad `man`. Large data transfers should use the [Data Transfer](/storage/data_trasfer) service offered by CSCS.
+You should be able to use `rsync`, `scp` or `sftp` instead: please check the availability of these commands using `which` within the terminal. For more information on their usage, please have a look at the corresponding manual pages with the command `man`. Large data transfers should use the [Data Transfer](/storage/data_transfer) service offered by CSCS.
