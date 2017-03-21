@@ -13,7 +13,6 @@ We will allow the user to charge your allocation as a secondary project, when th
 ---
 
 ## I'm not able to login on the systems due to `Host key verification failed`
-
 ```
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED! @
@@ -26,7 +25,7 @@ Add correct host key in .ssh/known_hosts to get rid of this message.
 Host key verification failed.
 ```
 
-Please proceed as suggested by the WARNING message, deleting all the entries wth the name of the system from your `.ssh/known_hosts` file.
+Please proceed as suggested by the WARNING message, deleting all the entries wth the name of the system from your `.ssh/known_hosts` file. The same procedure applies in case of `@ WARNING: POSSIBLE DNS SPOOFING DETECTED! @`.
 
 E.g. for Ela:
 
@@ -42,12 +41,6 @@ The authenticity of host 'ela.cscs.ch' can't be established.
 ```
 
 Type `yes`. In case you are prompted similar messages again, delete manually all lines in the `.ssh/known_hosts` file or even the file itself and try again.
-
----
-
-## I'm not able to login at CSCS due to `@ WARNING: POSSIBLE DNS SPOOFING DETECTED! @`
-
-Please, edit the file `.ssh/known_hosts` in your `$HOME` as suggested in the FAQ above and remove any line containing the name of the machine that you were using at CSCS. Then try to connect again on that machine.
 
 ---
 
