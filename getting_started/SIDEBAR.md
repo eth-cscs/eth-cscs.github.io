@@ -7,6 +7,7 @@ Getting Started
 # [Get an account](https://eth-cscs.github.io/getting_started/get_an_account)
 # [Compute budget](https://eth-cscs.github.io/getting_started/compute_budget)
 # [Running jobs](https://eth-cscs.github.io/getting_started/running_jobs)
+## [Jobscript Generator](https://eth-cscs.github.io/getting_started/running_jobs/jobscript_generator)
 ## [Grand Tavé](https://eth-cscs.github.io/getting_started/running_jobs/grand_tave)
 ## [Mönch](https://eth-cscs.github.io/getting_started/running_jobs/monch)
 ## [Monte Leone](https://eth-cscs.github.io/getting_started/running_jobs/monte_leone)
