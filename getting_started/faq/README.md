@@ -1,4 +1,4 @@
-# Access and accounting
+# Access and Accounting
 
 ## How to get an account at CSCS?
 
@@ -105,7 +105,7 @@ Then you will be able to write on `/project/sXYZ` and to check the computing bud
 
 ---
 
-# Job scheduler
+# Job Scheduler
 
 ## Why my jobs on CSCS machines don't start?
 
@@ -259,7 +259,7 @@ If the post-processing job depends on a production job running on Piz Daint, ple
 
 ---
 
-# Compiling and running
+# Compiling and Running
 
 ## Where can I find the documentation of the systems available at CSCS?
 
@@ -388,7 +388,7 @@ Most performance tools can measure the floating-point rate of execution  of any 
 
 ---
 
-# Data management
+# Data Management
 
 ## What is the cleaning policy on `/scratch?`
 
