@@ -13,8 +13,8 @@ Getting Started
 ## [Monte Leone](https://eth-cscs.github.io/getting_started/running_jobs/monte_leone)
 ## [Piz Daint](https://eth-cscs.github.io/getting_started/running_jobs/piz_daint)
 # [FAQ](https://eth-cscs.github.io/getting_started/faq)
-## [Access and Accounting](https://eth-cscs.github.io/getting_started/faq/#access-and-accounting)
-## [Job Scheduler](https://eth-cscs.github.io/getting_started/faq/#job-scheduler)
-## [Data Management](https://eth-cscs.github.io/getting_started/faq/#data-management)
-## [Compiling and Running](https://eth-cscs.github.io/getting_started/faq/#compiling-and-running)
+## [Access and Accounting](https://eth-cscs.github.io/getting_started/faq/access-and-accounting)
+## [Job Scheduler](https://eth-cscs.github.io/getting_started/faq/job-scheduler)
+## [Data Management](https://eth-cscs.github.io/getting_started/faq/data-management)
+## [Compiling and Running](https://eth-cscs.github.io/getting_started/faq/compiling-and-running)
 <!-- # [Tutorials](https://eth-cscs.github.io/getting_started/tutorials) -->
