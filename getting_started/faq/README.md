@@ -124,7 +124,7 @@ Then you will be able to write on `/project/sXYZ` and to check the computing bud
 
 ---
 
-# Queueing system
+# Job scheduler
 
 ## Why my jobs on CSCS machines don't start?
 
@@ -240,6 +240,18 @@ In some cases you might gain a speed up, but this is strongly application depend
 
 ---
 
+## Getting information on the configuration and nodes available
+
+### Q: How can I see the detailed configuration of the current SLURM system and see the list of the available nodes?
+
+The corresponding SLURM commands are the following:
+```
+scontrol show config
+scontrol show nodes
+```
+
+---
+
 ## How to place and release a job from hold state?
 
 
@@ -337,7 +349,7 @@ If the post-processing job depends on a production job running on Piz Daint, ple
 
 ---
 
-# Computing systems
+# Compiling and running
 
 ## Where can I find the documentation of the systems available at CSCS?
 
@@ -348,56 +360,6 @@ You can find the documentation on the systems available at CSCS on the [CSCS web
 The different sections listed in the top menu of the pages will guide you through the facilities offered to the users community.
 
 ---
-
-## How to check the free memory on selected nodes
-
-### Q: A job crashed after running for several hours with the following error message:
-```
-OOM killer terminated this process.
-```
-Jobs of the same size used to run before without errors: could you please check this issue?
-
-The out of memory issue (OOM) might arise from a temporarily low free memory on a node. 
-You can check the free memory on the nodes that you allocate by inserting the following command in your batch script:
-```
-srun -n $SLURM_JOB_NUM_NODES --ntasks-per-node=1 free -m
-```
-The free memory per node is usually slightly less than the nominal value, since it is partly used by the filesystem. If the free memory on the nodes where you run is already close to the maximum value, then please try running with more nodes, using fewer tasks per node.
-
----
-
-## Getting information on the configuration and nodes available
-
-### Q: How can I see the detailed configuration of the current SLURM system and see the list of the available nodes?
-
-The corresponding SLURM commands are the following:
-```
-scontrol show config
-scontrol show nodes
-```
-
----
-
-## How to check the memory usage of a code
-
-### I would like to check the memory footprint of my code, how can I do that?
-
-You can insert in your code the C or Fortran examples that you find in `/project/csstaff/examples/memory`: they read the file `/proc/self/statm` and print current information about memory usage, measured in page units (please type `man 5 proc` for more details):
-* size (total program size, same as VmSize in `/proc/[pid]/status`);
-* resident set size (same as VmRSS in `/proc/[pid]/status`);
-* share (shared pages, from shared mappings);
-* text (text code);
-* lib (library, unused in Linux 2.6);
-* data (data + stack);
-* dt (dirty pages, unused in Linux 2.6)
-
-The CUDA runtime API provides memory management functions such as `cudaMemGetInfo` which can be called to get the free and total amount of memory available on GPU devices in bytes.
-
-For more details, please have a look at the cudatoolkit documentation with the command `module help cudatoolkit`.
-
----
-
-# Compiling and running
 
 ## Useful commands of the module framework
 
@@ -527,6 +489,41 @@ for csh
 > The appropriate paths to the library will be added to the compiler wrappers \(`ftn` for Frotran codes, `cc` for C, `CC` for C++\). For example, if you are missing the netcdf library, then you should add the corresponding module by typing `module load netcdf` in your shell.
 
 ---
+## How to check the free memory on selected nodes
+
+### Q: A job crashed after running for several hours with the following error message:
+```
+OOM killer terminated this process.
+```
+Jobs of the same size used to run before without errors: could you please check this issue?
+
+The out of memory issue (OOM) might arise from a temporarily low free memory on a node. 
+You can check the free memory on the nodes that you allocate by inserting the following command in your batch script:
+```
+srun -n $SLURM_JOB_NUM_NODES --ntasks-per-node=1 free -m
+```
+The free memory per node is usually slightly less than the nominal value, since it is partly used by the filesystem. If the free memory on the nodes where you run is already close to the maximum value, then please try running with more nodes, using fewer tasks per node.
+
+---
+
+## How to check the memory usage of a code
+
+### I would like to check the memory footprint of my code, how can I do that?
+
+You can insert in your code the C or Fortran examples that you find in `/project/csstaff/examples/memory`: they read the file `/proc/self/statm` and print current information about memory usage, measured in page units (please type `man 5 proc` for more details):
+* size (total program size, same as VmSize in `/proc/[pid]/status`);
+* resident set size (same as VmRSS in `/proc/[pid]/status`);
+* share (shared pages, from shared mappings);
+* text (text code);
+* lib (library, unused in Linux 2.6);
+* data (data + stack);
+* dt (dirty pages, unused in Linux 2.6)
+
+The CUDA runtime API provides memory management functions such as `cudaMemGetInfo` which can be called to get the free and total amount of memory available on GPU devices in bytes.
+
+For more details, please have a look at the cudatoolkit documentation with the command `module help cudatoolkit`.
+
+---
 
 ## How to measure the performance of an application
 
@@ -542,13 +539,13 @@ Most performance tools can measure the floating-point rate of execution  of any 
 
 ---
 
-# Storage and Data Transfer
+# Data management
 
 ## What is the cleaning policy on `/scratch?`
 
 ### Q: I've found today that my files on `/scratch` have been deleted. Is it still possible to get back those files?
 
-Files older than a month are deleted by a cleaning script: please check the cleaning policy on the `/scratch` filesystem on the [Filesystems page](/storage/file_systems).
+The `/scratch` filesystem is cleaned by a script on a regular basis: please check the cleaning policy on the [Filesystems web page](/storage/file_systems).
 
 Unfortunately, once the files on `/scratch` have been deleted, there is no way to recover them. In fact, `/scratch` is meant to keep only the temporary files needed for a run.
 
