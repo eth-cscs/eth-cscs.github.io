@@ -10,7 +10,7 @@ system. Use `module avail` to get an overview.
 
 To use TensorFlow on Piz Daint you have to load the corresponding module:
 
-```
+```bash
 module load daint-gpu
 module load TensorFlow/1.0.0-CrayGNU-2016.11-cuda-8.0-Python-3.5.2
 ```
@@ -23,13 +23,13 @@ Note that there is a mor elaborate documentation on the
 ## Simple Import Test
 On the Daint login node, directly try to import the TensorFlow module:
 
-```
+```bash
 python -c 'import tensorflow as tf'
 ```
 
 The output should look like:
 
-```
+```bash
 I tensorflow/stream_executor/dso_loader.cc:111] successfully opened CUDA library libcublas.so.8.0 locally
 I tensorflow/stream_executor/dso_loader.cc:111] successfully opened CUDA library libcudnn.so.5 locally
 I tensorflow/stream_executor/dso_loader.cc:111] successfully opened CUDA library libcufft.so.8.0 locally
@@ -41,14 +41,14 @@ I tensorflow/stream_executor/dso_loader.cc:111] successfully opened CUDA library
 
 A more elaborate test is to actually train a model using the GPU:
 
-```
+```bash
 salloc -N1 -C gpu
 srun python -m 'tensorflow.models.image.mnist.convolutional'
 ```
 
 The output should look like:
 
-```
+```bash
 I tensorflow/stream_executor/dso_loader.cc:111] successfully opened CUDA library libcublas.so.8.0 locally
 I tensorflow/stream_executor/dso_loader.cc:111] successfully opened CUDA library libcudnn.so.5 locally
 I tensorflow/stream_executor/dso_loader.cc:111] successfully opened CUDA library libcufft.so.8.0 locally
@@ -75,7 +75,7 @@ running time is 10 minutes. For TensorFlow, it is usually a good idea to set
 CRAY_CUDA_MPS=1 to enable multiple tasks to access the GPU device at the same
 time.
 
-```
+```bash
 #!/bin/bash
 #SBATCH --time=00:10:00
 #SBATCH --nodes=1
@@ -96,7 +96,7 @@ srun python -m 'tensorflow.models.image.mnist.convolutional'
 
 Say, this sbatch file is named `test-tf.sbatch`, then it is submitted to Slurm by
 
-```
+```bash
 sbatch test-tf.sbatch
 ```
 
