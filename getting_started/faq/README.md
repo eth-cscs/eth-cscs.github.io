@@ -48,20 +48,14 @@ You can generate a public/private rsa key pair on the system of your choice:
 
 ## Direct access to CSCS machines from local clients
 
-In order to login on CSCS systems you need to access the front-end Ela first. If you want to copy your output files from a CSCS production system to your local client, outgoing connections will work if your client has a static IP address. Otherwise, you can configure your local client to forward the connection from Ela to the CSCS system that you wish to access, editing the file `.ssh/config` on your local client.
-
-For instance, you might write the following in `.ssh/config` for Piz Daint:
+Login on CSCS systems goes through the front-end Ela: if you want to copy your output files from a CSCS production system to your local client, outgoing connections will work if your client has a static IP address. Otherwise, you can configure your local client to forward the connection from Ela to the CSCS system that you wish to access, editing the file `.ssh/config` on your local client. E.g. for Piz Daint:
 ```
-host daint
-Hostname daint.cscs.ch
-User <username>
-ForwardAgent yes
-Port 22
-ProxyCommand ssh -q -Y <username>@ela.cscs.ch netcat %h %p -w 10
+Host daint.cscs.ch
+ProxyCommand ssh -q -Y <username>@ela.cscs.ch -W %h:%p
 ```
 Then you will be able to run the command `ssh` or `scp` on your local client outside CSCS:
 ```
-$ scp daint <path> <localpath>
+$ scp daint.cscs.ch <path> <localpath>
 ```
 Please note that you need to edit `username`, `<path>` and `<localpath>`, since they are user specific.
 
