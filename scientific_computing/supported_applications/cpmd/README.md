@@ -81,5 +81,4 @@ srun -n $SLURM_NTASKS --ntasks-per-node=$SLURM_NTASKS_PER_NODE -c $SLURM_CPUS_PE
 
 [CPMD Homepage](www.cpmd.org)
 
-
 [CPMD Tutorial](www.cpmd.org/cpmd-tutorial)
