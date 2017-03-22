@@ -12,7 +12,7 @@ To use TensorFlow on Piz Daint you have to load the corresponding module:
 
 ```
 module load daint-gpu
-module load TensorFlow/0.11.0-CrayGNU-2016.11-Python-3.5.2
+module load TensorFlow/1.0.0-CrayGNU-2016.11-cuda-8.0-Python-3.5.2
 ```
 
 Note that there is a mor elaborate documentation on the
@@ -88,9 +88,8 @@ time.
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 export CRAY_CUDA_MPS=1
 
-module use /apps/daint/UES/6.0.UP02/sandbox-ds/easybuild/haswell/modules/all/
 module load daint-gpu
-module load TensorFlow/0.11.0-CrayGNU-2016.11-Python-3.5.2
+module load TensorFlow/1.0.0-CrayGNU-2016.11-cuda-8.0-Python-3.5.2
 
 srun python -m 'tensorflow.models.image.mnist.convolutional'
 ```
