@@ -20,19 +20,15 @@ We will allow the user to charge your allocation as a secondary project, when th
 @ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED! @
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ```
-Please proceed as suggested by the WARNING message, deleting all the entries wth the name of the system from your `.ssh/known_hosts` file. The same procedure applies in case of the error message:
-`@ WARNING: POSSIBLE DNS SPOOFING DETECTED! @`. 
-
-You would do the following for Ela:
+Please proceed as suggested by the WARNING message, deleting all the entries with the hostname from the file `.ssh/known_hosts` (you can also delete the file `.ssh/known_hosts` as a whole, if you wish). The same procedure applies in case of the warning `POSSIBLE DNS SPOOFING DETECTED`. E.g. for Ela:
 ```
 sed -i '/^ela/d' ~/.ssh/known_hosts
 ```
-This command will delete all lines beginning with "ela" from the file `.ssh/known_hosts`, then you should be prompted only once a message like the following:
+This command removes all lines beginning with "ela" from `.ssh/known_hosts`. You will then need to type `yes` when prompted:
 ```
 The authenticity of host 'ela.cscs.ch' can't be established.
 [...] Are you sure you want to continue connecting (yes/no)?
 ```
-Type `yes`. In case you are prompted similar messages again, delete manually all lines in the `.ssh/known_hosts` file or even the file itself and try again.
 
 ---
 
