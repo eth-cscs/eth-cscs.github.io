@@ -48,10 +48,9 @@ void set_gpu(int dev){
 }
 ```
 
-Compile the source code as follows: **module load daint-gpu; module load cudatoolkit; nvcc -c mpicuda.cu; cc -o mpicuda.x mpicuda_main.c mpicuda.o** .
-
+Compile the source code as follows:
 ```
-module load daint-gpu  # on daint 
+module load daint-gpu
 module load cudatoolkit
 nvcc -c mpicuda.cu
 cc -o mpicuda.x mpicuda_main.c mpicuda.o
@@ -59,8 +58,7 @@ cc -o mpicuda.x mpicuda_main.c mpicuda.o
 
 ## Non-Cray systems
 
-Given below you have an example highlighting how to compile a simple MPI/OpenMP program on non-Cray systems.
-			
+Given below you have an example highlighting how to compile a simple MPI/OpenMP program on non-Cray systems.			
 ```
 #include <stdio.h>
 #include <mpi.h>
@@ -86,4 +84,6 @@ int main(int argc, char *argv[]) {
 }
 ```
 
-The MPI library on non-Cray systems is MVAPICH2, loaded by your Programming Environment. First, load the desired programming environment: **module load PrgEnv-gnu** (or -intel, for example); **mpicc hello_world_mpi.c -o hello_world_mpi.x**
+The MPI library on non-Cray systems is MVAPICH2, loaded by your Programming Environment. First, load the desired programming environment, e.g. for the GNU compiler: 
+`module load PrgEnv-gnu`
+`mpicc hello_world_mpi.c -o hello_world_mpi.x`
