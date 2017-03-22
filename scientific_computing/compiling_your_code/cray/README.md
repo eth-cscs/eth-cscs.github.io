@@ -20,7 +20,7 @@ The man pages (`man crayftn`; `man craycc`) provide information on all the compi
 
 The Cray compiler is a highly optimizing compiler, and the default optimization level is equivalent to `-O3` or `-fast` in other compiler suites. The default optimization level is the most thoroughly tested level and is recommended by Cray.
 
-Moreover, optimizations targeting the specific compute node architecture chosen by loading the `daint-gpu` or `daint-mc` module as discussed in [Compiling Your Code](http://eth-cscs.github.io/compiling_and_optimizing/compiling_your_code/#) section (Specific note for the hybrid Piz Daint XC50/XC40) are turned on by default.
+Moreover, optimizations targeting the specific compute node architecture chosen by loading the `daint-gpu` or `daint-mc` module as discussed in [Compiling Your Code](../../compiling_your_code) section (Specific note for the hybrid Piz Daint XC50/XC40) are turned on by default.
 
 Inlining is enabled by default but can be tuned using the `-Oipan` (Fortran) or `-hipan`(C/C++) flags, where `n` is `0`, `1`, `2`, `3` (the default), or `4`. See the man pages (`man crayftn`; `man craycc`) for more information on inlining.
 
