@@ -22,7 +22,7 @@ More aggressive optimization can be obtained by adding `-O3`, ie:
 
 At the `-O3` level, all level `2` optimizations are performed, and in addition, more aggressive code hoisting and scalar replacement optimizations are performed. These optimizations may speed up your code but might also slow it down, so it is always recommended to benchmark the performance of your code with a variety of options enabled/disabled. It may be worth experimenting with the `-Munroll`, `-Minline`, `-Mmovnt` and `-Mconcur` options in particular. Use `-help` to list the compiler options available or to see details on how to use a given option, e.g. `pgf95 -Munroll -help`.
 
-On the Cray systems, optimizations targeting the specific compute node architecture chosen by loading the `daint-gpu` or `daint-mc` module as discussed in [Compiling Your Code](http://eth-cscs.github.io/compiling_and_optimizing/compiling_your_code/#) section (Specific note for the hybrid Piz Daint XC50/XC40) are turned on by default.
+On the Cray systems, optimizations targeting the specific compute node architecture chosen by loading the `daint-gpu` or `daint-mc` module - as discussed in the [Specific note for the hybrid Piz Daint XC50/XC40](../../compiling_your_code/#specific-note-for-the-hybrid-piz-daint-xc50-xc40) - are turned on by default.
 
 ## Interprocedural analysis
 
