@@ -7,3 +7,4 @@ Note that dynamical linking is the default when the cudatoolkit module is loaded
 
 For example, to compile a Fortran code on the system: `ftn [options] code.f90 -o code`. For C code: `cc [options] code.c -o code`, and for C++ code: `CC [options] code.cpp -o code`. Note that MPI, BLAS and LAPACK are all found automatically, if needed.
 
+Depending on the target platform the GNU, Intel, Cray and PGI compilers might be available. You can find more details on each compiler in the corresponding sections.
