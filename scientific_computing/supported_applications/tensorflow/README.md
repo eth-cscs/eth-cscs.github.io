@@ -2,7 +2,7 @@
 
 This document gives a quick introduction how to get a first test program in
 TensorFlow running. All instructions have been tested on Piz Daint only. As an
-example we use TensorFlow 0.11.0 but other versions might be available on the
+example we use TensorFlow 1.0.0 but other versions might be available on the
 system. Use `module avail` to get an overview.
 
 
@@ -15,8 +15,8 @@ module load daint-gpu
 module load TensorFlow/1.0.0-CrayGNU-2016.11-cuda-8.0-Python-3.5.2
 ```
 
-Note that there is a mor elaborate documentation on the
-[module system](https://eth-cscs.github.io/production/getting_started/faq/#software-and-modules).
+Note that there is a more elaborate documentation on the
+[module system](/getting_started/faq/#software-and-modules).
 
 # Testing TensorFlow
 
@@ -42,8 +42,11 @@ I tensorflow/stream_executor/dso_loader.cc:111] successfully opened CUDA library
 A more elaborate test is to actually train a model using the GPU:
 
 ```bash
+cd $SCRATCH
+git clone git@github.com:tensorflow/models.git
+cp -r /apps/daint/UES/mnist/data/ .
 salloc -N1 -C gpu
-srun python -m 'tensorflow.models.image.mnist.convolutional'
+srun python models/tutorials/image/mnist/convolutional.py
 ```
 
 The output should look like:
@@ -71,9 +74,7 @@ Extracting data/train-images-idx3-ubyte.gz
 The following script exemplifies how to submit a TensorFlow job to the
 queing system. The script asks for 1 nodes, making 12 CPUs available to the 1
 Python task. Further, the job is constraint to the GPU nodes of Piz Daint and its
-running time is 10 minutes. For TensorFlow, it is usually a good idea to set
-CRAY_CUDA_MPS=1 to enable multiple tasks to access the GPU device at the same
-time.
+running time is 10 minutes. 
 
 ```bash
 #!/bin/bash
@@ -86,12 +87,11 @@ time.
 #SBATCH --error=test-tf-%j.log
 
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
-export CRAY_CUDA_MPS=1
 
 module load daint-gpu
 module load TensorFlow/1.0.0-CrayGNU-2016.11-cuda-8.0-Python-3.5.2
 
-srun python -m 'tensorflow.models.image.mnist.convolutional'
+srun python $SCRATCH/models/tutorials/image/mnist/convolutional.py
 ```
 
 Say, this sbatch file is named `test-tf.sbatch`, then it is submitted to Slurm by
