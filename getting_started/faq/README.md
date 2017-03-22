@@ -59,6 +59,8 @@ $ scp daint.cscs.ch <path> <localpath>
 ```
 Please note that you need to edit `username`, `<path>` and `<localpath>`, since they are user specific.
 
+---
+
 ## How can I check the usage of my budget?
 
 You can check the usage of your budget on the systems at CSCS with two scripts:
