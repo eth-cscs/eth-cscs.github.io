@@ -175,7 +175,7 @@ function __cscs_email_protector() {
 
 function __cscs_mouseover_link() {
 
-  $('#cscs-markdown-content').children("h1, h2, h3, h4, h5, h6").each(function(index, element) {
+  $('#cscs-markdown-content').children("h1, h2").each(function(index, element) {
     $(element).hover(
         function() {
             $(this).wrap(function() {
