@@ -6,7 +6,7 @@ example we use TensorFlow 0.11.0 but other versions might be available on the
 system. Use `module avail` to get an overview.
 
 
-## Loading the Module
+# Loading the Module
 
 To use TensorFlow on Piz Daint you have to load the corresponding module:
 
@@ -18,9 +18,9 @@ module load TensorFlow/1.0.0-CrayGNU-2016.11-cuda-8.0-Python-3.5.2
 Note that there is a mor elaborate documentation on the
 [module system](https://eth-cscs.github.io/production/getting_started/faq/#software-and-modules).
 
-## Testing TensorFlow
+# Testing TensorFlow
 
-### Simple Import Test
+## Simple Import Test
 On the Daint login node, directly try to import the TensorFlow module:
 
 ```
@@ -37,7 +37,7 @@ I tensorflow/stream_executor/dso_loader.cc:111] successfully opened CUDA library
 I tensorflow/stream_executor/dso_loader.cc:111] successfully opened CUDA library libc
 ```
 
-### Testing MNIST demo model
+## Testing MNIST demo model
 
 A more elaborate test is to actually train a model using the GPU:
 
@@ -66,7 +66,7 @@ I tensorflow/core/common_runtime/gpu/gpu_device.cc:1041] Creating TensorFlow dev
 Extracting data/train-images-idx3-ubyte.gz
 ```
 
-## Submiting a Job
+# Submiting a Job
 
 The following script exemplifies how to submit a TensorFlow job to the
 queing system. The script asks for 1 nodes, making 12 CPUs available to the 1
