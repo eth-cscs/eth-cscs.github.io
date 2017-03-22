@@ -338,7 +338,7 @@ Not in general: it may happen that the architecture of the processors are not co
 In order to use the available libraries dynamically, you have to add the library directory to the path list of the environment variable `$LD_LIBRARY_PATH` before the execution of your job starts. E.g. for `/user/lib64` you would export it as below:
 ```
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib64 (bash)
-set LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib64 (csh)
+set LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:/usr/lib64    (csh)
 ```
 The Cray compiler wrappers link statically by default, unless you use the option `-dynamic` or set `export CRAY_LINK_TYPE=dynamic`. If you cannot use static libraries since only the corresponding dynamic libraries are available, then you should always load the system module containing the missing library. The appropriate paths to the library will be added to the compiler wrappers \(`ftn` for Frotran codes, `cc` for C, `CC` for C++\). For example, if you are missing the netcdf library, then you should add the corresponding module by typing `module load netcdf` in your shell.
 
