@@ -8,27 +8,22 @@ The forms to be filled in to get and account as Principal Investigator (PI) or n
 
 ---
 
-## Can you allow an existing user to charge computing time on my project?
+## Can you add an existing user to my project?
 
 We will allow the user to charge your allocation as a secondary project, when the request will be approved by the principal investigator of the project.
 
 ---
 
-## I'm not able to login on the systems due to `Host key verification failed`
+## Unable to login due to `Host key verification failed`
 ```
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED! @
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ```
-
 Please proceed as suggested by the WARNING message, deleting all the entries wth the name of the system from your `.ssh/known_hosts` file. The same procedure applies in case of the error message:
-```
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@ WARNING: POSSIBLE DNS SPOOFING DETECTED! @
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-```
+`@ WARNING: POSSIBLE DNS SPOOFING DETECTED! @`. 
 
-E.g. for Ela:
+You would do the following for Ela:
 ```
 sed -i '/^ela/d' ~/.ssh/known_hosts
 ```
@@ -41,7 +36,7 @@ Type `yes`. In case you are prompted similar messages again, delete manually all
 
 ---
 
-## How can I set up a passwordless access to CSCS systems from Ela?
+## Setting a passwordless access from Ela to CSCS systems
 
 You can generate a public/private rsa key pair on the system of your choice:
 
@@ -110,7 +105,7 @@ This will tell SLURM to charge the compute budget of the selected group for the 
 
 ---
 
-## I would like to increase the priority of my runs, as I am always waiting while other users run
+## How do I increase the priority of my runs?
 
 You have likely already reached almost 100% of your budget, whereas the other projects that you mention used less: manually adjusting the priorities is not possible, since it would prevent a fair share of the computing resources among our users.
 
@@ -141,19 +136,19 @@ Please have a look at the pages on [how to run a batch job](../running_jobs). If
 
 ---
 
-## I run successfully my executable but it is not listed in the queue
+## I run an executable but it is not listed in the queue
 
 You should not run on the login nodes of the system, as they are a shared resource. In order to submit batch jobs, you need to create a SLURM script that contains the correct header information so that the scheduler can allocate resources and place your job in the queue. Please have a look at the page on [how to run a batch job](../running_jobs).
 
 ---
 
-## How can I optimize the number of tasks per node to get more memory for my job?
+## How can I get more memory for my job?
 
 Please remember that you are charged resources per node: of course when memory becomes an issue, then you need to reduce the number of tasks per node. However you will gain not only the extra memory but also more memory bandwidth, so the code should run a bit faster. If your application makes use of OpenMP threads, you might try to use less tasks per node and set `--cpus-per-task` within your batch script, that distribute them evenly across the node. In some cases you might gain a speed up, but this is strongly application dependent.
 
 ---
 
-## How to get information on the SLURM configuration and the available nodes
+## How to get the SLURM and nodes configuration 
 
 The SLURM commands to get the SLURM and the nodes configuration are the following:
 ```
@@ -173,8 +168,7 @@ To release the job from the hold state, issue `scontrol release JOB_ID`.
 
 ## What is the meaning of SLURM job state codes?
 
-Jobs typically pass through several states in the course of their execution, as displayed by the `squeue` command. 
-(e.g.: PENDING, RUNNING, SUSPENDED, COMPLETING and COMPLETED). An explanation of each state follows:
+Several job states are displayed by the `squeue` command:
 * CA (CANCELLED): the job was explicitly cancelled by the user or system administrator. The job may or may not have been initiated.
 * CD (COMPLETED): the job has terminated all processes on all nodes.
 * CF (CONFIGURING): the job has been allocated resources, but are waiting for them to become ready for use (e.g.booting).
@@ -201,7 +195,7 @@ You can see your jobs in the queue issuing the command `squeue -a -l -u $USER`. 
 
 ---
 
-## How can I display the accounting information of my past SLURM jobs?
+## Displaying the accounting information of my past SLURM jobs
 
 You can get this information using the command `sacct -l -u $USER`. Please check the man pages `man sacct` for more options.
 
@@ -225,7 +219,7 @@ If the post-processing job depends on a production job running on Piz Daint, ple
 
 ---
 
-## Where can I find the documentation of the systems available at CSCS?
+## Where can I get information on CSCS computing systems?
 
 You can find the documentation on the systems available at CSCS on the [CSCS web site](http://www.cscs.ch) and on the [CSCS User Portal](/). 
 
@@ -239,7 +233,7 @@ You can have a list of the most useful module commands printed on the screen typ
 
 ---
 
-## How can I check the commands and flags invoked by the compiler wrapper?
+## How can I check the command invoked by the compiler wrapper?
 
 After you load all modules that you need, you can issue one of the following commands to have a list of the flags invoked by the appropriate compiler wrapper: `cc -###` (or `ftn` or `CC` in place of `cc`) or `cc -v` (or `ftn` or `CC` in place of `cc`). 
 
@@ -307,7 +301,7 @@ Not in general: it may happen that the architecture of the processors are not co
 
 ---
 
-## I have problems running my executable dynamically linked to shared libraries
+## Troubles running a dynamically linked executable
 
 In order to use the available libraries dynamically, you have to add the library directory to the path list of the environment variable `$LD_LIBRARY_PATH` before the execution of your job starts. E.g. for `/user/lib64` you would export it as below:
 ```
