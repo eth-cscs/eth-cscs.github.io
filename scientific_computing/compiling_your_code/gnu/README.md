@@ -38,7 +38,7 @@ Note that loop unrolling is not turned on by default at `-O3`, hence the need to
 * `-finline-functions` to integrate simple functions into their callers (default at `-O3`)
 * `-finline-limit=n` to limit the size of functions inlined
 
-On the Cray systems, optimizations targeting the specific compute node architecture chosen by loading the `daint-gpu` or `daint-mc` module as discussed in [Compiling Your Code](http://eth-cscs.github.io/compiling_and_optimizing/compiling_your_code/#) section (Specific note for the hybrid Piz Daint XC50/XC40) are turned on by default. On non-Cray systems we recommend adding the `-march=native` flag.
+On the Cray systems, optimizations targeting the specific compute node architecture chosen by loading the `daint-gpu` or `daint-mc` module as discussed in [Compiling Your Code](../../compiling_your_code) section (Specific note for the hybrid Piz Daint XC50/XC40) are turned on by default. On non-Cray systems we recommend adding the `-march=native` flag.
 
 ## Floating point accuracy
 
@@ -60,4 +60,4 @@ Debugging information is generated with the `-g` flag.
 
 See the man pages for detailed information on the compilers and compiler flags (`man gcc`, `man g++` and `man gfortran`).
 
-Refer to the [online documentation](http://gcc.gnu.org/onlinedocs/) from the GNU Project.
+Refer to the [online documentation](http://gcc.gnu.org/onlinedocs) from the GNU Project.
