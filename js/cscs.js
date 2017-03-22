@@ -113,10 +113,10 @@ function cscs_setup_index_page_content(newsfile)
   __cscs_change_table_layout();
 }
 
-// function cscs_get_perftools_module(link, header)
+// function cscs_get_modulelist(link, regex, shash_at = 0, elementid = "cscs-markdown-content")
 // {
 //   cscs_read_file_contents(link, function __populate_site_content(argument) {
-//     var pattern = /perftools-cscs\S*/gmi;
+//     var pattern = regex;
 //     var parsed_module = "";
 
 //     var result = pattern.exec(argument);
@@ -127,7 +127,7 @@ function cscs_setup_index_page_content(newsfile)
 //       holder = "";
 //       cat = '-';
 //       for (var i = 0; i < splitter.length; i++) {
-//         if(i == 1) {
+//         if(i == shash_at) {
 //           cat = '/';
 //         } else if(i == splitter.length -1){
 //           cat = '';
@@ -139,7 +139,7 @@ function cscs_setup_index_page_content(newsfile)
 //       parsed_module += holder + '\n';
 //       result = pattern.exec(argument);
 //     }
-//     document.getElementById("cscs-markdown-content").innerHTML += header + '<pre>' + parsed_module + '</pre>';
+//     document.getElementById(elementid).innerHTML += parsed_module;
 //   });
 // }
 
@@ -218,6 +218,17 @@ function __cscs_create_toc() {
     $body.scrollspy('refresh');
   });
 
+  var tocsize = 0;
+  $('#toc').children("ul").each(function(index, element) {
+    var size = $(this).children("li").length;
+    if(size > tocsize){
+      tocsize = size;
+    }
+  });
+
+  if(tocsize == 1) {
+    $("head").append("<style> nav[data-toggle='toc'] .nav .nav { display: block; } </style>");
+  }
 }
 
 // This function destroys the remark presentation and restores the CSCS website

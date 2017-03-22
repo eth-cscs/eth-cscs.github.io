@@ -28,7 +28,7 @@ Additional information is available on the [system webpage](http://www.cscs.ch/c
 [Piz Daint] [Cray Programming Environment 17.02](http://docs.cray.com/books/S-9408-1702/) is installed as non-default. In order to use it, you need to type:
 ```
 module load cdt/17.02
-``` 
+```
 
 # Planned Outages
 
