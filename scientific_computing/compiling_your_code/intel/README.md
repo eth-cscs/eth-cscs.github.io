@@ -18,7 +18,7 @@ We suggest trying `-O3 -unroll-aggressive -opt-prefetch` or fine tuning these pa
 
 There is a useful flag `-opt-report[n]` (`n=0-3`, where `3` refers to most verbose) which will generate an optimization report, which is written to standard error.
 
-On the Cray systems, optimizations targeting the specific compute node architecture chosen by loading the `daint-gpu` or `daint-mc` module as discussed in [Compiling Your Code](../../compiling_your_code) section (Specific note for the hybrid Piz Daint XC50/XC40) are turned on by default.
+On the Cray systems, optimizations targeting the specific compute node architecture chosen by loading the `daint-gpu` or `daint-mc` module - as discussed in the [Specific note for the hybrid Piz Daint XC50/XC40](../../compiling_your_code/#specific-note-for-the-hybrid-piz-daint-xc50-xc40) - are turned on by default.
 
 ## OpenMP 
 
