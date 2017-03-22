@@ -5,7 +5,7 @@ running. In the following instructions we use Theano 0.8.2 but other versions
 might be available on the system. Use `module avail` to get an overview. This
 documentation has been tested on Piz Daint only.
 
-## Loading the Module
+# Loading the Module
 
 To use Theano on Piz Daint you have to load the corresponding module:
 
@@ -14,9 +14,9 @@ module load daint-gpu
 module load Theano/0.8.2-CrayGNU-2016.11-Python-3.5.2
 ```
 
-## Testing Theano
+# Testing Theano
 
-### Simple Import Test
+## Simple Import Test
 
 On the login node load the Theano module as described above. Trying to import
 Theano on a login node results usually in an MPI error. Thus, even simple tests
@@ -43,7 +43,7 @@ For a rough sanity check whether Theano is working it is suffiant to verify that
 the GPU is correctly recognized (first line). The full test is usually not
 needed.
 
-### Testing LeNet demo model
+## Testing LeNet demo model
 
 A more elaborate test is to actually train a model using the GPU. We can, e.g.,
 use the LeNet demo model from deeplearining.net:
@@ -80,7 +80,7 @@ Best validation score of 0.920000 % obtained at iteration 10900, with test perfo
 
 The run time on Piz Daint should be less than 5 minutes.
 
-## Submitting a Job
+# Submitting a Job
 
 The following script exemplifies how to submit a Theano job to the queing
 system. The script asks for 1 nodes, making 12 CPUs available to the 1 Python
