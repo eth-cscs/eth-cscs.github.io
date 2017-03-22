@@ -12,8 +12,7 @@ To use TensorFlow on Piz Daint you have to load the corresponding module:
 
 ```
 module load daint-gpu
-module use /apps/daint/UES/6.0.UP02/sandbox-ds/easybuild/haswell/modules/all/
-module load TensorFlow/0.11.0-CrayGNU-2016.11-Python-3.5.2
+module load TensorFlow/1.0.0-CrayGNU-2016.11-cuda-8.0-Python-3.5.2
 ```
 
 Note that there is a mor elaborate documentation on the
@@ -89,9 +88,8 @@ time.
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 export CRAY_CUDA_MPS=1
 
-module use /apps/daint/UES/6.0.UP02/sandbox-ds/easybuild/haswell/modules/all/
 module load daint-gpu
-module load TensorFlow/0.11.0-CrayGNU-2016.11-Python-3.5.2
+module load TensorFlow/1.0.0-CrayGNU-2016.11-cuda-8.0-Python-3.5.2
 
 srun python -m 'tensorflow.models.image.mnist.convolutional'
 ```
@@ -102,16 +100,5 @@ Say, this sbatch file is named `test-tf.sbatch`, then it is submitted to Slurm b
 sbatch test-tf.sbatch
 ```
 
-The status of Slurm's queue can be viewed with
-
-```
-squeue -u $USER
-```
-
-and a job can be cancelled running
-```
-scancel <JOBID>
-```
-
 A more detailed documentation on how to submit a job can be found
-[here](http://user.cscs.ch/getting_started/running_jobs/piz_daint/index.html).
+[here](/getting_started/running_jobs).
