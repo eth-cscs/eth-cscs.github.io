@@ -1,5 +1,6 @@
 # CPMD
-## Information on CPMD 
+
+# Information on CPMD 
 
 The CPMD code is a plane wave/pseudopotential implementation of Density Functional Theory, particularly designed for ab-initio molecular dynamics. Its first version  was developed by Jurg Hutter at IBM Zurich Research Laboratory starting from the original Car-Parrinello codes. During the years many people from diverse organizations contributed to the development of the code and of its pseudopotential library:
 
@@ -8,7 +9,8 @@ M. Parrinello, J. Hutter, D. Marx, P. Focher, M. Tuckerman, W. Andreoni, A. Curi
 The current version, 4.1, is copyrighted jointly by IBM Corp and by Max Planck Institute, Stuttgart, and is distributed free of charge to non-profit organizations ( see download ). Profit organizations interested at the code should contact the CPMD consortium www.cpmd.org .
 
 CPMD runs on many different computer architectures and it is well parallelized (MPI and Mixed MPI/SMP).
-## CPMD capabilities 
+
+# CPMD capabilities 
 
 -    Works with norm conserving or ultrasoft pseudopotentials
 -    LDA, LSD and the most popular gradient correction schemes; free energy density functional implementation
@@ -24,7 +26,7 @@ CPMD runs on many different computer architectures and it is well parallelized (
 -    Time-dependent DFT (excitations, molecular dynamics in excited states)
 -    Coarse-grained non-Markovian metadynamics
 
-## Licensing Terms and Conditions
+# Licensing Terms and Conditions
 
 **Users are kindly asked to obtain their own license:** academic users should register on the [CPMD webpage](www.cpmd.org/download) and provide the registration confirmation. Only users belonging to group cpmd with a valid CPMD license are allowed to access CPMD executables and library files.
 
@@ -75,7 +77,7 @@ ulimit -s unlimited
 srun -n $SLURM_NTASKS --ntasks-per-node=$SLURM_NTASKS_PER_NODE -c $SLURM_CPUS_PER_TASK cpmd.x input.in
 ```
 
-## Further Documentation
+# Further Documentation
 
 [CPMD Homepage](www.cpmd.org)
 
