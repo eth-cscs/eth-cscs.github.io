@@ -25,7 +25,9 @@ Add correct host key in .ssh/known_hosts to get rid of this message.
 Host key verification failed.
 ```
 
-Please proceed as suggested by the WARNING message, deleting all the entries wth the name of the system from your `.ssh/known_hosts` file. The same procedure applies in case of `@ WARNING: POSSIBLE DNS SPOOFING DETECTED! @`.
+Please proceed as suggested by the WARNING message, deleting all the entries wth the name of the system from your `.ssh/known_hosts` file. The same procedure applies in case of the error message:
+ 
+ `@ WARNING: POSSIBLE DNS SPOOFING DETECTED! @`
 
 E.g. for Ela:
 
