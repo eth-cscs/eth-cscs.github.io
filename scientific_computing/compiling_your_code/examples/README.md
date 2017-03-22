@@ -87,5 +87,3 @@ int main(int argc, char *argv[]) {
 ```
 
 The MPI library on non-Cray systems is MVAPICH2, loaded by your Programming Environment. First, load the desired programming environment: **module load PrgEnv-gnu** (or -intel, for example); **mpicc hello_world_mpi.c -o hello_world_mpi.x**
-
-If you have any questions, please contact us at help(at)cscs.ch
