@@ -88,6 +88,7 @@ function cscs_setup_markdown_page_content(markdownFile)
   __cscs_mouseover_link();
   __cscs_create_toc();
   __cscs_change_table_layout();
+  __cscs_highlight_code();
 }
 
 function cscs_setup_index_page_content(newsfile)
@@ -111,6 +112,7 @@ function cscs_setup_index_page_content(newsfile)
   __cscs_mouseover_link();
   __cscs_create_toc();
   __cscs_change_table_layout();
+  __cscs_highlight_code();
 }
 
 // function cscs_get_modulelist(link, regex, shash_at = 0, elementid = "cscs-markdown-content")
@@ -248,3 +250,17 @@ function __cscs_change_table_layout() {
     });
   });
 }
+
+function __cscs_highlight_code() {
+  if(hljs != null) {
+    $("head").append('<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">');
+    $("head").append("<style> .hljs { background: none; } </style>");
+    $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+    });
+  }
+}
+
+
+
+

@@ -8,7 +8,7 @@ Users with molecular science codes such as CP2K, Quantum Espresso, LAMMPS, GROMA
 
 You can see a list of the available versions of the program installed on the machine after loading the gpu module, by typing:
 
-```
+```bash
 module load daint-gpu
 module avail VMD
 ```
@@ -19,18 +19,18 @@ VMD is currently available with reduced functionality, to run in batch mode, wit
 
 The NVIDIA CUDA and OptiX versions of VMD are installed on Daint. The new syntax in your Tcl script for Optix-based rendering would be:
 
-```
+```bash
 render TachyonLOptiXInternal my_image.ppm
 ```
 The following job script asks for 1 node, using 1 task per node. VMD will automatically use all threads available on the node and execute the contents of your TCL script in file "script.tcl".
-		
-```
-!/bin/bash -l
+
+```bash
+#!/bin/bash
 #
 # VMD on Piz Daint
-# 
+#
 # 1 nodes, 1 task per node, all threads are detected by VMD
-# 
+#
 #SBATCH --job-name="vmd"
 #SBATCH --time=01:00:00
 #SBATCH --nodes=1
@@ -49,4 +49,4 @@ srun -n $SLURM_NTASKS -N $SLURM_NNODEs vmd -size 1024 800 -dispdev none -eofexit
 [VMD Homepage](http://www.ks.uiuc.edu/Research/vmd/)
 
 [VMD User's Guide](http://www.ks.uiuc.edu/Research/vmd/current/docs.html)
-			
+

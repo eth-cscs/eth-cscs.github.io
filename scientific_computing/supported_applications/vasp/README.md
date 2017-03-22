@@ -12,30 +12,30 @@ Users are kindly asked to obtain their own license, CSCS cannot provide free acc
 
 # Setup
 
-You can see a list of the available versions of the program installed on the machine after loading the gpu or multicore modulefile. In the examples below we use the daint-gpu modulefile:		
-```
+You can see a list of the available versions of the program installed on the machine after loading the gpu or multicore modulefile. In the examples below we use the daint-gpu modulefile:
+```bash
 module load daint-gpu
 module avail VASP
 ```
 
 The following module command will load the environment of the default version of the program:
-```
+```bash
 module load VASP
 ```
 
 You can either type this command every time you intend to use the program within a new session, or you can automatically load it by including it in your shell configuration file.
 
-The following module commands will print the environment variables set by loading the program and a help message:		
-```
+The following module commands will print the environment variables set by loading the program and a help message:
+```bash
 module show VASP
 module help VASP
 ```
-		
+
 # How to Run on Piz Daint
 
 The following job script asks for 64 nodes, using 1 MPI task per node. If you use more MPI tasks per node you will have less memory per MPI task. If you use multiple MPI tasks per node, you need to set CRAY_CUDA_MPS=1 to enable the tasks to access the GPU device on each node at the same time.
-		
-```
+
+```bash
 #!/bin/bash -l
 #
 # VASP on Piz Daint: 64 nodes, 1 MPI task per node, 1 OpenMP thread per task
@@ -52,7 +52,7 @@ module load daint-gpu
 module load VASP
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 ulimit -s unlimited
-srun -n $SLURM_NTASKS --ntasks-per-node=$SLURM_NTASKS_PER_NODE -c $SLURM_CPUS_PER_TASK vasp_std 
+srun -n $SLURM_NTASKS --ntasks-per-node=$SLURM_NTASKS_PER_NODE -c $SLURM_CPUS_PER_TASK vasp_std
 ```
 
 Further Documentation

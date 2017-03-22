@@ -10,7 +10,7 @@ ParaView is distributed [free of charge](http://www.paraview.org/download) with 
 
 ParaView uses GPUs for accelerated rendering. You will need to load the daint-gpu module and the ParaView module:
 
-```
+```bash
 module load daint-gpu
 module load ParaView
 ```
@@ -20,14 +20,14 @@ module load ParaView
 ## Batch-mode with Python scripts
 
 The following job script asks for 8 nodes, using 8 MPI task per node. ParaView has a special executable called ``pvbatch`` to execute parallel Python scripts. Users will provide their Python code (e.g. file script.py) as an input to pvbatch.
-		
-```
+
+```bash
 !/bin/bash -l
 #
 # ParaView on Piz Daint
-# 
+#
 # 8 nodes, 8 MPI task per node
-# 
+#
 #SBATCH --job-name="ParaView"
 #SBATCH --time=01:00:00
 #SBATCH --nodes=8
@@ -58,5 +58,5 @@ Host daint*.cscs.ch
 ```
 
 Windows users need a putty profile which will be sent to you upon request. Please contact vis-rt@cscs.ch. Once setup, you may start paraview in interactive mode and create a connection. Use the menu File->Connect and double-click on the option “Reverse-Connect-Daint”.
-A popup menu will help you select the number of paraview servers called `pvserver`, the number of tasks per node, and other attributes of your SLURM job. You will also need your Unix Id (type the command "id" on daint, and read the "uid" number. Insert that number instead of the 11111 used as default in the pvserver port entry. The SLURM job file will be created, and submitted, enabling a parallel ParaView server to automatically connect itself to your client application. 
+A popup menu will help you select the number of paraview servers called `pvserver`, the number of tasks per node, and other attributes of your SLURM job. You will also need your Unix Id (type the command "id" on daint, and read the "uid" number. Insert that number instead of the 11111 used as default in the pvserver port entry. The SLURM job file will be created, and submitted, enabling a parallel ParaView server to automatically connect itself to your client application.
 <br />

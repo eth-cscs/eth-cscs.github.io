@@ -9,7 +9,7 @@ documentation has been tested on Piz Daint only.
 
 To use Theano on Piz Daint you have to load the corresponding module:
 
-```
+```bash
 module load daint-gpu
 module load Theano/0.8.2-CrayGNU-2016.11-Python-3.5.2
 ```
@@ -22,7 +22,7 @@ On the login node load the Theano module as described above. Trying to import
 Theano on a login node results usually in an MPI error. Thus, even simple tests
 have to be run on a compute node:
 
-```
+```bash
 export CRAY_CUDA_MPS=1
 salloc -N1 -C gpu
 srun python -c 'import theano; theano.test()'
@@ -30,7 +30,7 @@ srun python -c 'import theano; theano.test()'
 
 The output should look like:
 
-```
+```bash
 Using gpu device 0: Tesla P100-PCIE-16GB (CNMeM is disabled, cuDNN 5105)
 /apps/daint/UES/6.0.UP02/sandbox-ds/easybuild/haswell/software/Theano/0.8.2-CrayGNU-2016.11-Python-3.5.2/lib/python3.5/site-packages/Theano-0.8.2-py3.5.egg/theano/sandbox/cuda/__init__.py:600: UserWarning: Your cuDNN version is more recent than the one Theano officially supports. If you see any problems, try updating Theano or downgrading cuDNN to version 5.
   warnings.warn(warn)
@@ -48,7 +48,7 @@ needed.
 A more elaborate test is to actually train a model using the GPU. We can, e.g.,
 use the LeNet demo model from deeplearining.net:
 
-```
+```bash
 wget http://deeplearning.net/tutorial/code/convolutional_mlp.py
 salloc -N1 -C gpu
 export CRAY_CUDA_MPS=1
@@ -58,7 +58,7 @@ time srun python convolutional_mlp.py
 
 The output should be something like this:
 
-```
+```bash
 ... loading data
 ... building the model
 ... training
@@ -89,7 +89,7 @@ running time is 10 minutes. For Theano, it is usually a good idea to set
 CRAY_CUDA_MPS=1 to enable multiple tasks to access the GPU device at the same
 time.
 
-```
+```bash
 #!/bin/bash
 #SBATCH --time=00:10:00
 #SBATCH --nodes=1
@@ -111,7 +111,7 @@ srun python convolutional_mlp.py
 
 Say, this sbatch file is named `test-th.sbatch`, then it is submitted to Slurm by
 
-```
+```bash
 sbatch test-th.sbatch
 ```
 
