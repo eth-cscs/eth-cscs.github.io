@@ -1,4 +1,4 @@
-# Examples 
+# Examples
 
 We report practical examples showing how to build a simple code on the Cray and non-Cray production systems available at CSCS.
 
@@ -25,11 +25,11 @@ void run_gpu_kernel(int *a1, int *a2, int *a3, int vecsize){
     cudaMalloc((void**) &d_a3, sizeof(int)*vecsize);
     cudaMemcpy(d_a1, a1, sizeof(int)*vecsize, cudaMemcpyHostToDevice);
     cudaMemcpy(d_a2, a2, sizeof(int)*vecsize, cudaMemcpyHostToDevice);
- 
+
     gpu_kernel<<<(vecsize-1)/4+1, 4>>>(d_a1, d_a2, d_a3, vecsize);
- 
+
     cudaMemcpy(a3, d_a3, sizeof(int)*vecsize, cudaMemcpyDeviceToHost);
- 
+
     cudaFree(d_a1);
     cudaFree(d_a2);
     cudaFree(d_a3);
@@ -58,7 +58,7 @@ cc -o mpicuda.x mpicuda_main.c mpicuda.o
 
 ## Non-Cray systems
 
-Given below you have an example highlighting how to compile a simple MPI/OpenMP program on non-Cray systems.			
+Given below you have an example highlighting how to compile a simple MPI/OpenMP program on non-Cray systems.
 ```
 #include <stdio.h>
 #include <mpi.h>
@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
 }
 ```
 
-The MPI library on non-Cray systems is MVAPICH2, loaded by your Programming Environment. First, load the desired programming environment, e.g. for the GNU compiler: 
+The MPI library on non-Cray systems is MVAPICH2, loaded by your Programming Environment. First, load the desired programming environment, e.g. for the GNU compiler:
 ```
 module load PrgEnv-gnu
 mpicc hello_world_mpi.c -o hello_world_mpi.x
