@@ -37,6 +37,7 @@ module load cdt/17.02
 
 # Past Outages
 
+- 23.03.2017 - 09:00-14:00 - [Piz Daint] Reboot due to system failure
 - 10.02.2017 - 11:15-13:40 - [Piz Daint] Reboot due to system failure
 
 # Upcoming Events
