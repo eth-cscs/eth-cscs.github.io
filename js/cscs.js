@@ -100,7 +100,7 @@ function cscs_setup_markdown_page_content(markdownFile) {
   __cscs_highlight_code();
 }
 
-function cscs_two_clomun_mode(markdownFile) {
+function cscs_two_column_mode(markdownFile) {
 
   var markdown_div = $('#cscs-markdown-content');
   if (markdown_div.hasClass('col-md-7') == true) {
