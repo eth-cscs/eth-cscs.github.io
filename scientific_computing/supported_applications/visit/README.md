@@ -20,7 +20,7 @@ module load Visit
 The following job script asks for 8 nodes, using 8 MPI task per node. Users will provide their Python code (e.g. file script.py) as an input to visit.
 
 ```bash
-!/bin/bash -l
+#!/bin/bash -l
 #
 # VisIt on Piz Daint
 #
@@ -37,6 +37,7 @@ module load Visit
 
 srun -n $SLURM_NTASKS -N $SLURM_NNODES -C mc --cpu_bind=sockets visit -nowin -cli -s script.py
 ```
+
 ## Interactive mode with a client-server connection
 VisIt needs a host profile to connect to a remote location. You will find a profile for daint in /apps/daint/UES/6.0.UP02/VisIt/host_daint.xml and you need to copy this file to your private directory $HOME/.visit/hosts, on your desktop.
 
