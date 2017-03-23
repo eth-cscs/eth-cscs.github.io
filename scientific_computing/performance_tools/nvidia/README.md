@@ -9,20 +9,25 @@ In addition to Cray's [Craypat](../craypat/) and VI-HPS' [Score-p](../vihps/), t
 
 First collect performance data on the compute node using nvprof:
 
-> module load craype-accel-nvidia60   
-> unset COMPUTE_PROFILE  
-> export PMI_NO_FORK=1  
-> srun -C gpu -n1 nvprof -o nvprof.output.%h.%p myexe  
+```bash
+module load craype-accel-nvidia60
+unset COMPUTE_PROFILE
+export PMI_NO_FORK=1
+srun -C gpu -n1 nvprof -o nvprof.output.%h.%p myexe
+```
 
 %h (and %p) will report the node name (and process ID) in the output file name
 ( `nvprof -h` for more details ). Then view and analyze the data using nvvp:
 
-> nvvp &  
->      File -> Import -> Nvprof file 
-
+```bash
+nvvp &  
+      File -> Import -> Nvprof file 
+```
 or  
 
-> nvprof -i nvprof.output.file 
+```bash
+nvprof -i nvprof.output.file 
+```
  
 ## Debugging
 
