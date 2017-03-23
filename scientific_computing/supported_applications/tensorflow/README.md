@@ -15,9 +15,6 @@ module load daint-gpu
 module load TensorFlow/1.0.0-CrayGNU-2016.11-cuda-8.0-Python-3.5.2
 ```
 
-Note that there is a more elaborate documentation on the
-[module system](/getting_started/faq/#software-and-modules).
-
 # Testing TensorFlow
 
 ## Simple Import Test
