@@ -51,6 +51,4 @@ Advanced users can run a full performance analysis with CrayPAT if they wish, in
 If your application does not run with CrayPat or help is needed in order to recompile it, please do not hesitate to contact us. For more details on proposal submission, please have a look at the webinars at the following link:
   * [Webinars on Proposal Submission](https://www.youtube.com/playlist?list=PL1tk5lGm7zvRnZJZQkVyC9wx-_1eiEJ5v)
 
-<div class="alert alert-info" role="alert" id="partitionwebsite">
-Please note that the Cuda Multi Process Service is currently not supported by Cray perftools, therefore you cannot produce a meaningful report when `CRAY_CUDA_MPS=1` on Piz Daint. In this case please contact us and submit the scalability test of your application and a measure of the performance of your representative benchmark.
-</div>
+> Please note that the Cuda Multi Process Service is currently not supported by Cray perftools, therefore you cannot produce a meaningful report when `CRAY_CUDA_MPS=1` on Piz Daint. In this case please contact us and submit the scalability test of your application and a measure of the performance of your representative benchmark.
