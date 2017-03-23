@@ -48,7 +48,7 @@ Note that multiple NAMD processes (or threads) can share the same GPU, and thus 
 The following job script asks for 64 nodes, using 1 MPI task per node and 24  threads per MPI task with hyperthreading turned on. If you use more than one MPI task per node you will need to set CRAY_CUDA_MPS=1 to enable the tasks to access the GPU device on each node at the same time.
 
 ```bash
-!/bin/bash -l
+#!/bin/bash -l
 #
 # NAMD on Piz Daint
 #
