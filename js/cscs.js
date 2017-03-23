@@ -252,12 +252,16 @@ function __cscs_change_table_layout() {
 }
 
 function __cscs_highlight_code() {
-  if(hljs != null) {
-    $("head").append('<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">');
-    $("head").append("<style> .hljs { background: none; } </style>");
-    $('pre code').each(function(i, block) {
-        hljs.highlightBlock(block);
-    });
+  try {
+    if(hljs != null) {
+        $("head").append('<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">');
+        $("head").append("<style> .hljs { background: none; } </style>");
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    }
+  } catch(msg) {
+    // no need to catch
   }
 }
 
