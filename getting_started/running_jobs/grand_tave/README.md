@@ -21,7 +21,7 @@ Name of the queue |	Max time | Max running jobs per user | Max number nodes
 --- | --- | --- | ---
 normal | 5 hours | - |	164
 
-The list of queues and partitions is available typing __sinfo__ or __scontrol show partition__. 
+The list of queues and partitions is available typing __sinfo__ or __scontrol show partition__. The command `sinfo -o "%30N %20b %f"` will show the active and available features of each node on the system. 
 Note that not all groups are enabled on every partition, please check the `AllowGroups` entry of the command
 `scontrol show partition <partition_name>`.
 
