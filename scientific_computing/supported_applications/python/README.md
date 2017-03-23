@@ -13,24 +13,24 @@
 ## Built-in modules
 
 * Can be imported after loading the Python module
-  * Setuptools
-  * Pip
+  * Cython
+  * matplotlib
+  * mpi4py
   * Nose
   * Numpy
+  * pandas
+  * Pip
   * Scipy
-  * mpi4py
-  * Cython
+  * Setuptools
   * Six
   * Virtualenv
-  * pandas
 
 ## Loadable modules
 
 * Need an extra module load before the 'import'
   * h5py (serial/parallel)
-  * matplotlib
-  * pyCuda  (daint-gpu only)
   * netcdf4
+  * pyCuda  (daint-gpu only)
 
 ---
 
