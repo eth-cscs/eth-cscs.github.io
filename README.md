@@ -5,7 +5,7 @@
 
 [All Systems] We are happy to announce a new tool to help generate valid SLURM batch scripts to our systems.
 
-* [SLURM Jobscript Generator](getting_started/running_jobs/jobscript_generator.html)
+* [SLURM Jobscript Generator](getting_started/running_jobs/jobscript_generator)
 
 
 ## 07.03.2017 - New supported applications
@@ -28,7 +28,7 @@ Additional information is available on the [system webpage](http://www.cscs.ch/c
 [Piz Daint] [Cray Programming Environment 17.02](http://docs.cray.com/books/S-9408-1702/) is installed as non-default. In order to use it, you need to type:
 ```
 module load cdt/17.02
-``` 
+```
 
 # Planned Outages
 

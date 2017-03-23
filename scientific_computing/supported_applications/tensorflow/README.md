@@ -2,35 +2,31 @@
 
 This document gives a quick introduction how to get a first test program in
 TensorFlow running. All instructions have been tested on Piz Daint only. As an
-example we use TensorFlow 0.11.0 but other versions might be available on the
+example we use TensorFlow 1.0.0 but other versions might be available on the
 system. Use `module avail` to get an overview.
 
 
-## Loading the Module
+# Loading the Module
 
 To use TensorFlow on Piz Daint you have to load the corresponding module:
 
-```
+```bash
 module load daint-gpu
-module use /apps/daint/UES/6.0.UP02/sandbox-ds/easybuild/haswell/modules/all/
-module load TensorFlow/0.11.0-CrayGNU-2016.11-Python-3.5.2
+module load TensorFlow/1.0.0-CrayGNU-2016.11-cuda-8.0-Python-3.5.2
 ```
 
-Note that there is a mor elaborate documentation on the
-[module system](https://eth-cscs.github.io/production/getting_started/faq/#software-and-modules).
+# Testing TensorFlow
 
-## Testing TensorFlow
-
-### Simple Import Test
+## Simple Import Test
 On the Daint login node, directly try to import the TensorFlow module:
 
-```
+```bash
 python -c 'import tensorflow as tf'
 ```
 
 The output should look like:
 
-```
+```bash
 I tensorflow/stream_executor/dso_loader.cc:111] successfully opened CUDA library libcublas.so.8.0 locally
 I tensorflow/stream_executor/dso_loader.cc:111] successfully opened CUDA library libcudnn.so.5 locally
 I tensorflow/stream_executor/dso_loader.cc:111] successfully opened CUDA library libcufft.so.8.0 locally
@@ -38,18 +34,21 @@ I tensorflow/stream_executor/dso_loader.cc:111] successfully opened CUDA library
 I tensorflow/stream_executor/dso_loader.cc:111] successfully opened CUDA library libc
 ```
 
-### Testing MNIST demo model
+## Testing MNIST demo model
 
 A more elaborate test is to actually train a model using the GPU:
 
-```
+```bash
+cd $SCRATCH
+git clone git@github.com:tensorflow/models.git
+cp -r /apps/daint/UES/mnist/data/ .
 salloc -N1 -C gpu
-srun python -m 'tensorflow.models.image.mnist.convolutional'
+srun python models/tutorials/image/mnist/convolutional.py
 ```
 
 The output should look like:
 
-```
+```bash
 I tensorflow/stream_executor/dso_loader.cc:111] successfully opened CUDA library libcublas.so.8.0 locally
 I tensorflow/stream_executor/dso_loader.cc:111] successfully opened CUDA library libcudnn.so.5 locally
 I tensorflow/stream_executor/dso_loader.cc:111] successfully opened CUDA library libcufft.so.8.0 locally
@@ -67,16 +66,14 @@ I tensorflow/core/common_runtime/gpu/gpu_device.cc:1041] Creating TensorFlow dev
 Extracting data/train-images-idx3-ubyte.gz
 ```
 
-## Submiting a Job
+# Submiting a Job
 
 The following script exemplifies how to submit a TensorFlow job to the
 queing system. The script asks for 1 nodes, making 12 CPUs available to the 1
 Python task. Further, the job is constraint to the GPU nodes of Piz Daint and its
-running time is 10 minutes. For TensorFlow, it is usually a good idea to set
-CRAY_CUDA_MPS=1 to enable multiple tasks to access the GPU device at the same
-time.
+running time is 10 minutes. 
 
-```
+```bash
 #!/bin/bash
 #SBATCH --time=00:10:00
 #SBATCH --nodes=1
@@ -87,31 +84,18 @@ time.
 #SBATCH --error=test-tf-%j.log
 
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
-export CRAY_CUDA_MPS=1
 
-module use /apps/daint/UES/6.0.UP02/sandbox-ds/easybuild/haswell/modules/all/
 module load daint-gpu
-module load TensorFlow/0.11.0-CrayGNU-2016.11-Python-3.5.2
+module load TensorFlow/1.0.0-CrayGNU-2016.11-cuda-8.0-Python-3.5.2
 
-srun python -m 'tensorflow.models.image.mnist.convolutional'
+srun python $SCRATCH/models/tutorials/image/mnist/convolutional.py
 ```
 
 Say, this sbatch file is named `test-tf.sbatch`, then it is submitted to Slurm by
 
-```
+```bash
 sbatch test-tf.sbatch
 ```
 
-The status of Slurm's queue can be viewed with
-
-```
-squeue -u $USER
-```
-
-and a job can be cancelled running
-```
-scancel <JOBID>
-```
-
 A more detailed documentation on how to submit a job can be found
-[here](http://user.cscs.ch/getting_started/running_jobs/piz_daint/index.html).
+[here](/getting_started/running_jobs).

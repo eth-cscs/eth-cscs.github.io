@@ -5,6 +5,10 @@ var _cscs_split_time = function (timeString) {
     var minutes = 0;
     var seconds = 0;
 
+    if(timeString == "" || timeString == null) {
+        timeString = ":";
+    }
+
     var array = timeString.split(':');
     if(array.length == 3) {
         // assuming the case where we do not have the day
@@ -149,6 +153,9 @@ var Partition = function() {
     this.max_wall_time = {
         "normal"  : "00:00:00"
     };
+    this.default_wall_time = {
+        "normal"  : "00:00:00"
+    };
 
     this.target_time = 0;
 
@@ -264,16 +271,14 @@ Partition.prototype.updateNodesInformation = function () {
 };
 
 Partition.prototype.updateTimeGUI = function () {
-    var target_time = this.getValue(this.max_wall_time);
+    var target_time = this.getValue(this.default_wall_time);
     if (target_time == null) {
         $('#hours').val("0");
         $('#minutes').val("0");
-        // $('#seconds').val("0");
     } else {
         var time = _cscs_split_time(target_time);
         $('#hours').val(_cscs_unpad_interger(time.hours));
         $('#minutes').val(_cscs_unpad_interger(time.minutes));
-        // $('#seconds').val(time.seconds);
     }
 };
 
@@ -296,8 +301,6 @@ Partition.prototype.hideGUIBooleanField = function(fieldid, fieldvalue, referenc
 }
 
 Partition.prototype.updatePartitionsFields = function() {
-    var _self = this;
-
     this.hideGUIBooleanField('#ExclusiveNodeGroup', this.allow_node_sharing, true);
 
     this.hideGUIDataField('#numberOfNodesGroup', this.max_num_nodes);
@@ -331,11 +334,11 @@ Partition.prototype.updateGUI = function() {
         cscs_print_jobscript();
     });
 
-    $('#numberTasksPerCore').change(function(){
-        // add here the changes when the partition changes
-        __cscs_partition.updateNodesInformation();
-        cscs_print_jobscript();
-    });
+    // $('#numberTasksPerCore').change(function(){
+    //     // add here the changes when the partition changes
+    //     __cscs_partition.updateNodesInformation();
+    //     cscs_print_jobscript();
+    // });
 
     __cscs_partition.updatePartitionsFields();
     __cscs_partition.updateTimeGUI();
@@ -484,6 +487,15 @@ Partition.prototype.printPartitionWebSite = function(element) {
     }
 }
 
+Partition.prototype.printTimeWarningMessage = function(element) {
+    var hours = $('#hours').val();
+    var minutes = $('#minutes').val();
+    var time_string = _cscs_compose_time(hours, minutes);
+
+    if(timeString == "00:00:00") {
+        element.innerHTML += "<p>You have selected job a wall time of 00:00:00.</p>";
+    }
+}
 
 Partition.prototype.printJobScriptMessage = function(element) {
     var max_num_threads = this.getMaxNumberOfThreads();
@@ -529,7 +541,17 @@ Partition.prototype.printJobScriptMessage = function(element) {
         warning_state = true;
         error_state = false;
     }
-    element.innerHTML = null;
+    element.innerHTML = "";
+
+    var hours = $('#hours').val();
+    var minutes = $('#minutes').val();
+    var time_string = _cscs_compose_time(hours, minutes);
+
+    var time_warning = false;
+    if(time_string == "00:00:00") {
+        time_warning = true
+    }
+    var timeMsg = "<p>You have selected a wall time of 00:00:00.</p>";
 
     if(warning_state) {
         var alertBox = $('#jobscriptalert');
@@ -537,9 +559,6 @@ Partition.prototype.printJobScriptMessage = function(element) {
         if(alertBox.hasClass('alert-success') == true) {
             alertBox.removeClass('alert-success');
         }
-        // if(alertBox.hasClass('alert-danger') == true) {
-        //     alertBox.removeClass('alert-danger');
-        // }
         alertBox.addClass('alert-warning');
 
         element.innerHTML += "<h4>Warning</h4>";
@@ -573,68 +592,40 @@ Partition.prototype.printJobScriptMessage = function(element) {
             element.innerHTML += " <p>Note: <b>HyperThreading</b> is <b>off</b>.</p>";
         }
 
-    // } else if (error_state){
-    //     var alertBox = $('#jobscriptalert');
-    //     alertBox.show();
+        if(time_warning) {
+            element.innerHTML += timeMsg;
+        }
 
-    //     if(alertBox.hasClass('alert-warning') == true) {
-    //         alertBox.removeClass('alert-warning');
-    //     }
-    //     if(alertBox.hasClass('alert-success') == true) {
-    //         alertBox.removeClass('alert-success');
-    //     }
-    //     alertBox.addClass('alert-danger');
-
-    //     arrayOfNodeInfo = [];
-    //     if(num_tasks_per_core == "") {
-    //         // current_num_threads *= num_tasks_per_core;
-    //         arrayOfNodeInfo.push('tasks per core');
-    //     }
-    //     if(num_tasks_per_node == "") {
-    //         arrayOfNodeInfo.push('tasks per node');
-    //     }
-    //     if(num_cpus_per_task == "") {
-    //         arrayOfNodeInfo.push('cpus per task');
-    //     }
-
-    //     element.innerHTML += "<h4>Error</h4>";
-    //     element.innerHTML += "Wrong value for ";
-
-    //     var x;
-    //     var counter = 0;
-    //     var size = arrayOfNodeInfo.length;
-    //     var x;
-    //     for (x in arrayOfNodeInfo) {
-    //         counter = Number(counter) + 1;
-    //         element.innerHTML += '<b>' + arrayOfNodeInfo[x] + '</b>';
-
-    //         if(counter == (size - 1)) {
-    //             element.innerHTML += " and ";
-    //         } else if(counter != size) {
-    //             element.innerHTML += ", ";
-    //         }
-    //     }
     } else if (current_num_threads != 1){
         var alertBox = $('#jobscriptalert');
         alertBox.show();
 
-        if(alertBox.hasClass('alert-warning') == true) {
-            alertBox.removeClass('alert-warning');
+        if(time_warning) {
+            if(alertBox.hasClass('alert-success') == true) {
+                alertBox.removeClass('alert-success');
+            }
+            alertBox.addClass('alert-warning');
+
+            element.innerHTML += "<h4>Warning</h4>";
+        } else {
+            if(alertBox.hasClass('alert-warning') == true) {
+                alertBox.removeClass('alert-warning');
+            }
+            alertBox.addClass('alert-success');
+
+            element.innerHTML += "<h4>Success</h4>";
         }
-        // if(alertBox.hasClass('alert-danger') == true) {
-        //     alertBox.removeClass('alert-danger');
-        // }
 
-        alertBox.addClass('alert-success');
-
-        element.innerHTML += "<h4>Success</h4>";
 
         element.innerHTML += "<p>For a hybrid MPI + OpenMP program you have selected: </p>";
-        element.innerHTML += "<p><b>" + num_tasks_per_node + "</b> MPI ranks and <b>" + num_cpus_per_task + "</b> OpenMP threads </p>";
+        element.innerHTML += "<p><b>" + num_tasks_per_node + "</b> MPI rank(s) and <b>" + num_cpus_per_task + "</b> OpenMP thread(s) </p>";
         if(has_hyperthreading) {
             element.innerHTML += " <p>Note: <b>HyperThreading</b> is <b>on</b>.</p>";
         } else {
             element.innerHTML += " <p>Note: <b>HyperThreading</b> is <b>off</b>.</p>";
+        }
+        if(time_warning) {
+            element.innerHTML += timeMsg;
         }
 
     } else {
@@ -706,6 +697,16 @@ var DaintGPUPartition = function(name) {
         "debug"   : "00:30:00"
     };
 
+    this.default_wall_time = {
+        "normal"  : "01:00:00",
+        "low"     : "01:00:00",
+        "high"    : "01:00:00",
+        "xfer"    : "01:00:00",
+        "prepost" : "00:30:00",
+        "debug"   : "00:30:00"
+    };
+
+
     this.partition_website = {
         "normal"  : "http://eth-cscs.github.io/getting_started/running_jobs/piz_daint",
         "low"     : "http://eth-cscs.github.io/getting_started/running_jobs/piz_daint",
@@ -724,9 +725,7 @@ var DaintGPUPartition = function(name) {
 
     this.list_of_partitions = [ "normal", "low", "high", "xfer", "prepost", "debug" ];
 
-    this.allow_node_sharing = {
-        "normal" : false
-    }
+    this.allow_node_sharing = {}
 
     this.pre_commands = {
         xfer : "module unload xalt",
@@ -810,6 +809,10 @@ var DaintMCPartition = function(name) {
         "debug"  : 36
     };
 
+    this.max_num_gpus = {};
+
+
+    this.env_variables_ntasks = {};
 };
 _bindPrototypeMethods(DaintMCPartition, DaintGPUPartition);
 
@@ -817,11 +820,121 @@ var MonchPartition = function(name) {
     Partition.call(this);
     this.name = name;
     this.typeName = MonchPartition;
+
     this.Partition = {
-        normal   : "--partition=",
-        largemem : "--partition="
+        "dphys_compute"         : "--partition=",
+        "dphys_largemem"        : "--partition=",
+        "dphys_largemem_wk"     : "--partition=",
+        "dphys_hugemem"         : "--partition=",
+        "dphys_hugemem_wk"      : "--partition=",
+        "fichtner_compute"      : "--partition=",
+        "parrinello_compute"    : "--partition=",
+        "spaldin_compute"       : "--partition=",
+        "express_compute"       : "--partition="
     };
-    this.list_of_partitions = [ "normal", "largemem" ];
+
+    this.env_variables_ntasks = {};
+
+    this.list_of_partitions = [ "dphys_compute", "dphys_largemem", "dphys_largemem_wk",
+        "dphys_hugemem", "dphys_hugemem_wk", "fichtner_compute", "parrinello_compute",
+        "spaldin_compute", "express_compute" ];
+
+
+    this.max_wall_time = {
+        "dphys_compute"         : "24:00:00",
+        "dphys_largemem"        : "24:00:00",
+        "dphys_largemem_wk"     : "168:00:00",
+        "dphys_hugemem"         : "24:00:00",
+        "dphys_hugemem_wk"      : "168:00:00",
+        "fichtner_compute"      : "24:00:00",
+        "parrinello_compute"    : "24:00:00",
+        "spaldin_compute"       : "24:00:00",
+        "express_compute"       : "02:00:00"
+    };
+
+    this.default_wall_time = {
+        "dphys_compute"         : "01:00:00",
+        "dphys_largemem"        : "01:00:00",
+        "dphys_largemem_wk"     : "01:00:00",
+        "dphys_hugemem"         : "01:00:00",
+        "dphys_hugemem_wk"      : "01:00:00",
+        "fichtner_compute"      : "01:00:00",
+        "parrinello_compute"    : "01:00:00",
+        "spaldin_compute"       : "01:00:00",
+        "express_compute"       : "01:00:00"
+    };
+
+    this.partition_website = {
+        "dphys_compute"         : "http://eth-cscs.github.io/getting_started/running_jobs/monch",
+        "dphys_largemem"        : "http://eth-cscs.github.io/getting_started/running_jobs/monch",
+        "dphys_largemem_wk"     : "http://eth-cscs.github.io/getting_started/running_jobs/monch",
+        "dphys_hugemem"         : "http://eth-cscs.github.io/getting_started/running_jobs/monch",
+        "dphys_hugemem_wk"      : "http://eth-cscs.github.io/getting_started/running_jobs/monch",
+        "fichtner_compute"      : "http://eth-cscs.github.io/getting_started/running_jobs/monch",
+        "parrinello_compute"    : "http://eth-cscs.github.io/getting_started/running_jobs/monch",
+        "spaldin_compute"       : "http://eth-cscs.github.io/getting_started/running_jobs/monch",
+        "express_compute"       : "http://eth-cscs.github.io/getting_started/running_jobs/monch"
+    };
+
+    this.max_num_nodes = {
+        "dphys_compute"         : "310",
+        "dphys_largemem"        : "40",
+        "dphys_largemem_wk"     : "12",
+        "dphys_hugemem"         : "24",
+        "dphys_hugemem_wk"      : "8",
+        "fichtner_compute"      : "310",
+        "parrinello_compute"    : "310",
+        "spaldin_compute"       : "310",
+        "express_compute"       : "2"
+    };
+
+    this.max_num_gpus = {};
+
+    this.max_num_tasks_per_node = {
+        "dphys_compute"         : "20",
+        "dphys_largemem"        : "20",
+        "dphys_largemem_wk"     : "20",
+        "dphys_hugemem"         : "20",
+        "dphys_hugemem_wk"      : "20",
+        "fichtner_compute"      : "20",
+        "parrinello_compute"    : "20",
+        "spaldin_compute"       : "20",
+        "express_compute"       : "20"
+    };
+
+    this.max_num_cpus_per_tasks = {
+        "dphys_compute"         : "20",
+        "dphys_largemem"        : "20",
+        "dphys_largemem_wk"     : "20",
+        "dphys_hugemem"         : "20",
+        "dphys_hugemem_wk"      : "20",
+        "fichtner_compute"      : "20",
+        "parrinello_compute"    : "20",
+        "spaldin_compute"       : "20",
+        "express_compute"       : "20"
+    };
+
+    this.max_num_tasks_per_core = {
+        "dphys_compute"         : "2",
+        "dphys_largemem"        : "2",
+        "dphys_largemem_wk"     : "2",
+        "dphys_hugemem"         : "2",
+        "dphys_hugemem_wk"      : "2",
+        "fichtner_compute"      : "2",
+        "parrinello_compute"    : "2",
+        "spaldin_compute"       : "2",
+        "express_compute"       : "2"
+    };
+
+    // No need to set the memory o n monch because the partition nodes already have the correct memory
+    // this.has_constraints = {
+    //     "dphys_largemem"        : "--mem=62GB",
+    //     "dphys_largemem_wk"     : "--mem=62GB",
+    //     "dphys_hugemem"         : "--mem=250GB",
+    //     "dphys_hugemem_wk"      : "--mem=250GB"
+    // };
+
+
 };
 _bindPrototypeMethods(MonchPartition, Partition);
 
@@ -830,10 +943,59 @@ var LeonePartition = function(name) {
     this.name = name;
     this.typeName = LeonePartition;
     this.Partition = {
-        normal   : "--partition=",
-        largemem : "--partition="
+        "normal"  : "--partition=",
+        "longrun" : "--partition=",
+        "debug"   : "--partition="
     };
-    this.list_of_partitions = [ "normal", "debug", "longrun" ];
+    this.list_of_partitions = [ "normal", "longrun", "debug" ];
+
+    this.env_variables_ntasks = {};
+
+    this.max_wall_time = {
+        "normal"  : "24:00:00",
+        "longrun" : "168:00:00",
+        "debug"   : "00:30:00"
+    };
+
+    this.default_wall_time = {
+        "normal"  : "01:00:00",
+        "longrun" : "01:00:00",
+        "debug"   : "00:30:00"
+    };
+
+    this.partition_website = {
+        "normal"  : "http://eth-cscs.github.io/getting_started/running_jobs/monte_leone",
+        "longrun" : "http://eth-cscs.github.io/getting_started/running_jobs/monte_leone",
+        "debug"   : "http://eth-cscs.github.io/getting_started/running_jobs/monte_leone"
+    };
+
+    this.max_num_nodes = {
+        "normal"  : "2",
+        "longrun" : "2",
+        "debug"   : "1"
+    };
+
+    this.max_num_gpus = {};
+
+    this.max_num_tasks_per_node = {
+        "normal"  : "16",
+        "longrun" : "16",
+        "debug"   : "16"
+    };
+
+    this.max_num_cpus_per_tasks = {
+        "normal"  : "16",
+        "longrun" : "16",
+        "debug"   : "16"
+    };
+
+    this.max_num_tasks_per_core = {
+        "normal"  : "2",
+        "longrun" : "2",
+        "debug"   : "2"
+    };
+
+    this.has_constraints = {};
 };
 _bindPrototypeMethods(LeonePartition, Partition);
 
@@ -879,7 +1041,7 @@ function cscs_populate_form() {
             __cscs_partition.updateGUI();
         } else if ($(this).val() == "Monch") {
             _cscs_clean_fields();
-            __cscs_partition = new MonchPartition("normal");
+            __cscs_partition = new MonchPartition("dphys_compute");
             __cscs_partition.updateGUI();
         } else if ($(this).val() == "Leone") {
             _cscs_clean_fields();
@@ -916,13 +1078,16 @@ function cscs_populate_form() {
     obj_num_nodes.keyup(function() {
         if(Number(this.value) > Number(this.max)) {
             this.value = this.max;
-        } else if(Number(this.value) < Number(this.min)) {
+        } else if(Number(this.value) < Number(this.min) && this.value != "") {
             this.value = this.min;
         }
         $('#numberOfNodesText').text('Specify the number of nodes. Maximum value: ' + this.max + '.');
         cscs_print_jobscript();
     });
 
+//
+// TASKS PER CORE
+//
     var obj_tasks_per_core = $('#numberTasksPerCore');
     obj_tasks_per_core.change(function() {
         var max_tasks_per_core = __cscs_partition.getValue(__cscs_partition.max_num_tasks_per_core);
@@ -965,26 +1130,30 @@ function cscs_populate_form() {
             max_tasks_per_core = 1;
         }
 
-        if(this.value == "") {
-            this.value = 1;
-        }
 
         if(Number(this.value) > Number(this.max)) {
             this.value = this.max;
         } else if(Number(this.value) > Number(max_tasks_per_core)) {
             this.value = max_tasks_per_core;
         }
-        else if(Number(this.value) < 0) {
+        else if(Number(this.value) <= 0 && this.value != "") {
             this.value = this.min;
         }
 
-        __cscs_partition.setNumTasksPerNodeAndNumCpusPerNodeValues(this.value);
+        var tasks_per_core = this.value;
+        if(tasks_per_core == "") {
+            tasks_per_core = 1;
+        }
+
+
+        __cscs_partition.setNumTasksPerNodeAndNumCpusPerNodeValues(tasks_per_core);
         $('#numberTasksPerCoreText').text('Specify the number of tasks per core. Values greater than one turn hyperthreading on.  Maximum value: ' + max_tasks_per_core + '.');
         cscs_print_jobscript();
     });
 
-    // TODO
-    // add here the validation of ntasks per node
+//
+// TASKS PER NODE
+//
     var obj_tasks_per_node = $('#numberOfTasksPerNode');
     obj_tasks_per_node.change(function() {
         var max_threads = __cscs_partition.getMaxNumberOfThreads();
@@ -1025,7 +1194,7 @@ function cscs_populate_form() {
 
         if(Number(this.value) > Number(this.max)) {
             this.value = this.max;
-        } else if(Number(this.value) < 0) {
+        } else if(Number(this.value) <= 0 && this.value != "") {
             this.value = this.min;
         }
 
@@ -1049,6 +1218,9 @@ function cscs_populate_form() {
         cscs_print_jobscript();
     });
 
+//
+// CPUS PER TASK
+//
     var obj_cpus_per_task = $('#numberOfCpusPerTask');
     obj_cpus_per_task.change(function() {
         var max_threads = __cscs_partition.getMaxNumberOfThreads();
@@ -1061,6 +1233,7 @@ function cscs_populate_form() {
             this.value = this.min;
         }
 
+        console.log('obj_cpus_per_task.change');
         if(num_tasks_per_node == null) {
             num_tasks_per_node = 1;
         }
@@ -1087,9 +1260,10 @@ function cscs_populate_form() {
         var obj_num_tasks_per_node = $('#numberOfTasksPerNode');
         var num_tasks_per_node = obj_num_tasks_per_node.val();
 
+        console.log('obj_cpus_per_task.keyup');
         if(Number(this.value) > Number(this.max)) {
             this.value = this.max;
-        }  else if(Number(this.value) < 0) {
+        }  else if(Number(this.value) <= 0 && this.value != "") {
             this.value = this.min;
         }
 

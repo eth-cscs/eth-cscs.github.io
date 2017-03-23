@@ -18,7 +18,7 @@ module avail GROMACS
 ```
 
 The following module command will load the environment of the default version of the program:
-```	
+```
 module load GROMACS
 ```
 
@@ -52,7 +52,7 @@ module load daint-gpu
 module load GROMACS
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 export CRAY_CUDA_MPS=1
-srun -n $SLURM_NTASKS --ntasks-per-node=$SLURM_NTASKS_PER_NODE -c $SLURM_CPUS_PER_TASK gmx_mpi mdrun -s input.tpr 
+srun -n $SLURM_NTASKS --ntasks-per-node=$SLURM_NTASKS_PER_NODE -c $SLURM_CPUS_PER_TASK gmx_mpi mdrun -s input.tpr
 ```
 
 # Further Documentation

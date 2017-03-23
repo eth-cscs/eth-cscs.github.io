@@ -9,7 +9,7 @@ VisIt is distributed [free of charge](https://wci.llnl.gov/simulation/computer-c
 
 VisIt does not use GPUs for accelerated rendering. You should load the daint-mc module and the VisIt module. Should you only have an allocation on the GPU partition, you may also use the daint-gpu module, but be aware that rendering with be software-based:
 
-```
+```bash
 module load daint-mc
 module load Visit
 ```
@@ -18,14 +18,14 @@ module load Visit
 
 ## Batch-mode with Python scripts
 The following job script asks for 8 nodes, using 8 MPI task per node. Users will provide their Python code (e.g. file script.py) as an input to visit.
-		
-```
-!/bin/bash -l
+
+```bash
+#!/bin/bash -l
 #
 # VisIt on Piz Daint
-# 
+#
 # 8 nodes, 8 MPI task per node
-# 
+#
 #SBATCH --job-name="VisIt"
 #SBATCH --time=01:00:00
 #SBATCH --nodes=8
@@ -37,6 +37,7 @@ module load Visit
 
 srun -n $SLURM_NTASKS -N $SLURM_NNODES -C mc --cpu_bind=sockets visit -nowin -cli -s script.py
 ```
+
 ## Interactive mode with a client-server connection
 VisIt needs a host profile to connect to a remote location. You will find a profile for daint in /apps/daint/UES/6.0.UP02/VisIt/host_daint.xml and you need to copy this file to your private directory $HOME/.visit/hosts, on your desktop.
 
