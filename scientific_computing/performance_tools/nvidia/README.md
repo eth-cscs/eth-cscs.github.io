@@ -1,9 +1,6 @@
 # NVIDIA tools
 
-In addition to Cray's
-[Craypat](https://eth-cscs.github.io/scientific_computing/performance_tools/craypat/)
-and VI-HPS' [Score-p](https://eth-cscs.github.io/scientific_computing/performance_tools/vihps/),
-the following tools from NVIDIA are supported:
+In addition to Cray's [Craypat](../craypat/) and VI-HPS' [Score-p](../vihps/), the following tools from NVIDIA are supported:
 
 * [nvprof](http://docs.nvidia.com/cuda/profiler-users-guide/#nvprof-overview): command line profiler
 * [nvvp](http://docs.nvidia.com/cuda/profiler-users-guide/#visual): visual profiler
@@ -29,7 +26,7 @@ or
  
 ## Debugging
 
-For cpu and gpu debugging, you may want to use [DDT](https://eth-cscs.github.io/scientific_computing/debugging_tools).
+For cpu and gpu debugging, you may want to use [DDT](../../debugging_tools/).
 For reference, Nvidia debugging tools are also available:
 
 * [cuda-gdb](http://docs.nvidia.com/cuda/cuda-gdb): debugger
