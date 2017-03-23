@@ -28,6 +28,7 @@ Scientific Computing
 ## [Programming Environments](scientific_computing/compiling_your_code/programming_environments)
 ## [Examples](scientific_computing/compiling_your_code/examples)
 # [Debugging tools](scientific_computing/debugging_tools)
+## [DDT](scientific_computing/debugging_tools/ddt)
 # [Performance tools](scientific_computing/performance_tools)
 ## [CRAY performance tools](scientific_computing/performance_tools/craypat/)
 ## [VI-HPS performance tools](scientific_computing/performance_tools/vihps/)

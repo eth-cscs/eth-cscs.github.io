@@ -30,30 +30,21 @@ inefficient or faulty parts of a program.
 ## Setup
 
 ### Score-P
+Score-P supports the CCE, GNU (including Cuda), PGI (including OpenACC) and INTEL compilers.
 
 ```
-module load daint-gpu # or daint-mc
-module load Score-P/3.0-CrayXXX-2016.11
+module load daint-gpu # or module load daint-mc
+module avail Score-P
+module load Score-P
 ```
-
-where XXX is CCE, GNU, PGI or Intel for cpu profiling.
- 
-```
-module load daint-gpu
-module load Score-P/3.0-CrayGNU-2016.11-cuda-8.0.54
-or
-module load Score-P/3.0-CrayPGI-2016.11
-```
-
-for Cuda and OpenACC (pgi only) profiling.
 
 ### Scalasca
+Scalasca supports the GNU, PGI and INTEL compilers.
 
 ```
-module load daint-gpu # or daint-mc
-module load Scalasca/2.3.1-CrayGNU-2016.11
-module load Scalasca/2.3.1-CrayPGI-2016.11
-module load Scalasca/2.3.1-CrayIntel-2016.11
+module load daint-gpu # or module load daint-mc
+module avail Scalasca 
+module load Scalasca 
 ```
 
 ## Troubleshooting
