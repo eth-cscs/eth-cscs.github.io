@@ -40,7 +40,7 @@ Please proceed through the following steps:
     Write (MBytes): 38.421875 MBytes
  ```
 
- The first ten lines come from the top of the report file; USER and MPI are listed in Table 1, Read and Write in Table 2. Please check the [example performance report](example_performance_report) available, but please note that this report comes from a very small testcase, therefore it is shown only as a guideline to help you find the required information within the text.
+ The first ten lines come from the top of the report file; USER and MPI are listed in Table 1, Read and Write in Table 2. Please check the [example performance report](example_performance_report.html) available, but please note that this report comes from a very small testcase, therefore it is shown only as a guideline to help you find the required information within the text.
 
 ## Additional information
 

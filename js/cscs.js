@@ -75,8 +75,7 @@ function cscs_setup_site_content(navbarfile, sidebarfile) {
 // this function parses the markdown using the same markdown used by remark.js
 // before changing the markdown one needs to verify if it is compatible with the
 // presentation mode
-function cscs_setup_markdown_page_content(markdownFile)
-{
+function cscs_setup_markdown_page_content(markdownFile) {
   __cscsMarkDown = markdownFile;
 
   cscs_read_file_contents(markdownFile, function __populate_site_content(argument) {
@@ -99,6 +98,18 @@ function cscs_setup_markdown_page_content(markdownFile)
   __cscs_create_toc();
   __cscs_change_table_layout();
   __cscs_highlight_code();
+}
+
+function cscs_two_clomun_mode(markdownFile) {
+
+  var markdown_div = $('#cscs-markdown-content');
+  if (markdown_div.hasClass('col-md-7') == true) {
+    markdown_div.removeClass('col-md-7');
+  }
+  markdown_div.addClass('col-md-9');
+
+  $('#cscs-rightbar').hide();
+
 }
 
 // function cscs_get_modulelist(link, regex, shash_at = 0, elementid = "cscs-markdown-content")
@@ -260,7 +271,8 @@ function __cscs_highlight_code() {
   }
 }
 
-function __cscs_prepend_domain_to_links() {
+function __cscs_prepend_domain_to_links()
+{
   var domain = "";
 
   if(document.location.domain != null) {
