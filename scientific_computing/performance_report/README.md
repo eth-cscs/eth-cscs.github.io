@@ -4,15 +4,17 @@ As high-performance computing resources become larger and more heterogeneous, us
 
 CrayPat is the recommended performance analysis tool for Cray systems: it provides detailed information about application performance, it can be used for basic profiling, MPI/OpenMP tracing and hardware performance counter based analysis. CrayPat also provides access to a variety of performance experiments that measure how an executable program consumes resources while it is running, as well as several different user interfaces that provide access to the experiment and reporting functions.
 
-## How to produce a performance report
+## How to produce the performance report
 
-First, you need to instrument your application, loading the appropriate perftool-cscs modulefiles:
+First, you need to run a scalability test of your application before instrumenting the executable and report the scalability plot in your proposal. In order to do so, please follow the guidelines provided in the [template performance report](template_performance_report.pdf): you can use the (LaTeX template)[template_performance_report.tex] as well as the (Gnuplot script)[scalability.gp] to produce the report file with the scalability plot.
+
+Once you have selected the optimal job size for your benchmark following the guidelines, you should run your instrumented executable. In order to instrument your application, loading the appropriate perftool-cscs modulefiles:
 ```
 module load daint-gpu
 module load perftools-cscs/645-cuda
 ```
 
-You should load the module perftools-cscs/645-nogpu or perftools-cscs/645-openacc if your code does not make use of the GPU or if it uses OpenACC respectively. Then please build your application as usual, to create the binary file instrumented for performance analysis: the executable can be used within a SLURM batch script without loading the module perftools-cscs.
+You should load the module `perftools-cscs/645-nogpu` or `perftools-cscs/645-openacc` if your code does not make use of the GPU or if it uses OpenACC respectively. Then build your application as usual, to create the binary file instrumented for performance analysis: the executable can be used within a SLURM batch script without loading the perftools modulefile.
 
 When your job exits successfully, two files with extension `.rpt` (report file) and `.ap2` (apprentice file) will be written in your working folder. Please attach both files to your proposal and enclose within the text of your proposal a summary of the performance data of your most representative runs, extracting the following information from the performance report, as in the following example:
 ```
