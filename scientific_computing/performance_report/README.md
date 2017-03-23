@@ -7,12 +7,12 @@ CrayPat is the recommended performance analysis tool for Cray systems: it provid
 ## How to produce the performance report
 
 Please proceed through the following steps:
-1. first run a scalability test of your application before instrumenting the executable and report the scalability plot in your proposal. In order to do so, please follow the guidelines provided in the [performance report template](performance_report_template.pdf): you can use the [LaTeX template](performance_report_template.tex) as well as the [Gnuplot script](scalability.gp) to produce the report file with the scalability plot.
+1. first run a scalability test of your application before instrumenting the executable and report the scalability plot in your proposal. In order to do so, please follow the guidelines provided in the [performance report template](performance_report_template.pdf): you can use the [LaTeX template](performance_report_template.tex) as well as the [Gnuplot script](scalability.gp) to produce the report file with the scalability plot;
 
 1. once you have selected the optimal job size for your benchmark following the guidelines, you should run your instrumented executable. In order to instrument your application, please load the appropriate perftool-cscs modulefiles:
  ```
  module load daint-gpu
-module load perftools-cscs/645-cuda
+ module load perftools-cscs/645-cuda
  ```
  You should load the module `perftools-cscs/645-nogpu` or `perftools-cscs/645-openacc` if your code does not make use of the GPU or if it uses OpenACC respectively. Then build your application as usual, to create the binary file instrumented for performance analysis: the executable can be used within a SLURM batch script without loading the perftools modulefile.
 
