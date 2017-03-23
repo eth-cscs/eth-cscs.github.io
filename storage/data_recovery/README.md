@@ -10,8 +10,8 @@ Snapshots directories are not visible to the `ls` command or `readdir()` functio
 
 For example, the command `ls -a /project/<group_id>` does not list the hidden read-only folder `.snapshots`, but both `ls /project/<group_id>/.snapshots` and `cd /project/<group_id>/.snapshots` do.
 
-```
-ls /project/<group_id>/.snapshots
+```bash
+$ ls /project/<group_id>/.snapshots
 
 snap-20150610  snap-20150611  snap-20150612  snap-20150613  snap-20150614  snap-20150615  snap-20150616
 ```
@@ -21,7 +21,7 @@ Example:
 
 The file `/project/mygroup/myfolder/myfile has been deleted or modified by mistake and you want to retrieve the version of the day before.
 
-```
+```bash
 $ cd /project/mygroup/myfolder/.snapshots
 $ ls
 
