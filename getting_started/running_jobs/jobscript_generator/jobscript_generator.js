@@ -1052,7 +1052,19 @@ function cscs_populate_form() {
             __cscs_partition = new TavePartition("normal");
             __cscs_partition.updateGUI();
         }
+
+        try {
+            __cscs_highlight_code();
+        } catch (msg) {
+            // no need to catch
+        }
     });
+
+    try {
+        __cscs_highlight_code();
+    } catch (msg) {
+        // no need to catch
+    }
 
     var max_nodes = __cscs_partition.getValue(__cscs_partition.max_num_nodes);
     var obj_num_nodes = $('#numberOfNodes');

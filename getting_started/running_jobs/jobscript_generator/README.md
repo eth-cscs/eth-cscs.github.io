@@ -92,5 +92,5 @@
 <div class="form-group">
 <div class="alert alert-info" role="alert" id="partitionwebsite"></div>
   <div class="alert alert-success" role="alert" id="jobscriptalert"></div>
-  <textarea class="form-control" id="jobscript" rows="16" readonly style="resize:none"></textarea>
+  <pre><code id="jobscript" class="bash hljs"></code></pre>
 </div>
