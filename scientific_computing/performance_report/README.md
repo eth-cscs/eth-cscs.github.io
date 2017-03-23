@@ -6,18 +6,18 @@ CrayPat is the recommended performance analysis tool for Cray systems: it provid
 
 ## How to produce the performance report
 
-First, you need to run a scalability test of your application before instrumenting the executable and report the scalability plot in your proposal. In order to do so, please follow the guidelines provided in the [template performance report](template_performance_report.pdf): you can use the (LaTeX template)[template_performance_report.tex] as well as the (Gnuplot script)[scalability.gp] to produce the report file with the scalability plot.
+Please proceed through the following steps:
+1. first run a scalability test of your application before instrumenting the executable and report the scalability plot in your proposal. In order to do so, please follow the guidelines provided in the [performance report template](performance_report_template.pdf): you can use the [LaTeX template](performance_report_template.tex) as well as the [Gnuplot script](scalability.gp) to produce the report file with the scalability plot.
 
-Once you have selected the optimal job size for your benchmark following the guidelines, you should run your instrumented executable. In order to instrument your application, loading the appropriate perftool-cscs modulefiles:
-```
-module load daint-gpu
+1. once you have selected the optimal job size for your benchmark following the guidelines, you should run your instrumented executable. In order to instrument your application, please load the appropriate perftool-cscs modulefiles:
+ ```
+ module load daint-gpu
 module load perftools-cscs/645-cuda
-```
+ ```
+ You should load the module `perftools-cscs/645-nogpu` or `perftools-cscs/645-openacc` if your code does not make use of the GPU or if it uses OpenACC respectively. Then build your application as usual, to create the binary file instrumented for performance analysis: the executable can be used within a SLURM batch script without loading the perftools modulefile.
 
-You should load the module `perftools-cscs/645-nogpu` or `perftools-cscs/645-openacc` if your code does not make use of the GPU or if it uses OpenACC respectively. Then build your application as usual, to create the binary file instrumented for performance analysis: the executable can be used within a SLURM batch script without loading the perftools modulefile.
-
-When your job exits successfully, two files with extension `.rpt` (report file) and `.ap2` (apprentice file) will be written in your working folder. Please attach both files to your proposal and enclose within the text of your proposal a summary of the performance data of your most representative runs, extracting the following information from the performance report, as in the following example:
-```
+1. when your job exits successfully, two files with extension `.rpt` (report file) and `.ap2` (apprentice file) will be written in your working folder. Please attach both files to your proposal and enclose within the text of your proposal a summary of the performance data of your most representative runs, extracting the following information from the performance report, as in the following example:
+ ```
     Number of PEs (MPI ranks):     16
     Numbers of PEs per Node:        8  PEs on each of  2  Nodes
     Numbers of Threads per PE:      1
@@ -38,9 +38,9 @@ When your job exits successfully, two files with extension `.rpt` (report file) 
     Read (MBytes): 18.724653 MBytes
 
     Write (MBytes): 38.421875 MBytes
-```
+ ```
 
-The first ten lines come from the top of the report file; USER and MPI are listed in Table 1, Read and Write in Table 2. Please check the [example performance report](example_performance_report) available, but please note that this report comes from a very small testcase, therefore it is shown only as a guideline to help you find the required information within the text.
+ The first ten lines come from the top of the report file; USER and MPI are listed in Table 1, Read and Write in Table 2. Please check the [example performance report](example_performance_report) available, but please note that this report comes from a very small testcase, therefore it is shown only as a guideline to help you find the required information within the text.
 
 ## Additional information
 
