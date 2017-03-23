@@ -32,3 +32,4 @@ Scientific Computing
 ## [CRAY performance tools](scientific_computing/performance_tools/craypat/)
 ## [VI-HPS performance tools](scientific_computing/performance_tools/vihps/)
 ## [NVIDIA performance tools](scientific_computing/performance_tools/nvidia/)
+# [Performance report](scientific_computing/performance_report)
