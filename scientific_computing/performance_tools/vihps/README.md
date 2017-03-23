@@ -47,8 +47,6 @@ module avail Scalasca
 module load Scalasca 
 ```
 
-See the list of installed versions at the bottom of this page.
-
 ## Troubleshooting
 
 For further information please check: http://www.vi-hps.org/training/material/
