@@ -41,5 +41,5 @@ For more details, please have a look at:
 
 In case of questions/remarks, please contact us at [help@cscs.ch](mailto:help@cscs.ch)
 
-<img src="img/ddt_pizdaint.png" alt="ddt_daint">
+![ddt_daint](img/ddt_pizdaint.png)
 

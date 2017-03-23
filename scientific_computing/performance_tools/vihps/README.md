@@ -30,7 +30,7 @@ inefficient or faulty parts of a program.
 ## Setup
 
 ### Score-P
-* Score-P supports the CCE, GNU (including Cuda), PGI (including OpenACC) and INTEL compilers.
+Score-P supports the CCE, GNU (including Cuda), PGI (including OpenACC) and INTEL compilers.
 
 ```
 module load daint-gpu # or module load daint-mc
@@ -39,7 +39,7 @@ module load Score-P
 ```
 
 ### Scalasca
-* Scalasca supports the GNU, PGI and INTEL compilers.
+Scalasca supports the GNU, PGI and INTEL compilers.
 
 ```
 module load daint-gpu # or module load daint-mc
@@ -72,4 +72,3 @@ The material (presentations and hands-on practical exercises on Piz Daint Cray
 XC30 system) is available on [CSCS YouTube channel](http://www.youtube.com/playlist?list=PL1tk5lGm7zvSfjUIYtfUwd0bJcKAWVIw4).
 Slides are available on demand.
 
-## Installed Versions (daint-gpu|daint-mc)
