@@ -21,8 +21,8 @@ Please proceed through the following steps:
 1. first run a scalability test of your application before instrumenting the
 executable and report the scalability plot in your proposal. In order to do so,
 please follow the guidelines provided in the [performance report template](performance_report_template.pdf): 
-you can use the [LaTeX template](performance_report_template.tex) to produce the report file including the scalability plot 
-with the command `pdflatex --shell-escape performance_report_template.tex` available on Ela upon loading the module `texlive`;
+you can use the [LaTeX template](performance_report_template.tex) to create the proposal PDF file with the scalability plot, 
+using the command `pdflatex --shell-escape performance_report_template.tex`. LaTeX and pdfLaTeX are available on Ela upon loading the module `texlive`;
 
 1. once you have selected the optimal job size for your benchmark following the
 guidelines, you should run your instrumented executable to produce the
