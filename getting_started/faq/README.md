@@ -79,11 +79,10 @@ Then you will be able to write on `/project/sXYZ` and to check the computing bud
 
 ---
 
-## Why my jobs on CSCS machines don't start?
+## How do I increase the priority of my runs?
 
-Please check the priority of your submitted job: your jobs will have less priority if your are overusing the budget and you will likely wait more in the queue if you set a longer wall time. You can check the usage of your budget against what is expected typing the command `monthly_usage`.
-
-Please have a look at the CSCS User Portal for more details on how to check your budget.
+You might have already reached almost 100% usage of your budget for the current three-months allocation period, while other projects with higher priority used less: please keep in mind that you wait more in the queue if you set a longer wall time. 
+You can check the usage of your project's budget during the last month typing the command `monthly_usage`: a linear usage with time is expected by the scheduler, which adjusts priority accordingly. Please note that manually adjusting the priorities is not possible, as it would prevent a fair share of the computing resources among our users.
 
 ---
 
@@ -94,12 +93,6 @@ If you are a member of the group `<gid>`, you can use the following directive:
 #SBATCH --account=<gid>
 ```
 This will tell SLURM to charge the compute budget of the selected group for the current job. In case your username belongs to different projects, you can override the default account using the SLURM flag `-A/--account=` when calling `sbatch` or `salloc`. You can do this also adding the line above in your SLURM batch script.
-
----
-
-## How do I increase the priority of my runs?
-
-You have likely already reached almost 100% of your budget, whereas the other projects that you mention used less: manually adjusting the priorities is not possible, since it would prevent a fair share of the computing resources among our users.
 
 ---
 
@@ -300,7 +293,7 @@ In order to use the available libraries dynamically, you have to add the library
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib64 (bash)
 set LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:/usr/lib64    (csh)
 ```
-The Cray compiler wrappers link statically by default, unless you use the option `-dynamic` or set `export CRAY_LINK_TYPE=dynamic`. If you cannot use static libraries since only the corresponding dynamic libraries are available, then you should always load the system module containing the missing library. The appropriate paths to the library will be added to the compiler wrappers \(`ftn` for Frotran codes, `cc` for C, `CC` for C++\). For example, if you are missing the netcdf library, then you should add the corresponding module by typing `module load netcdf` in your shell.
+The Cray compiler wrappers link statically by default, unless you use the option `-dynamic` or set `export CRAY_LINK_TYPE=dynamic`. If you cannot use static libraries since only the corresponding dynamic libraries are available, then you should always load the system module containing the missing library. The appropriate paths to the library will be added to the compiler wrappers \(`ftn` for Frotran codes, `cc` for C, `CC` for C++\).
 
 ---
 
