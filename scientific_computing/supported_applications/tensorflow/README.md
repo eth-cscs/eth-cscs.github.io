@@ -40,10 +40,10 @@ A more elaborate test is to actually train a model using the GPU:
 
 ```bash
 cd $SCRATCH
-git clone git@github.com:tensorflow/models.git
+wget https://raw.githubusercontent.com/tensorflow/models/master/tutorials/image/mnist/convolutional.py
 cp -r /apps/daint/UES/mnist/data/ .
 salloc -N1 -C gpu
-srun python models/tutorials/image/mnist/convolutional.py
+srun python convolutional.py
 ```
 
 The output should look like:
@@ -88,7 +88,7 @@ export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 module load daint-gpu
 module load TensorFlow/1.0.0-CrayGNU-2016.11-cuda-8.0-Python-3.5.2
 
-srun python $SCRATCH/models/tutorials/image/mnist/convolutional.py
+srun python $SCRATCH/convolutional.py
 ```
 
 Say, this sbatch file is named `test-tf.sbatch`, then it is submitted to Slurm by
