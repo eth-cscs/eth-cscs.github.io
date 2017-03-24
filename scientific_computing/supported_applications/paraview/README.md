@@ -22,7 +22,7 @@ module load ParaView
 The following job script asks for 8 nodes, using 8 MPI task per node. ParaView has a special executable called ``pvbatch`` to execute parallel Python scripts. Users will provide their Python code (e.g. file script.py) as an input to pvbatch.
 
 ```bash
-!/bin/bash -l
+#!/bin/bash -l
 #
 # ParaView on Piz Daint
 #
