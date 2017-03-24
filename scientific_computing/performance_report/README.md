@@ -18,16 +18,43 @@ experiment and reporting functions.
 ## How to produce the performance report
 
 Please proceed through the following steps:
-1. first run a scalability test of your application before instrumenting the executable and report the scalability plot in your proposal. In order to do so, please follow the guidelines provided in the [performance report template](performance_report_template.pdf): you can use the [LaTeX template](performance_report_template.tex) as well as the [Gnuplot script](scalability.gp) to produce the report file with the scalability plot;
 
-1. once you have selected the optimal job size for your benchmark following the guidelines, you should run your instrumented executable to produce the performance report. In order to instrument your application, please load the appropriate perftool-cscs modulefiles:
- ```
+1. first run a scalability test of your application before instrumenting the
+executable and report the scalability plot in your proposal. In order to do so,
+please follow the guidelines provided in the [performance report
+template](performance_report_template.pdf): you can use the [LaTeX
+template](performance_report_template.tex) as well as the [Gnuplot
+script](scalability.gp) to produce the report file with the scalability plot;
+
+1. once you have selected the optimal job size for your benchmark following the
+guidelines, you should run your instrumented executable to produce the
+performance report. In order to instrument your application, please load the
+appropriate perftool-cscs modulefiles: 
+
+```
  module load daint-gpu
  module load perftools-cscs/645-cuda
  ```
- You should load the module `perftools-cscs/645-nogpu` or `perftools-cscs/645-openacc` if your code does not make use of the GPU or if it uses OpenACC respectively. Then build your application as usual, to create the binary file instrumented for performance analysis: the executable can then be used within the SLURM batch script of the optimal job size to produce the performance report, without loading the perftools modulefile;
 
-1. when your job exits successfully, two files with extension `.rpt` (report file) and `.ap2` (apprentice file) will be written in your working folder. Please attach both files to your proposal submission and enclose within the text of the proposal a summary of the performance data extracted from the report file `.rpt`, as in the following example:
+You should load the module `perftools-cscs/645-nogpu` or
+`perftools-cscs/645-openacc` if your code does not make use of the GPU or if it
+uses OpenACC respectively. Then build your application as usual, to create the
+binary file instrumented for performance analysis: the executable can then be
+used within the SLURM batch script of the optimal job size to produce the
+performance report, without loading the perftools modulefile;
+
+1. when your job exits successfully, two files with extension `.rpt` (report
+file) and `.ap2` (apprentice file) will be written in your working folder.
+
+Please make the two files `.rpt` and `.ap2` available for inspection by the
+reviewers, either by enclosing them to your submission or indicating explicitly
+within your proposal a folder under your CSCS $HOME or $PROJECT where they can
+be accessed for reading (please adjust the reading permissions).
+
+You should also always enclose within the text of your proposal 
+a summary of the performance data extracted from the
+report file `.rpt`, as in the following example:
+
  ```
     Number of PEs (MPI ranks):     16
     Numbers of PEs per Node:        8  PEs on each of  2  Nodes
@@ -74,7 +101,9 @@ instrumenting their executable with the standard perftools module, as long as
 they provide in their proposals a performance report with the information
 required above, enclosing the required report files as well.
 
-If your application does not run with CrayPat or help is needed in order to recompile it, please do not hesitate to contact us. For more details on proposal submission, please have a look at the webinars at the following link:
-  * [Webinars on Proposal Submission](https://www.youtube.com/playlist?list=PL1tk5lGm7zvRnZJZQkVyC9wx-_1eiEJ5v)
+If your application does not run with CrayPat or help is needed in order to
+recompile it, please do not hesitate to contact us. For more details on
+proposal submission, please have a look at the webinars at the following link:
+* [Webinars on Proposal Submission](https://www.youtube.com/playlist?list=PL1tk5lGm7zvRnZJZQkVyC9wx-_1eiEJ5v)
 
 > Please note that the Cuda Multi Process Service is currently not supported by Cray perftools, therefore you cannot produce a meaningful report when `CRAY_CUDA_MPS=1` on Piz Daint. In this case please contact us and submit the scalability test of your application and a measure of the performance of your representative benchmark.
