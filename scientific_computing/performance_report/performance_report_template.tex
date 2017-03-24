@@ -1,0 +1,141 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,includeheadfoot,top=1cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{here}
+\usepackage{sectsty}
+\usepackage{graphicx}
+\usepackage{gnuplottex}
+
+\title{Proposal title}
+\author{
+        PI \\
+        affiliation,
+            \and
+        CoPI\\
+        affiliation
+}
+\date{}
+
+\sectionfont{\large\centering}
+\subsectionfont{\large\centering}
+\subsubsectionfont{\large\centering}
+\paragraphfont{\large\centering}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+ This is the proposals's abstract \ldots
+\end{abstract}
+
+\section{Background and Significance}
+The project proposal should be no longer than {\bf 10 A4 pages} including graphs and references, and must have the structure used in this template, the style might be modified.
+
+\section{Scientific Goals and Objectives}
+
+\section{Research Method, Algorithms and Code}
+Comprehensive explanation including short list of libraries used: fftw, parallel-hdf5, petsc, \ldots
+
+\section{Parallelisation Approach and Memory Requirements}
+MPI or MPI/OpenMP, details like type of MPI communication, halo cell exchange, which part of the code is shared memory parallelised, in which parts of the code the GPU is used, OpenACC/CUDA
+
+\section{Representative Benchmarks and Scaling}
+Strong scaling tests are mandatory, the lowest number of cores might be determined by the memory constraint the highest number of cores by $50\%$ of the parallel efficiency. Weak scaling tests might be added. Figure~\ref{fig:scaling} shows the scaling for our n cases.
+
+\begin{figure}[H]
+ \begin{center}
+  \begin{gnuplot}
+   % gnuplot script file to create a scalability plot
+   set terminal latex
+   set xlabel "Number of Nodes"
+   set ylabel "Speed-up"
+   # plot legend
+   set key left
+   set size 1.,1.
+   plot "-" w linespoints title "First system", "-" w linespoints title "Second system", x/8 w lines lt 3 title "Ideal Speed-up"
+   8 1.0
+   16 1.9
+   32 3.7
+   64 6.0
+   128 7.5
+   e
+   8 1.0
+   16 1.75
+   32 3.0
+   64 5.0
+   128 7.0
+  \end{gnuplot}
+ \end{center}
+ \caption{Strong scaling}
+ \label{fig:scaling}
+\end{figure}
+
+\section{Performance Analysis}
+Here one single case should be documented which is the production case, if the project is split into multiple production runs with the same resources requirements chose one of them. Please provide the Craypat files `*.rpt', `*.ap2' and a short summary of the data
+
+\begin{verbatim}
+ Number of PEs (MPI ranks):     16
+ Numbers of PEs per Node:        8  PEs on each of  2  Nodes
+ Numbers of Threads per PE:      1
+ Number of Cores per Socket:     8
+ Execution start time:  Wed Sep 24 16:49:15 2014
+ System name and speed:  daint05 2601 MHz
+
+ Process Time:          1366  secs       85.368 secs per PE
+ High Memory:        858.441 MBytes      53.653 MBytes per PE
+ MFLOPS (aggregate):   15447 M/sec      965.459 M/sec per PE
+ I/O Read Rate:       90.281 MBytes/sec        
+ I/O Write Rate:      83.975 MBytes/sec
+
+ |  25.0% | 2122.2 |     -- |    -- |MPI
+
+ |  24.4% | 2074.2 |     -- |    -- |USER
+
+ Read (MBytes): 18.724653 MBytes
+
+ Write (MBytes): 38.421875 MBytes
+\end{verbatim}
+
+The first eleven lines come from the top of the report file; USER and MPI are listed in Table 1 of the performance report, Read and Write in Table 2 of the performance report. Please note that the report comes from a very small testcase, therefore it is shown only as a guideline to help you find the required information within the text.
+
+\section{Resources Justification}
+The computation of the required time should start with the node hours required for a single timestep.
+As an example, the values in Table~\ref{table:derivation_node_hours} sum up to 107500 node hours.
+\begin{table}[H]
+ \begin{center}
+  \begin{tabular}{|c|c|c|}
+   \hline
+   & simulation type 1 & simulation type 2 \\ 
+   \hline
+   number of simulations & 2 & 3 \\
+   \hline
+   node hours per timestep & 1 & 1.5 \\
+   \hline
+   number of timesteps per simulation & 20000 & 15000 \\
+   \hline
+   node hours & 40000 & 67500 \\
+   \hline
+  \end{tabular}
+ \end{center}
+ \caption{Derivation of node hours}
+ \label{table:derivation_node_hours}
+\end{table}
+
+
+\section{Project Plans: Tasks and Milestones}
+
+\section{Visualization, pre- and post-processing}
+
+\section{Results from Previous Allocations}
+
+\section{Research publications from Previous Allocations}
+
+\section{Development and debugging requirements}
+This part is not mandatory.
+
+\section*{References}
+
+\bibliographystyle{abbrv}
+\bibliography{main}
+
+\end{document}
