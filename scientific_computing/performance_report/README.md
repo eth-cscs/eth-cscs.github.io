@@ -2,10 +2,9 @@
 
 As high-performance computing resources become larger and more heterogeneous,
 using them to their full potential for scientific research becomes increasingly
-challenging. CSCS intends to extend the production projects allocation process
-to include performance information about user applications in order to improve
-the allocation of compute resources, thus enabling more results of scientific
-merit. 
+challenging. 
+CSCS implements a [production projects allocation](http://www.cscs.ch/user_lab/allocation_schemes/index.html) 
+review process with the evaluation of users application performance, in order to improve the allocation of computing resources.
 
 CrayPat is the recommended performance analysis tool for Cray systems: it
 provides detailed information about application performance, it can be used for
@@ -21,10 +20,9 @@ Please proceed through the following steps:
 
 1. first run a scalability test of your application before instrumenting the
 executable and report the scalability plot in your proposal. In order to do so,
-please follow the guidelines provided in the [performance report
-template](performance_report_template.pdf): you can use the [LaTeX
-template](performance_report_template.tex) as well as the [Gnuplot
-script](scalability.gp) to produce the report file with the scalability plot;
+please follow the guidelines provided in the [performance report template](performance_report_template.pdf): 
+you can use the [LaTeX template](performance_report_template.tex) to produce the report file including the scalability plot 
+with the command `pdflatex --shell-escape performance_report_template.tex` available on Ela upon loading the module `texlive`;
 
 1. once you have selected the optimal job size for your benchmark following the
 guidelines, you should run your instrumented executable to produce the
@@ -48,8 +46,8 @@ file) and `.ap2` (apprentice file) will be written in your working folder.
 
 Please make the two files `.rpt` and `.ap2` available for inspection by the
 reviewers, either by enclosing them to your submission or indicating explicitly
-within your proposal a folder under your CSCS $HOME or $PROJECT where they can
-be accessed for reading (please adjust the reading permissions).
+within your proposal a folder under your CSCS $HOME or $PROJECT (not $SCRATCH), 
+where they can be accessed for reading (please adjust the reading permissions).
 
 You should also always enclose within the text of your proposal 
 a summary of the performance data extracted from the
@@ -78,7 +76,7 @@ report file `.rpt`, as in the following example:
     Write (MBytes): 38.421875 MBytes
  ```
 
-The first ten lines come from the top of the report file; USER and MPI are
+The first ten lines come from the top of the report file; MPI and USER are
 listed in Table 1, Read and Write in Table 2. Please complete the summary
 information following the guidelines available in the performance report
 template and check the [example performance
