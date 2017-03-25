@@ -1,7 +1,5 @@
 # Latest News
 
-<!-- <div id="begin-latest-news"></div> -->
-
 <!-- start-news --><!-- end-news -->
 
 # All News

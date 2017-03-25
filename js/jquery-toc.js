@@ -53,7 +53,7 @@ $.TOC = function(el, scope, options){
 
     toc.buildTOC = function(){
         toc.current_depth = toc.options.startLevel;
-        toc.$headings.each(function(i, elem){
+        toc.$headings.each(function(i){
             var depthClass = this.nodeName.toLowerCase();
             if(toc.options.nested){
                 // Get current depth based on h1, h2, h3, etc.
