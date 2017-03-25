@@ -20,7 +20,8 @@ $.TOC = function(el, scope, options){
         if(typeof(toc.options.scope) == "undefined" || toc.options.scope == null){ toc.options.scope = document.body; }
         if(typeof(options) == "undefined" || options == null){ options = ''; }
 
-        toc.options.nested = (options.headings) ? false : toc.options.nested; // Can only be nested if headings are default h1-h6
+        // toc.options.nested = (options.headings) ? false : toc.options.nested; // Can only be nested if headings are default h1-h6
+        toc.options.nested = true;
         toc.options.startLevel = (toc.options.startLevel < 1 || toc.options.startLevel > 6) ?  1 : toc.options.startLevel; // Validate starting level
         toc.options.depth =  (toc.options.depth < 1 || toc.options.depth > 6) ? 1 : toc.options.depth; // Validate depth
         var filtered_tags = (toc.options.nested) ? toc.options.headings.splice(toc.options.startLevel - 1, toc.options.depth) : toc.options.headings; // If nested get only the tags starting with startLevel, and counting to depth
@@ -52,7 +53,7 @@ $.TOC = function(el, scope, options){
 
     toc.buildTOC = function(){
         toc.current_depth = toc.options.startLevel;
-        toc.$headings.each(function(i){
+        toc.$headings.each(function(i, elem){
             var depthClass = this.nodeName.toLowerCase();
             if(toc.options.nested){
                 // Get current depth based on h1, h2, h3, etc.
@@ -92,7 +93,7 @@ $.TOC = function(el, scope, options){
     };
 
     toc.addItem = function(new_depth, index){
-    var i;
+        var i;
         if(new_depth > toc.current_depth){
             // Opening tags for changes in depth
             for(i = toc.current_depth; i < new_depth; i++){
@@ -133,7 +134,7 @@ $.TOC.defaultOptions = {
     scope: "#cscs-markdown-content",
     headings: ["h1","h2"],
     startLevel: 1,
-    depth: 3,
+    depth: 2,
     depthClass: "toc-depth-%",
     linkText: "%",
     topLinks: false,
