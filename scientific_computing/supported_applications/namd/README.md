@@ -39,13 +39,13 @@ module help NAMD
 
 # How to Run on Piz Daint
 
-The CUDA-enabled version of NAMD is installed on Daint. When using this version you should set outputEnergies to 100 or higher in the simulation config file, as outputting energies from the GPU is slower compared to the CPU, and you should add +idlepoll to the command line in order to poll the GPU for results rather than sleeping while idle. Note that some features are unavailable in the CUDA build, including alchemical free energy perturbation and the Lowe-Andersen thermostat.
+The CUDA-enabled version of NAMD is installed on Daint. When using this version you should set outputEnergies to 100 or higher in the simulation config file, as outputting energies from the GPU is slower compared to the CPU, and you should add `+idlepoll` to the command line in order to poll the GPU for results rather than sleeping while idle. Note that some features are unavailable in the CUDA build, including alchemical free energy perturbation and the Lowe-Andersen thermostat.
 
 The GPU code in NAMD is relatively new (introduced first in NAMD 2.7), and forces evaluated on the GPU differ slightly from a CPU-only calculation, so you should test your simulations well before launching production runs.
 
 Note that multiple NAMD processes (or threads) can share the same GPU, and thus it is possible to run with multiple processes per node (see below).
 
-The following job script asks for 64 nodes, using 1 MPI task per node and 24  threads per MPI task with hyperthreading turned on. If you use more than one MPI task per node you will need to set CRAY_CUDA_MPS=1 to enable the tasks to access the GPU device on each node at the same time.
+The following job script asks for 64 nodes, using 1 MPI task per node and 24  threads per MPI task with hyperthreading turned on. If you use more than one MPI task per node you will need to set `CRAY_CUDA_MPS=1` to enable the tasks to access the GPU device on each node at the same time.
 
 ```bash
 #!/bin/bash -l
