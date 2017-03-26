@@ -22,7 +22,7 @@ The NVIDIA CUDA and OptiX versions of VMD are installed on Daint. The new syntax
 ```bash
 render TachyonLOptiXInternal my_image.ppm
 ```
-The following job script asks for 1 node, using 1 task per node. VMD will automatically use all threads available on the node and execute the contents of your TCL script in file "script.tcl".
+The following job script asks for 1 node, using 1 task per node. VMD will automatically use all threads available on the node and execute the contents of your TCL script in file `script.tcl`.
 
 ```bash
 #!/bin/bash
