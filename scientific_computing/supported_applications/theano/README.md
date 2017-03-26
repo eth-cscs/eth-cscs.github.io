@@ -1,11 +1,12 @@
 # Theano
 
+Theano is a Python library for the definition, optization and evaluation of mathematical expressions involving multi-dimensional arrays efficiently.
+
 This document gives a quick introduction how to get a first test program
 running. In the following instructions we use Theano 0.8.2 but other versions
-might be available on the system. Use `module avail` to get an overview. This
-documentation has been tested on Piz Daint only.
+might be available on Piz Daint. Use `module avail` to get an overview.
 
-# Loading the Module
+# Setup
 
 To use Theano on Piz Daint you have to load the corresponding module:
 
@@ -39,14 +40,14 @@ Using gpu device 0: Tesla P100-PCIE-16GB (CNMeM is disabled, cuDNN 5105)
 ................
 ```
 
-For a rough sanity check whether Theano is working it is suffiant to verify that
+For a rough sanity check whether Theano is working it is sufficient to verify if
 the GPU is correctly recognized (first line). The full test is usually not
 needed.
 
 ## Testing LeNet demo model
 
 A more elaborate test is to actually train a model using the GPU. We can, e.g.,
-use the LeNet demo model from deeplearining.net:
+use the LeNet demo model from [deeplearning.net](http://deeplearning.net):
 
 ```bash
 wget http://deeplearning.net/tutorial/code/convolutional_mlp.py
@@ -80,13 +81,13 @@ Best validation score of 0.920000 % obtained at iteration 10900, with test perfo
 
 The run time on Piz Daint should be less than 5 minutes.
 
-# Submitting a Job
+# How to Run on Piz Daint
 
 The following script exemplifies how to submit a Theano job to the queing
 system. The script asks for 1 nodes, making 12 CPUs available to the 1 Python
 task. Further, the job is constraint to the GPU nodes of Piz Daint and its
 running time is 10 minutes. For Theano, it is usually a good idea to set
-CRAY_CUDA_MPS=1 to enable multiple tasks to access the GPU device at the same
+`CRAY_CUDA_MPS=1` to enable multiple tasks to access the GPU device at the same
 time.
 
 ```bash
@@ -109,11 +110,6 @@ export THEANO_FLAGS='cuda.root=$CRAY_CUDATOOLKIT_DIR,device=gpu,floatX=float32'
 srun python convolutional_mlp.py
 ```
 
-Say, this sbatch file is named `test-th.sbatch`, then it is submitted to Slurm by
+# Further Documentation
 
-```bash
-sbatch test-th.sbatch
-```
-
-A more detailed documentation on how to submit a job can be found
-[here](/getting_started/running_jobs).
+[Theano website](http://deeplearning.net/software/theano/)
