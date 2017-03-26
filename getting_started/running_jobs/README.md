@@ -72,8 +72,8 @@ The SLURM script above shows how to run a hybrid job with two MPI tasks per node
 The srun option `--hint=nomultithread` would avoid using extra threads with in-core multi-threading, a configuration that can benefit communication intensive applications (see __man srun__ for further details).
 
 The example below shows the commands required to run large MPI jobs:
- - PMI_MMAP_SYNC_WAIT_TIME and srun option --wait prevent Slurm from killing tasks that take long time to run
- - srun's option --bcast copies the binary to /tmp on all nodes before launching them. This helps task startup time.
+ - PMI_MMAP_SYNC_WAIT_TIME and srun option `--wait` prevent Slurm from killing tasks that take long time to run
+ - __srun__'s option `--bcast` copies the binary to `/tmp` on all nodes before launching them. This helps task startup time.
 
 ```
 export PMI_MMAP_SYNC_WAIT_TIME=300
