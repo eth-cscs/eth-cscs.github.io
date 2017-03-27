@@ -196,7 +196,11 @@ function __cscs_mouseover_link() {
 // this function creates the toc based on the main markdown content
 function __cscs_create_toc() {
   // TOC creation
-  $('#toc').TOC();
+  // $('#toc').TOC();
+  $('#toc').TOC("#cscs-markdown-content", {
+    headings: ["h1","h2"],
+  });
+
   $('#toc').append('<a class="back-to-top" href="#">Back to top</a>');
   // Sidenav affixing
   setTimeout(function () {
@@ -290,6 +294,48 @@ function __cscs_prepend_domain_to_links()
   $('#cscs-leftbar-markdown').children('h1, h2, h3, h4, h5, h6').children('a').each(function(index, element) {
     $(element).attr('href',function(i,v) {
       return domain + v;
+    });
+  });
+}
+
+function __cscs_getCommentsObject(element, comment) {
+  var returnValue = null;
+  $(element).contents().filter(function(){
+    return this.nodeType == 8;
+  }).each(function(i, e){
+    if(e.nodeValue === comment) {
+      returnValue = e;
+      return false;
+    }
+  });
+  return returnValue;
+}
+
+function cscs_read_news(news_markdown_file, number_of_news)
+{
+  cscs_read_file_contents(news_markdown_file, function __populate_site_content(argument) {
+    marked(argument, function (err, content) {
+      if (err) throw err;
+
+      $('#toc').children().remove();
+
+      var theStart = __cscs_getCommentsObject('#cscs-markdown-content', ' start-news ');
+      $(content).insertAfter(theStart);
+      var theEnd = __cscs_getCommentsObject('#cscs-markdown-content', ' end-news ');
+
+      if(Number(number_of_news) > 0) {
+        var lastOne = $(theEnd).prev();
+        if($(theStart).nextUntil(lastOne).filter("h2").length > number_of_news) {
+          toRemove = $(theStart).nextUntil(lastOne).filter("h2").slice(0, number_of_news + 1).last();
+          toRemove.nextUntil(lastOne).remove();
+          toRemove.remove();
+          lastOne.remove();
+        }
+      }
+      __cscs_mouseover_link();
+      __cscs_create_toc();
+      __cscs_change_table_layout();
+      __cscs_highlight_code();
     });
   });
 }
