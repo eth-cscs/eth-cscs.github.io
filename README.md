@@ -2,7 +2,7 @@
 
 <!-- start-news --><!-- end-news -->
 
-# All News
+# Past News
  
 For a collection of all news [access the news archive](news).
 # Planned Outages
