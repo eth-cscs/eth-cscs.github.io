@@ -2,7 +2,6 @@
 
 <form>
   <div class="form-group">
-    <label for="selectYear">Select Year</label>
     <p class="help-block">Select by publication year</p>
     <select class="form-control" id="selectYear">
       <option>2017</option>
