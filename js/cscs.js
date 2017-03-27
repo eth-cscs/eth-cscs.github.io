@@ -72,13 +72,6 @@ function cscs_setup_site_content(navbarfile, sidebarfile) {
   __cscs_prepend_domain_to_links();
 }
 
-function __cscs_markdown_post_features() {
-  __cscs_mouseover_link();
-  __cscs_create_toc();
-  __cscs_change_table_layout();
-  __cscs_highlight_code();
-}
-
 // this function parses the markdown using the same markdown used by remark.js
 // before changing the markdown one needs to verify if it is compatible with the
 // presentation mode
@@ -101,38 +94,12 @@ function cscs_setup_markdown_page_content(markdownFile) {
       document.getElementById("cscs-markdown-content").innerHTML = content;
     });
   });
-  __cscs_markdown_post_features();
+  __cscs_mouseover_link();
+  __cscs_create_toc();
+  __cscs_change_table_layout();
+  __cscs_highlight_code();
 }
 
-// this function reads the news markdown and appends it to the cscs-markdown-content.
-function cscs_read_news(news_markdown_file, number_of_news)
-{
-  cscs_read_file_contents(news_markdown_file, function __populate_site_content(argument) {
-    marked(argument, function (err, content) {
-      if (err) throw err;
-
-      $('#toc').children().remove();
-
-      var theStart = __cscs_getCommentsObject('#cscs-markdown-content', ' start-news ');
-      $(content).insertAfter(theStart);
-      var theEnd = __cscs_getCommentsObject('#cscs-markdown-content', ' end-news ');
-
-      if(Number(number_of_news) > 0) {
-        var lastOne = $(theEnd).prev();
-        if($(theStart).nextUntil(lastOne).filter("h2").length > number_of_news) {
-          toRemove = $(theStart).nextUntil(lastOne).filter("h2").slice(0, number_of_news + 1).last();
-          toRemove.nextUntil(lastOne).remove();
-          toRemove.remove();
-          lastOne.remove();
-        }
-      }
-      __cscs_markdown_post_features();
-    });
-  });
-}
-
-// this function hides the right toc from the page and
-// makes it a two column page.
 function cscs_two_column_mode(markdownFile) {
 
   var markdown_div = $('#cscs-markdown-content');
@@ -308,7 +275,6 @@ function __cscs_highlight_code() {
   }
 }
 
-// this function prepends the domain to the navbar and left sidebar
 function __cscs_prepend_domain_to_links()
 {
   var domain = "";
@@ -332,7 +298,6 @@ function __cscs_prepend_domain_to_links()
   });
 }
 
-// this is a helper function to get the position of the comments in the page
 function __cscs_getCommentsObject(element, comment) {
   var returnValue = null;
   $(element).contents().filter(function(){
@@ -344,4 +309,33 @@ function __cscs_getCommentsObject(element, comment) {
     }
   });
   return returnValue;
+}
+
+function cscs_read_news(news_markdown_file, number_of_news)
+{
+  cscs_read_file_contents(news_markdown_file, function __populate_site_content(argument) {
+    marked(argument, function (err, content) {
+      if (err) throw err;
+
+      $('#toc').children().remove();
+
+      var theStart = __cscs_getCommentsObject('#cscs-markdown-content', ' start-news ');
+      $(content).insertAfter(theStart);
+      var theEnd = __cscs_getCommentsObject('#cscs-markdown-content', ' end-news ');
+
+      if(Number(number_of_news) > 0) {
+        var lastOne = $(theEnd).prev();
+        if($(theStart).nextUntil(lastOne).filter("h2").length > number_of_news) {
+          toRemove = $(theStart).nextUntil(lastOne).filter("h2").slice(0, number_of_news + 1).last();
+          toRemove.nextUntil(lastOne).remove();
+          toRemove.remove();
+          lastOne.remove();
+        }
+      }
+      __cscs_mouseover_link();
+      __cscs_create_toc();
+      __cscs_change_table_layout();
+      __cscs_highlight_code();
+    });
+  });
 }
