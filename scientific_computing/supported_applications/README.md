@@ -1,7 +1,7 @@
 # Supported Applications
 
 CSCS provides and supports a selection scientific applications on the computing systems. 
-Please follow the links of the list on the left to find out how to run the applications in a production environment.
+Please follow the links to find out how to run the applications in a production environment.
 
 CSCS staff can also help users with data analysis and visualization to achieve effective data understanding:
 * suggesting paradigms of data exploration, data analytics, and classical data analysis to extract information
