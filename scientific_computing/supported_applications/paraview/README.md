@@ -32,20 +32,19 @@ The following job script asks for 8 nodes, using 8 MPI task per node. ParaView h
 #SBATCH --time=01:00:00
 #SBATCH --nodes=8
 #SBATCH --ntasks=64
-#SBATCH --constraint=startx,gpu
+#SBATCH --constraint=gpu
 #========================================
 # load modules
-export DISPLAY=:0
 module load daint-gpu
-module load ParaView
+module load ParaView/5.3.0-CrayGNU-2016.11-EGL
 
-srun -n $SLURM_NTASKS -N $SLURM_NNODES pvbatch --disable-xdisplay-test script.py
+srun -n $SLURM_NTASKS -N $SLURM_NNODES --cpu_bind=sockets pvbatch script.py
 ```
 
 ## Interactive mode with a client-server connection
 
 A ParaView client on the User's remote desktop needs a host profile to connect to a remote server. Linux and Mac users will find a profile for daint in `/apps/daint/UES/ParaView/server_daint.pvsc`; Windows users must instead use the file `/apps/daint/UES/ParaView/server_daint_Windows.pvsc`. You need to copy this file to your remote desktop, start ParaView, and use the `"File->Connect->Load Servers"` command to install it on your local copy of the application.
-This config file also needs a shell script generating a SLURM job. You will find this in `/apps/daint/UES/ParaView/rc-submit-pvserver-xserver.sh`.
+This config file also needs a shell script generating a SLURM job. You will find this in `/apps/daint/UES/ParaView/rc-submit-pvserver.sh`.
 Our advice is for you to make a copy of this file in your home on the daint filesystem, so that you can modify it further for your needs. You will then need to modify the file’s pathname in `servers.pvsc`.
 
 Linux and Mac users will need one additional setup, to enable your desktop to directly connect to daint. Edit your `$HOME/.ssh/config` file to include the following lines:
