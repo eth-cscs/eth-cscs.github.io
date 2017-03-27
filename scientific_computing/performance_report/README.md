@@ -18,41 +18,22 @@ experiment and reporting functions.
 
 Please proceed through the following steps:
 
-1. first run a scalability test of your application before instrumenting the
-executable and report the scalability plot in your proposal. In order to do so,
-please follow the guidelines provided in the [performance report template](performance_report_template.pdf): 
-you can use the [LaTeX template](performance_report_template.tex) to create the proposal PDF file with the scalability plot, 
-using the command `pdflatex --shell-escape performance_report_template.tex`. LaTeX and pdfLaTeX are available on Ela upon loading the module `texlive`;
+1. first run a scalability test of your application before instrumenting the executable and report the scalability plot in your proposal. In order to do so, please follow the guidelines provided in the [performance report template](performance_report_template.pdf): you can use the [LaTeX template](performance_report_template.tex) to create the proposal PDF  file with the scalability plot, using the command 
+ ```bash
+ pdflatex --shell-escape performance_report_template.tex
+ ```
+ LaTeX and pdfLaTeX are available on Ela upon loading the module `texlive`;
 
-1. once you have selected the optimal job size for your benchmark following the
-guidelines, you should run your instrumented executable to produce the
-performance report. In order to instrument your application, please load the
-appropriate perftool-cscs modulefiles: 
-
-```
+1. once you have selected the optimal job size for your benchmark following the guidelines, you should run your instrumented executable to produce the performance report. In order to instrument your application, please load the appropriate perftool-cscs modulefiles: 
+ ```
  module load daint-gpu
  module load perftools-cscs/645-cuda
  ```
+ You should load the module `perftools-cscs/645-nogpu` or `perftools-cscs/645-openacc` if your code does not make use of the GPU or if it uses OpenACC respectively. Then build your application as usual, to create the binary file instrumented for performance analysis: the executable can then be used within the SLURM batch script of the optimal job size to produce the performance report, without loading the perftools modulefile;
 
-You should load the module `perftools-cscs/645-nogpu` or
-`perftools-cscs/645-openacc` if your code does not make use of the GPU or if it
-uses OpenACC respectively. Then build your application as usual, to create the
-binary file instrumented for performance analysis: the executable can then be
-used within the SLURM batch script of the optimal job size to produce the
-performance report, without loading the perftools modulefile;
+1. when your job exits successfully, two files with extension `.rpt` (report file) and `.ap2` (apprentice file) will be written in your working folder. Please make the two files `.rpt` and `.ap2` available for inspection by the reviewers, either by enclosing them to your submission or indicating explicitly within your proposal a folder under your CSCS $HOME or $PROJECT (not $SCRATCH), where they can be accessed for reading (please adjust the reading permissions).
 
-1. when your job exits successfully, two files with extension `.rpt` (report
-file) and `.ap2` (apprentice file) will be written in your working folder.
-
-Please make the two files `.rpt` and `.ap2` available for inspection by the
-reviewers, either by enclosing them to your submission or indicating explicitly
-within your proposal a folder under your CSCS $HOME or $PROJECT (not $SCRATCH), 
-where they can be accessed for reading (please adjust the reading permissions).
-
-You should also always enclose within the text of your proposal 
-a summary of the performance data extracted from the
-report file `.rpt`, as in the following example:
-
+You should also always enclose within the text of your proposal a summary of the performance data extracted from the report file `.rpt`, as in the following example:
  ```
     Number of PEs (MPI ranks):     16
     Numbers of PEs per Node:        8  PEs on each of  2  Nodes

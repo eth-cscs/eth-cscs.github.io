@@ -9,7 +9,7 @@ This default version will be loaded automatically when the `PrgEnv-x` module is 
 If you wish to use a different version of the base compiler you need to issue a `module switch` (or `swap`).
 For example, to switch from the default gcc compiler of `PrgEnv-gnu` to `gcc/5.3.0`, issue the command: `module switch gcc gcc/5.3.0`.
 
-Depending on the target platform that you have chosen you might have the GNU, Intel, Cray or PGI Programming Environments available with the corresponding compilers: please find more details on each compiler in the corresponding sections.
+Depending on the target platform that you have chosen you might have the GNU, Intel, Cray or PGI Programming Environments available with the corresponding compilers: please find more details on each compiler in the corresponding sections. CSCS provides as well the [EasyBuild](https://easybuild.readthedocs.io/en/latest) framework on production systems: please check the step by step instructions to build your code using [EasyBuild at CSCS](easybuild_framework). 
 
 ## Enabling GPU support in the programming environment
 
