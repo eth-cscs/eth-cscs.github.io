@@ -65,7 +65,6 @@ function cscs_setup_site_content(navbarfile, sidebarfile) {
   }
 
   var presenterMode = document.getElementById('start-cscs-presenter-mode');
-  presenterMode.click(function(e){e.preventDefault();});
   presenterMode.onclick = __cscs_show_in_presenter_mode;
 
   __cscs_email_protector();
