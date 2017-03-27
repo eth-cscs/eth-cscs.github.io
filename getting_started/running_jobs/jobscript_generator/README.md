@@ -3,7 +3,7 @@
 <form>
   <div class="form-group">
     <label for="selectMachine">Computing system</label>
-    <p class="help-block">Select the computing system on which you want to submit your job</p>
+    <p class="help-block">Select the computing system on which you want to submit your job.</p>
     <select class="form-control" id="selectMachine">
       <option>Daint Hybrid</option>
       <option>Daint MultiCore</option>
@@ -14,7 +14,7 @@
   </div>
   <div class="form-group">
     <label for="selectPartition">Partition</label>
-    <p class="help-block">Select the partition on which you want to submit your job</p>
+    <p class="help-block">Select the partition on which you want to submit your job.</p>
     <select class="form-control" id="selectPartition" >
     </select>
   </div>
@@ -78,7 +78,7 @@
   </div>
   <div class="form-group" id="bigMemoryGroup">
     <label for="bigMemory">Large memory nodes</label>
-    <p class="help-block">Specify if you want to ask for nodes with a large amount of memory.</p>
+    <p class="help-block">Specify if you want to ask for nodes with larger amount of memory.</p>
     <div class="checkbox">
       <label>
         <input type="checkbox" id="bigMemory" onchange="cscs_print_jobscript()">Large memory nodes
