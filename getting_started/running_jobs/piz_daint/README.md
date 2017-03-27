@@ -1,7 +1,7 @@
 # Piz Daint
 
-Piz Daint uses SLURM for the submission, monitoring and control of parallel jobs. Parallel programs compiled with Cray-MPICH (the MPI library available on this system) must be run using the __srun__ command. SLURM batch scripts need to be submitted with the __sbatch__ command from the `$SCRATCH` folder, since users are NOT supposed to run jobs from different filesystems because of the low performance. A simple SLURM job submission script would look like the following:
-```
+Piz Daint uses SLURM for submission, monitoring and control of parallel jobs. Parallel programs compiled with Cray-MPICH (the MPI library available on this system) must be run using the `srun` command. SLURM batch scripts need to be submitted with the `sbatch` command from the `$SCRATCH` folder, since users are __NOT__ supposed to run jobs from different filesystems because of the low performance. A simple SLURM job submission script would look like the following:
+```bash
 #!/bin/bash -l
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=12
@@ -17,7 +17,7 @@ module load daint-gpu
 srun -n $SLURM_NTASKS --ntasks-per-node=$SLURM_NTASKS_PER_NODE -c $SLURM_CPUS_PER_TASK ./test.exe 
 ```
 
-The flag `-l` at the beginning allows you to call the module command within the script, for instance to load the GPU enabled software stack in the MODULEPATH with the module daint-gpu. Alternatively, the module daint-mc will make the multicore software stack available in your `MODULEPATH` instead.
+The flag `-l` at the beginning allows you to call the module command within the script, for instance to load the GPU enabled software stack in the `MODULEPATH` with the module `daint-gpu`. Alternatively, the module `daint-mc` will make the multicore software stack available in your `MODULEPATH` instead.
 
 The SLURM option `--constraint=gpu` makes sure that the SLURM scheduler allocates the XC50 Intel Haswell 12-core nodes with GPU devices and automatically sets the option `--gres=gpu:1`.
 
@@ -40,9 +40,9 @@ prepost | 30min | 1 | High priority pre/post processing
 xfer | 24h | 1 | Data transfer queue
 total | 2 h | | CSCS maintenance queue (restricted use)
 
-The list of queues and partitions is available typing __sinfo__ or __scontrol show partition__. Note that not all groups are enabled on every partition, please check the `AllowGroups` entry of the command `scontrol show partition`.
+The list of queues and partitions is available typing `sinfo` or `scontrol show partition`. Note that not all groups are enabled on every partition, please check the `AllowGroups` entry of the command `scontrol show partition`.
 
 You can choose the queue where to run your job by issuing the `--partition` directive in your batch script: `#SBATCH --partition=<partition_name>`
 
 Please check the man pages and the official documentation for further details on SLURM directives.
-For a list of the most useful SLURM commands, have a look at the corresponding entry in the FAQ list.
+For a list of the most useful SLURM commands, have a look at the corresponding entry in the [FAQ list](/getting_started/faq).

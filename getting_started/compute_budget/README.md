@@ -6,9 +6,9 @@ Note that resources at CSCS are assigned over three-month windows. Quotas are re
 
 Two different scripts let you check your compute budget on the systems in the current allocation window. Please login in on the system you are interested in and run one of the following commands:
 
-* __sbucheck__
+## Group usage - `sbucheck`
 
-It reports group usage breakdowns across the various systems, e.g.:
+`sbucheck` reports group usage breakdowns across the various systems, e.g.:
 ```
 Per-project usage at CSCS since Sun 1 January, 12am CET
 Allocation period ending Fri 31 March, 11pm CEST
@@ -17,9 +17,9 @@ sXXX:   Authorized Daint constraints: gpu
            DAINT Usage:   yyy NODE HOURS (NH)   Quota:    zzz NH    0.0%
 ```
 
-* __monthly_usage__
+## Monthly usage - `monthly_usage`
 
-It reports the group usage on the current system, e.g.:
+`monthly_usage` reports the group usage on the current system, e.g.:
 ```
 FROM:  Tue 1 Apr 2014
 TO:    Fri 25 Apr 2014 
@@ -33,6 +33,8 @@ Month          Day        Usage          Total         %Usage
 
 [... list of the usage per day...]
 ```
+
+It also accepts command line options, e.g.
 
 `monthly_usage -h` lists all the options you can use with this script
 

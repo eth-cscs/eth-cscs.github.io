@@ -214,7 +214,15 @@ The different sections listed in the top menu of the pages will guide you throug
 
 ## Where can I find a list of the module commands?
 
-You can have a list of the most useful module commands printed on the screen typing `module`.
+You can have a list of the module commands printed on the screen typing `module`. Here is a list of the most useful ones: 
+* `module list`: Lists all the currently loaded modules in your environment.
+* `module avail [modulename]...`: Lists all the available modules for the current system.
+   You can optionally pass a list of module files to just examine if those exact modules are available.
+   This command will perform a substring search and it will print all matched module names that start with the user supplied name.
+   For example, typing `module avail cuda` will list all the module names starting with cuda.
+* `module show <modulename>`: Shows all the dependencies and conflicts of modulename and all the environment variables that it sets.
+   This command is useful when you need to know more internal details about the module you need.
+* `module help <modulename>`: Prints a help message associated with the requested module.
 
 ---
 

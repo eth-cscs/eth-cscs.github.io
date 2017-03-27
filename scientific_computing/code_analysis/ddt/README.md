@@ -1,6 +1,4 @@
-# Debugging Tools
-
-## DDT
+# DDT Debugger
 
 [Allinea DDT](https://www.allinea.com/products/ddt) provides source-level
 debugging of Fortran, C, and C++ codes.
@@ -11,7 +9,7 @@ production systems, including the CRAY Piz Daint system. It can be executed
 either as a graphical user interface (ddt --connect mode) or from the
 command-line (ddt --offline mode).
 
-### Using DDT
+## Using DDT
 
 DDT is available on all CSCS (Cray and non Cray) systems. In order to check and
 use the debugger, type the following commands:
@@ -31,15 +29,13 @@ using the `ddt --connect srun` command.
 Note that the -p debug partition can be used for debugging. If larger or longer
 debugging sessions are needed, please contact us.  
 
-### Further information and troubleshooting
+## Further information and troubleshooting
 
 For more details, please have a look at:
 
 * [http://www.allinea.com/user-guide](http://www.allinea.com/user-guide)
 * [Allinea's Youtube channel](http://www.youtube.com/user/AllineaSoftware/videos)
 * CSCS webinars: [videos](https://www.youtube.com/playlist?list=PL1tk5lGm7zvR1CPR9KYZZEyRlCYQYY-Xp) and [src codes](ftp://ftp.cscs.ch/out/jgp/allinea/2016-allinea-cscs-codes.tgz)
-
-In case of questions/remarks, please contact us at [help@cscs.ch](mailto:help@cscs.ch)
 
 ![ddt_daint](img/ddt_pizdaint.png)
 
