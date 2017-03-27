@@ -4,7 +4,7 @@ Amber (Assisted Model Building with Energy Refinement) is a collective name for 
 
 # Licensing Terms and Conditions
 
-Amber is maintained and distributed by UCSF. Users agree to acknowledge use of Amber in any reports or publications of results obtained with the Software (ref. to AMBER Homepage for details).
+Amber is maintained and distributed by UCSF. Users agree to acknowledge use of Amber in any reports or publications of results obtained with the Software (ref. to [AMBER Homepage](http://ambermd.org/) for details).
 
 # Setup
 
