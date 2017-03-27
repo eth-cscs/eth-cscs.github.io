@@ -8,7 +8,7 @@ LAMMPS is a freely-available open-source code, distributed under the terms of th
 
 # Setup
 
-You can see a list of the available versions of the program installed on the machine after loading the gpu or multicore modulefile. In the examples below we use the daint-gpu modulefile:
+You can see a list of the available versions of the program installed on the machine after loading the gpu or multicore modulefile. In the examples below we use the `daint-gpu` modulefile:
 
 ```bash
 module load daint-gpu
@@ -51,6 +51,9 @@ export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 export CRAY_CUDA_MPS=1
 srun -n $SLURM_NTASKS --ntasks-per-node=$SLURM_NTASKS_PER_NODE -c $SLURM_CPUS_PER_TASK lmp_mpi -sf gpu -in input.in
 ```
+
+> Please note that if you want to use the hybrid MPI+OpenMP version of LAMMPS you need to load the `daint-mc` module and use the `lmp_omp` executable.
+
 
 # Further Documentation
 
