@@ -17,10 +17,12 @@ $ globus-url-copy -p 4 \
 ```
 
 The GridFTP server at CSCS has access to the following filesystems:
- * `/scratch/snx3000`
- * `/project`
- * `/store`
- * `/scratch/shared`
+```bash
+/scratch/snx3000
+/project
+/store
+/scratch/shared
+```
 
 Therefore the `<path>` variable of the examples above can access any of them, even if the command is executed on Ela. 
 In case the remote site doesn’t provide a GridFTP server with SSH authentication you can pull data from CSCS provided that the remote site provides a node where: 
