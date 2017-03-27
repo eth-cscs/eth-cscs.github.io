@@ -1,6 +1,6 @@
 # EasyBuild framework
 
-The EasyBuild framework is available through the module `EasyBuild-custom`. This module defines the location of the EasyBuild configuration files, recipes and installation directories. On Piz Daint, which is a heterogeneous system, you need to select which architecture should be targeted when building software. You can target the Intel Haswell architecture accessing the gpu software stack using the command:
+The [EasyBuild framework](https://easybuild.readthedocs.io/en/latest) is available at CSCS through the module `EasyBuild-custom`. This module defines the location of the EasyBuild configuration files, recipes and installation directories. On Piz Daint, which is a heterogeneous system, you need to select which architecture should be targeted when building software. You can target the Intel Haswell architecture accessing the gpu software stack using the command:
 
 ```bash
 module load daint-gpu EasyBuild-custom
