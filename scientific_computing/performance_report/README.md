@@ -6,7 +6,7 @@ challenging.
 CSCS implements a [production projects allocation](http://www.cscs.ch/user_lab/allocation_schemes/index.html) 
 review process with the evaluation of users application performance, in order to improve the allocation of computing resources.
 
-Cray Performance and Analysis Tools (CrayPAT) are the recommended performance tools on Cray systems, providing detailed information about application performance for basic profiling, MPI/OpenMP tracing and hardware performance counters.
+[Cray Performance and Analysis Tools (CrayPAT)](/scientific_computing/code_analysis/craypat) are the recommended performance tools on Cray systems, providing detailed information about application performance for basic profiling, MPI/OpenMP tracing and hardware performance counters.
 CrayPAT also provide access to a variety of performance experiments that measure how an executable program consumes resources while it is running, as well as several different user interfaces that provide access to the experiment and reporting functions.
 
 ## How to produce the performance report
