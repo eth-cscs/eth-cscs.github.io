@@ -27,7 +27,7 @@
     <label for="jobName">Job Name</label>
     <p class="help-block">Specify a name for your job.</p>
     <input type="input" class="form-control" id="jobName" placeholder="job_name" maxlength="25" onkeyup="return cscs_print_jobscript()">
-  </div>
+  </div>    
   <div class="form-group" id="emailAddressGroup">
     <label for="emailAddress">Email address</label>
     <p class="help-block">Specify your email address to get notified when the job changes state.</p>
@@ -36,7 +36,7 @@
   <div class="row form-group">
     <div class="col-md-12">
     <label for="wallclock">Wall time</label>
-    <p class="help-block">Specify the job duration.</p>
+    <p class="help-block">Specify the job duration. Please note: shorter jobs are candidates for backfilling and thus may be able to run sooner than jobs with longer wall times.</p>
     </div>
     <div class="col-md-6">
       <p class="help-block">hours</p>
