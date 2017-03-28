@@ -13,21 +13,21 @@ CrayPAT also provide access to a variety of performance experiments that measure
 
 Please proceed through the following steps:
 
-1. first run a scalability test of your application before instrumenting the executable and report the scalability plot in your proposal. In order to do so, please follow the guidelines provided in the [performance report template](performance_report_template.pdf): you can use the [LaTeX template](performance_report_template.tex) to create the proposal PDF  file with the scalability plot, using the command below (LaTeX and pdfLaTeX are available on Ela upon loading the module `texlive`);
+1. first run a scaling test of your application before instrumenting the executable and report the scalability data and plot in your proposal. In order to do so, please follow the guidelines provided in the [performance report template](performance_report_template.pdf): you can use the [LaTeX template](performance_report_template.tex) to create the proposal PDF  file with the scalability plot, using the command below (LaTeX and pdfLaTeX are available on Ela upon loading the module `texlive`);
  ```bash
  pdflatex --shell-escape performance_report_template.tex
  ```
  
-1. once you have selected the optimal job size for your benchmark following the guidelines of the template above, you should run your instrumented executable to produce the performance report. In order to instrument your application, please load the appropriate perftool-cscs modulefile: 
+1. once you have selected the optimal job size for your benchmark following the guidelines of the template, you should run your instrumented executable to produce the performance report. In order to instrument your application, please load the appropriate perftool-cscs modulefile: 
  ```bash
  module load daint-gpu
  module load perftools-cscs/645-cuda
  ```
- You should load the module `perftools-cscs/645-nogpu` or `perftools-cscs/645-openacc` if your code does not make use of the GPU or if it uses OpenACC respectively. Then build your application as usual, to create the binary file instrumented for performance analysis: the executable can then be used within the SLURM batch script with the optimal job size to produce the performance report, without loading the perftools modulefile;
+ You should load the module `perftools-cscs/645-nogpu` or `perftools-cscs/645-openacc` if your code does not make use of the GPU or if it uses OpenACC respectively. Then build your application as usual, to create the binary file instrumented for performance analysis: the executable can then be used within the SLURM batch script with the optimal job size to produce the performance report file, without loading the perftools modulefile;
 
 1. when your SLURM job exits successfully, two files with extension `.rpt` (report file) and `.ap2` (apprentice file) will be written in your working folder. Please make the two files `.rpt` and `.ap2` available for inspection by the reviewers, either by enclosing them at the time of your proposal submission or indicating explicitly within your proposal a folder under your CSCS $HOME or $PROJECT (not $SCRATCH), where they can be accessed for reading (please adjust the reading permissions).
 
-1. Please also enclose within the text of your proposal a summary of the performance data extracted from the report file `.rpt`, as in the following example:
+1. Please also enclose within the section __Performance Analysis__ of your proposal a summary of the performance data extracted from the report file `.rpt`, as in the following example:
  ```
  Experiment:                   lite  lite/gpu     
  Number of PEs (MPI ranks):      16
@@ -48,9 +48,9 @@ Please proceed through the following steps:
  |  59.2% | 1,236.266484 | 110.728787 |  8.8% |          1.0 |USER
  ```
 
- The first lines come from the top of the report file and can be retrieved with the command 
+ The first lines come from the top of the performance report file and they can be retrieved with the following command: 
  `grep -A 12 Experiment <report_file>.rpt`
- The MPI and USER lines are listed in report Tables and can be retrieved with the commands
+ The MPI and USER lines are listed in report Tables and can be retrieved with the commands:
  `grep \|MPI <report_file>.rpt`
  `grep \|USER <report_file>.rpt`
  Please complete the summary information following the guidelines available in the performance report template and check the [example performance report](example_performance_report.html) provided (please note that this report comes from a small testcase, therefore it is shown only to help you find the required information within the text).
