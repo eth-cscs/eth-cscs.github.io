@@ -25,7 +25,7 @@ render TachyonLOptiXInternal my_image.ppm
 
 ## Batch-mode with Tcl scripts
 
-The EGL version of VMD can run OpenGL code on a compute node, without an X-server. You should use the VMD-egl module to run in batch. The following job script asks for 1 node, using 1 task per node. VMD will automatically use all threads available on the node and execute the contents of your TCL script in file `script.tcl`.
+The EGL version of VMD can run OpenGL code on a compute node, without an X-server. You should use the VMD/1.9.3-egl module to run in batch. The following job script asks for 1 node, using 1 task per node. VMD will automatically use all threads available on the node and execute the contents of your TCL script in file `script.tcl`.
 
 ```bash
 #!/bin/bash
@@ -42,7 +42,7 @@ The EGL version of VMD can run OpenGL code on a compute node, without an X-serve
 #========================================
 # load modules and run simulation
 module load daint-gpu
-module load VMD-egl/1.9.3
+module load VMD/1.9.3-egl
 
 srun -n $SLURM_NTASKS -N $SLURM_NNODEs vmd -size 1024 800 -dispdev none -eofexit < script.tcl
 ```
@@ -89,7 +89,7 @@ Once the job is scheduled, the SLURM output in file `vncdesktop.out` will give y
 ssh -f -L 12223:nid02223.daint:5901 username@ela.cscs.ch sleep 3600
 vncviewer localhost:12223
 ```
-Once inside the VNC desktop, use the VMD-ogl module and run VMD as you would on your local desktop, but with full access to Piz Daint's filesystem.
+Once inside the VNC desktop, use the VMD/1.9.3-ogl module and run VMD as you would on your local desktop, but with full access to Piz Daint's filesystem.
 
 # Further Documentation
 

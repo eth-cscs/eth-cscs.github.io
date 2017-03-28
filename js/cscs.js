@@ -65,7 +65,6 @@ function cscs_setup_site_content(navbarfile, sidebarfile) {
   }
 
   var presenterMode = document.getElementById('start-cscs-presenter-mode');
-  presenterMode.click(function(e){e.preventDefault();});
   presenterMode.onclick = __cscs_show_in_presenter_mode;
 
   __cscs_email_protector();
@@ -325,11 +324,11 @@ function __cscs_prepend_domain_to_links()
     });
   });
 
-  $('#cscs-leftbar-markdown').children('h1, h2, h3, h4, h5, h6').children('a').each(function(index, element) {
-    $(element).attr('href',function(i,v) {
-      return domain + v;
-    });
-  });
+  // $('#cscs-leftbar-markdown').children('h1, h2, h3, h4, h5, h6').children('a').each(function(index, element) {
+  //   $(element).attr('href',function(i,v) {
+  //     return domain + v;
+  //   });
+  // });
 }
 
 // this is a helper function to get the position of the comments in the page
