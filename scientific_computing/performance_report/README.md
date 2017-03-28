@@ -48,7 +48,12 @@ Please proceed through the following steps:
  |  59.2% | 1,236.266484 | 110.728787 |  8.8% |          1.0 |USER
  ```
 
- The first lines come from the top of the report file, while MPI and USER are listed in Table 1, Read and Write in Table 2. Please complete the summary information following the guidelines available in the performance report template and check the [example performance report](example_performance_report.html) provided (please note that this report comes from a small testcase, therefore it is shown only to help you find the required information within the text).
+ The first lines come from the top of the report file and can be retrieved with the command 
+ `grep -A 12 Experiment <report_file>.rpt`
+ The MPI and USER lines are listed in report Tables and can be retrieved with the commands
+ `grep \|MPI <report_file>.rpt`
+ `grep \|USER <report_file>.rpt`
+ Please complete the summary information following the guidelines available in the performance report template and check the [example performance report](example_performance_report.html) provided (please note that this report comes from a small testcase, therefore it is shown only to help you find the required information within the text).
 
 ## Additional information
 
