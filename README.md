@@ -2,10 +2,13 @@
 
 <!-- start-news --><!-- end-news -->
 
+---
+
 # Past News
  
 For a collection of all news [access the news archive](news).
-# Planned Outages
+
+# Planned Interventions
 
 - 31.05.2017 - [Site wide] Maintenance
 - 27.09.2017 - [Site wide] Maintenance
