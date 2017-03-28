@@ -7,4 +7,4 @@ CSCS User Portal
 # [Getting Started](getting_started/get_an_account)
 # [Storage](storage/file_systems)
 # [Scientific Computing](scientific_computing)
-# [My Projects](http://user.cscs.ch/nc/my_projects/index.html)
+# [My Projects](http://www.cscs.ch/user_lab/my_projects/index.html)
