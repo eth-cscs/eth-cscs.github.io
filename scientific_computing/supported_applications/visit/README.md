@@ -7,7 +7,7 @@ VisIt is distributed [free of charge](https://wci.llnl.gov/simulation/computer-c
 
 # Setup
 
-VisIt does not use GPUs for accelerated rendering. You should load the daint-mc module and the VisIt module. Should you only have an allocation on the GPU partition, you may also use the `daint-gpu` module, but be aware that rendering will be software-based:
+VisIt does not use GPUs for accelerated rendering. You should load the daint-mc module and the VisIt module. Should you only have an allocation on the GPU partition, you may also use the `daint-gpu` module, but be aware that rendering willl be software-based:
 
 ```bash
 module load daint-mc
