@@ -6,34 +6,28 @@ challenging.
 CSCS implements a [production projects allocation](http://www.cscs.ch/user_lab/allocation_schemes/index.html) 
 review process with the evaluation of users application performance, in order to improve the allocation of computing resources.
 
-CrayPat is the recommended performance analysis tool for Cray systems: it
-provides detailed information about application performance, it can be used for
-basic profiling, MPI/OpenMP tracing and hardware performance counter based
-analysis. CrayPat also provides access to a variety of performance experiments
-that measure how an executable program consumes resources while it is running,
-as well as several different user interfaces that provide access to the
-experiment and reporting functions.
+Cray Performance and Analysis Tools (CrayPAT) are the recommended performance tools on Cray systems, providing detailed information about application performance for basic profiling, MPI/OpenMP tracing and hardware performance counters.
+CrayPAT also provide access to a variety of performance experiments that measure how an executable program consumes resources while it is running, as well as several different user interfaces that provide access to the experiment and reporting functions.
 
 ## How to produce the performance report
 
 Please proceed through the following steps:
 
-1. first run a scalability test of your application before instrumenting the executable and report the scalability plot in your proposal. In order to do so, please follow the guidelines provided in the [performance report template](performance_report_template.pdf): you can use the [LaTeX template](performance_report_template.tex) to create the proposal PDF  file with the scalability plot, using the command 
+1. first run a scalability test of your application before instrumenting the executable and report the scalability plot in your proposal. In order to do so, please follow the guidelines provided in the [performance report template](performance_report_template.pdf): you can use the [LaTeX template](performance_report_template.tex) to create the proposal PDF  file with the scalability plot, using the command below (LaTeX and pdfLaTeX are available on Ela upon loading the module `texlive`);
  ```bash
  pdflatex --shell-escape performance_report_template.tex
  ```
- LaTeX and pdfLaTeX are available on Ela upon loading the module `texlive`;
-
-1. once you have selected the optimal job size for your benchmark following the guidelines, you should run your instrumented executable to produce the performance report. In order to instrument your application, please load the appropriate perftool-cscs modulefiles: 
- ```
+ 
+1. once you have selected the optimal job size for your benchmark following the guidelines of the template above, you should run your instrumented executable to produce the performance report. In order to instrument your application, please load the appropriate perftool-cscs modulefile: 
+ ```bash
  module load daint-gpu
  module load perftools-cscs/645-cuda
  ```
- You should load the module `perftools-cscs/645-nogpu` or `perftools-cscs/645-openacc` if your code does not make use of the GPU or if it uses OpenACC respectively. Then build your application as usual, to create the binary file instrumented for performance analysis: the executable can then be used within the SLURM batch script of the optimal job size to produce the performance report, without loading the perftools modulefile;
+ You should load the module `perftools-cscs/645-nogpu` or `perftools-cscs/645-openacc` if your code does not make use of the GPU or if it uses OpenACC respectively. Then build your application as usual, to create the binary file instrumented for performance analysis: the executable can then be used within the SLURM batch script with the optimal job size to produce the performance report, without loading the perftools modulefile;
 
-1. when your job exits successfully, two files with extension `.rpt` (report file) and `.ap2` (apprentice file) will be written in your working folder. Please make the two files `.rpt` and `.ap2` available for inspection by the reviewers, either by enclosing them to your submission or indicating explicitly within your proposal a folder under your CSCS $HOME or $PROJECT (not $SCRATCH), where they can be accessed for reading (please adjust the reading permissions).
+1. when your SLURM job exits successfully, two files with extension `.rpt` (report file) and `.ap2` (apprentice file) will be written in your working folder. Please make the two files `.rpt` and `.ap2` available for inspection by the reviewers, either by enclosing them at the time of your proposal submission or indicating explicitly within your proposal a folder under your CSCS $HOME or $PROJECT (not $SCRATCH), where they can be accessed for reading (please adjust the reading permissions).
 
-You should also always enclose within the text of your proposal a summary of the performance data extracted from the report file `.rpt`, as in the following example:
+1. Please also enclose within the text of your proposal a summary of the performance data extracted from the report file `.rpt`, as in the following example:
  ```
     Number of PEs (MPI ranks):     16
     Numbers of PEs per Node:        8  PEs on each of  2  Nodes
@@ -49,21 +43,13 @@ You should also always enclose within the text of your proposal a summary of the
     I/O Write Rate:      83.975 MBytes/sec
 
     |  25.0% | 2122.2 |     -- |    -- |MPI
-
     |  24.4% | 2074.2 |     -- |    -- |USER
 
     Read (MBytes): 18.724653 MBytes
-
     Write (MBytes): 38.421875 MBytes
  ```
 
-The first ten lines come from the top of the report file; MPI and USER are
-listed in Table 1, Read and Write in Table 2. Please complete the summary
-information following the guidelines available in the performance report
-template and check the [example performance
-report](example_performance_report.html) available (please note that this
-report comes from a small testcase, therefore it is shown only to help you find
-the required information within the text).
+ The first lines come from the top of the report file, while MPI and USER are listed in Table 1, Read and Write in Table 2. Please complete the summary information following the guidelines available in the performance report template and check the [example performance report](example_performance_report.html) provided (please note that this report comes from a small testcase, therefore it is shown only to help you find the required information within the text).
 
 ## Additional information
 
