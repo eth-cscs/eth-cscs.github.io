@@ -24,7 +24,7 @@ Scientific Computing
 ## [GNU compiler](scientific_computing/code_compilation/gnu)
 ## [Intel compiler](scientific_computing/code_compilation/intel)
 ## [PGI compiler](scientific_computing/code_compilation/pgi)
-## [EasyBuild framework](scientific_computing/icode_compilation/easybuild_framework)
+## [EasyBuild framework](scientific_computing/code_compilation/easybuild_framework)
 # [Code Analysis](scientific_computing/code_analysis)
 ## [CRAY performance tools](scientific_computing/code_analysis/craypat/)
 ## [VI-HPS performance tools](scientific_computing/code_analysis/vihps/)
