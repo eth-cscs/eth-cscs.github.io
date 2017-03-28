@@ -6,7 +6,7 @@ challenging.
 CSCS implements a [production projects allocation](http://www.cscs.ch/user_lab/allocation_schemes/index.html) 
 review process with the evaluation of users application performance, in order to improve the allocation of computing resources.
 
-Cray Performance and Analysis Tools (CrayPAT) are the recommended performance tools on Cray systems, providing detailed information about application performance for basic profiling, MPI/OpenMP tracing and hardware performance counters.
+[Cray Performance and Analysis Tools (CrayPAT)](/scientific_computing/code_analysis/craypat) are the recommended performance tools on Cray systems, providing detailed information about application performance for basic profiling, MPI/OpenMP tracing and hardware performance counters.
 CrayPAT also provide access to a variety of performance experiments that measure how an executable program consumes resources while it is running, as well as several different user interfaces that provide access to the experiment and reporting functions.
 
 ## How to produce the performance report
@@ -29,24 +29,23 @@ Please proceed through the following steps:
 
 1. Please also enclose within the text of your proposal a summary of the performance data extracted from the report file `.rpt`, as in the following example:
  ```
-    Number of PEs (MPI ranks):     16
-    Numbers of PEs per Node:        8  PEs on each of  2  Nodes
-    Numbers of Threads per PE:      1
-    Number of Cores per Socket:     8
-    Execution start time:  Wed Sep 24 16:49:15 2014
-    System name and speed:  daint05 2601 MHz
+ Experiment:                   lite  lite/gpu     
+ Number of PEs (MPI ranks):      16
+ Numbers of PEs per Node:         1  PE on each of  16  Nodes
+ Numbers of Threads per PE:   1,114
+ Number of Cores per Socket:     12
+ Execution start time:  Tue Mar 28 15:15:55 2017
+ System name and speed:  nid02294  2601 MHz (approx)
+ Intel haswell CPU  Family:  6  Model: 63  Stepping:  2
 
-    Process Time:          1366  secs       85.368 secs per PE
-    High Memory:        858.441 MBytes      53.653 MBytes per PE
-    MFLOPS (aggregate):   15447 M/sec      965.459 M/sec per PE
-    I/O Read Rate:       90.281 MBytes/sec        
-    I/O Write Rate:      83.975 MBytes/sec
+ Avg Process Time:     2,100 secs             
+ High Memory:       13,977.3 MBytes     873.6 MBytes per PE
+ I/O Read Rate:    67.110363 MBytes/sec       
 
-    |  25.0% | 2122.2 |     -- |    -- |MPI
-    |  24.4% | 2074.2 |     -- |    -- |USER
+ |  31.8% |   664.415775 |         -- |    -- |     35,648.0 |MPI_SYNC
+ |   2.8% |    58.511390 |         -- |    -- | 14,458,788.1 |MPI
 
-    Read (MBytes): 18.724653 MBytes
-    Write (MBytes): 38.421875 MBytes
+ |  59.2% | 1,236.266484 | 110.728787 |  8.8% |          1.0 |USER
  ```
 
  The first lines come from the top of the report file, while MPI and USER are listed in Table 1, Read and Write in Table 2. Please complete the summary information following the guidelines available in the performance report template and check the [example performance report](example_performance_report.html) provided (please note that this report comes from a small testcase, therefore it is shown only to help you find the required information within the text).
