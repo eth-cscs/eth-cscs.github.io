@@ -2,11 +2,11 @@
 
 <!-- start-news --><!-- end-news -->
 
----
-
 # Past News
  
 For a collection of all news [access the news archive](news).
+
+---
 
 # Planned Interventions
 
