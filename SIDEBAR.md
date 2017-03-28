@@ -8,3 +8,4 @@ CSCS User Portal
 # [Storage](/storage/file_systems)
 # [Scientific Computing](/scientific_computing)
 # [My Projects](http://www.cscs.ch/user_lab/my_projects/index.html)
+# [Software News](/software_news)
