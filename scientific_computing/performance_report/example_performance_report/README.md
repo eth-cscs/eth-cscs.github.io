@@ -5,7 +5,7 @@ as a template to run your representative benchmarks, scaling test and the perfor
 
 The example that we use is a small benchmark of the [CP2K](www.cp2k.org) software package, simulating the dynamics of a 
 water box featuring 256 water molecules: the basis set, the input file, the potential and the SLURM submission script 
-can be retrieved downloading the package [benchmark.tar.gz](benchmark.tar.gz):
+can be retrieved downloading the [corresponding package](benchmark.tar.gz):
 ```text
 Input files:
  GTH_BASIS_SETS
@@ -36,13 +36,14 @@ daint 2017-03-28T11:20:48 1226554 	 Time=206.249
 ```
 You see in columns the `$SLURM_CLUSTER_NAME`, the submit time, the `$SLURM_JOB_ID` and the wall time in seconds, as measured 
 by the application itself and printed in the output file `slurm-$SLURM_JOB_ID.out`. We can therefore compute the speed-up:
-| Nodes | Wall time (s) | Speed-up |
-| ---: | ---: | ---: |
-|    2 | 1022 | 1.00 |
-|    4 |  476 | 2.15 |
-|    8 |  339 | 3.01 |
-|   16 |  210 | 4.87 |
-|   32 |  206 | 4.96 |
+
+Nodes | Wall time (s) | Speed-up
+ ---: | ---: | ---:
+    2 | 1022 | 1.00
+    4 |  476 | 2.15
+    8 |  339 | 3.01
+   16 |  210 | 4.87
+   32 |  206 | 4.96
 
 We can plot the strong scaling results and compare them against the ideal scaling, using the following Gnuplot script:
 ```gnuplot
@@ -60,7 +61,7 @@ plot "-" w linespoints linewidth 2 title "H_{2}O benchmark", x/2 w lines lt 3 ti
 32 4.96
 ```
 
-![Strong scaling vs. ideal scaling](scaling.pdf)
+![Strong scaling vs. ideal scaling](scaling.png)
 
 # Performance Analysis
 
