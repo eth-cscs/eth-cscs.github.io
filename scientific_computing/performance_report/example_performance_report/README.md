@@ -54,7 +54,7 @@ set xlabel "Number of Nodes"
 set ylabel "Speed-up"
 set key left
 set size 1.,1.
-plot "-" w linespoints linewidth 2 title "H_{2}O benchmark", x/2 w lines lt 3 title "Ideal Speed-up"
+plot "-" w linespoints linewidth 2 title "Representative benchmark", x/2 w lines lt 3 title "Ideal Speed-up"
  2 1.00 
  4 2.15
  8 3.01
