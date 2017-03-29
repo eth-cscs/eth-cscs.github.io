@@ -25,7 +25,9 @@ Please proceed through the following steps:
  ```
  You should load the module `perftools-cscs/645-nogpu` or `perftools-cscs/645-openacc` if your code does not make use of the GPU or if it uses OpenACC respectively. Then build your application as usual with the module loaded, to create an executable instrumented to run the performance analysis: the instrumented binary file which can be used within the SLURM batch script with the optimal job size to produce the performance report file, without the need to load the perftools modulefile again;
 
-1. when the performance SLURM job exits successfully, you should find in your working folder two files with extension `.rpt` (report text file) and `.ap2` (apprentice binary file). Please make the two files `.rpt` and `.ap2` available for inspection by the reviewers, either by enclosing them at submission time or indicating within the section __Performance Analysis__ of your proposal where they can be accessed for reading under your $HOME or $PROJECT (not $SCRATCH). Please also report in this section a summary of the performance data extracted from the report text file `.rpt`, as in the following example:
+1. when the performance SLURM job exits successfully, you should find in your working folder two files with extension `.rpt` (report text file) and `.ap2` (apprentice binary file). Please make the two files `.rpt` and `.ap2` available for inspection by the reviewers, either by enclosing them at submission time or indicating within the section __Performance Analysis__ of your proposal where they can be accessed for reading under your $HOME or $PROJECT (not $SCRATCH). 
+
+1. Please also report in this section a summary of the performance data extracted from the report text file `.rpt`, as in the following example:
  ```
  CrayPat/X:  Version 6.4.5 Revision 87dd5b8  01/23/17 15:37:24
  Experiment:                   lite  lite/gpu     
