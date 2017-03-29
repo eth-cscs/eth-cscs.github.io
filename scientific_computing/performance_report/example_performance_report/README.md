@@ -35,7 +35,7 @@ daint 2017-03-28T11:01:58 1226149 	 Time=209.510
 daint 2017-03-28T11:20:48 1226554 	 Time=206.249
 ```
 You see in columns the `$SLURM_CLUSTER_NAME`, the submit time, the `$SLURM_JOB_ID` and the wall time in seconds, as measured 
-by the application itself and printed in the output file `slurm-$SLURM_JOB_ID.out`. We can therefore compute the speed-up:
+by the application itself and printed in the output file `slurm-$SLURM_JOB_ID.out`. We can therefore compute the corresponding speed-up:
 
 Nodes | Wall time (s) | Speed-up
  ---: | ---: | ---:
@@ -45,7 +45,7 @@ Nodes | Wall time (s) | Speed-up
    16 |  210 | 4.87
    32 |  206 | 4.96
 
-We can plot the strong scaling results and compare them against the ideal scaling, using the following Gnuplot script:
+Strong scaling results compared against the ideal scaling with a Gnuplot script:
 ```gnuplot
 set terminal postscript eps enhanced color size 5.5,3.5
 set output "scaling.eps"
@@ -62,6 +62,7 @@ plot "-" w linespoints linewidth 2 title "H_{2}O benchmark", x/2 w lines lt 3 ti
 ```
 
 ![Strong scaling vs. ideal scaling](scaling.png)
+<img src="scaling.png" width="48">
 
 # Performance Analysis
 
