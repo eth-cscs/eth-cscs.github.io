@@ -1,11 +1,11 @@
 # Example Performance Report
 
-We provide an example of perfomance report that might be used as a starting point for your CSCS Production Project Submission, 
-as a template to run your representative benchmarks, scaling test and the performance analysis in particular.
+We provide an example of perfomance report for the Production Project Submission, 
+which might be used as a guideline to run the representative benchmarks, scaling test and performance analysis.
 
-The example that we use is a small benchmark of the [CP2K](www.cp2k.org) software package, simulating the dynamics of a 
-water box featuring 256 water molecules: the basis set, the input file, the potential and the SLURM submission script 
-can be retrieved downloading the [corresponding package](benchmark.tar.gz):
+The example is a small benchmark of the [CP2K](www.cp2k.org) software package, simulating the dynamics of a 
+water box featuring 256 molecules: basis set, input file, potential and SLURM submission script 
+can be retrieved downloading the [compressed tarball](benchmark.tar.gz):
 ```text
 Input files:
  GTH_BASIS_SETS
@@ -16,15 +16,16 @@ SLURM batch script:
  cp2k.sbatch
 ```
 
-The job will run with the SLURM constraint `gpu` on the Cray XC50, using 1 MPI task per node and 12 OpenMP threads. 
-The SLURM batch script will write the output in `$SLURM_JOB_ID.out` and will append the wall time of each job
-to a log file called `$SLURM_JOB_NAME.log`, which will be used to create the scaling plot and the table.
+The job runs with the SLURM constraint `gpu` on the Cray XC50, with 1 MPI task per node and 12 OpenMP threads. 
+The script will write the output in `$SLURM_JOB_ID.out` and will append the wall time of each job
+to the log file `$SLURM_JOB_NAME.log`, which will be useful to create the scaling plot and the table.
 
 ## Scaling
 
-We start the scaling test on 2 nodes and we will use the corresponding wall time as a reference to compute 
-the speed-up of larger job sizes. We then proceed doubling the number of nodes and checking the corresponding speed-up, 
-until we are sure to have reached the ∼ 50% limit in parallel efficiency: this happens at 16 nodes in this small example.
+Due to the small size of the example, we can start the scaling test on 2 nodes: we will use the corresponding 
+wall time as a reference to compute the speed-up of larger job sizes. 
+We then proceed submitting the larger scaling jobs doubling the number of nodes each time, checking the corresponding speed-up 
+until we are sure that we have reached the ∼50% limit in parallel efficiency, which occurs at 16 nodes in this small example.
 
 The log file saved by the template SLURM batch script after 5 jobs on 2, 4, 8, 16 and 32 nodes will look like the following:
 ```text
@@ -34,8 +35,8 @@ daint 2017-03-28T10:55:23 1225965 	 Time=339.370
 daint 2017-03-28T11:01:58 1226149 	 Time=209.510
 daint 2017-03-28T11:20:48 1226554 	 Time=206.249
 ```
-You see in columns the `$SLURM_CLUSTER_NAME`, the submit time, the `$SLURM_JOB_ID` and the wall time in seconds, as measured 
-by the application itself and printed in the output file `slurm-$SLURM_JOB_ID.out`. We can therefore compute the corresponding speed-up:
+The columns show the `$SLURM_CLUSTER_NAME`, the submit time, the `$SLURM_JOB_ID` and the wall time in seconds, measured 
+by the application itself and printed in the output file `slurm-$SLURM_JOB_ID.out`. We present the scaling data in the table below:
 
 Nodes | Wall time (s) | Speed-up
  ---: | ---: | ---:
@@ -45,7 +46,7 @@ Nodes | Wall time (s) | Speed-up
    16 |  210 | 4.87
    32 |  206 | 4.96
 
-[Strong scaling results](scaling.pdf) can be plotted against the ideal scaling using the Gnuplot script below:
+[Strong scaling results](scaling.pdf) can be plotted against ideal scaling with this Gnuplot script:
 ```gnuplot
 set terminal postscript eps enhanced color size 5.5,3.5
 set output "scaling.eps"
@@ -60,6 +61,8 @@ plot "-" w linespoints linewidth 2 title "H_{2}O benchmark", x/2 w lines lt 3 ti
 16 4.87 
 32 4.96
 ```
+The output is the following scaling plot:
+![file:///scientific_computing/performance_report/example_performance_report/scaling.pdf]
 
 ## Performance Analysis
 
