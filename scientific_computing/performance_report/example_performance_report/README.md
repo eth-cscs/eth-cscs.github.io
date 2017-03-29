@@ -64,3 +64,4 @@ plot "-" w linespoints linewidth 2 title "H_{2}O benchmark", x/2 w lines lt 3 ti
 
 # Performance Analysis
 
+Please check the complete [example performance report file](example_performance_report_file.html) produced by CrayPAT.
