@@ -42,11 +42,15 @@ Please proceed through the following steps:
  Execution start time:  Tue Mar 28 15:15:55 2017
  System name and speed:  nid02294  2601 MHz (approx)
  Intel haswell CPU  Family:  6  Model: 63  Stepping:  2
+ 
+ 
  Avg Process Time:     2,100 secs             
  High Memory:       13,977.3 MBytes     873.6 MBytes per PE
  I/O Read Rate:    67.110363 MBytes/sec       
  I/O Write Rate:   19.512511 MBytes/sec
+ 
  |  59.2% | 1,236.266484 | 110.728787 |  8.8% |          1.0 |USER
+ 
  |  31.8% |   664.415775 |         -- |    -- |     35,648.0 |MPI_SYNC
  |   2.8% |    58.511390 |         -- |    -- | 14,458,788.1 |MPI
  ```
