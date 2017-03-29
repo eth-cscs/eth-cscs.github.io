@@ -13,7 +13,7 @@ Please proceed through the following steps:
 
 1. first run a scaling test of your application before instrumenting the executable and report the scalability data and plot in the section __Representative Benchmarks and Scaling__ of your proposal, following the guidelines provided in the [performance report template](performance_report_template.pdf). You can use the [LaTeX template](performance_report_template.tex) to create the PDF file with the module `texlive` on the front-end Ela:
  ```bash
- pdflatex --shell-escape performance_report_template.tex (run the command twice)
+ pdflatex --shell-escape performance_report_template.tex (run it twice)
  ```
   Based on the scaling data you can select the most parallel efficient job size for the performance report, following the guidelines of the template;
  
@@ -30,7 +30,7 @@ Please proceed through the following steps:
  grep \|USER <report>.rpt
  grep \|MPI <report>.rpt
  ```
- The summary should look like the example below: please check as well the complete [example performance report file](example_performance_report_file.html) provided.
+ The summary should look like the example below:
  ```text
  CrayPat/X:  Version 6.4.5 Revision 87dd5b8  01/23/17 15:37:24
  Experiment:                   lite  lite/gpu     
@@ -52,6 +52,8 @@ Please proceed through the following steps:
  |  31.8% |   664.415775 |         -- |    -- |     35,648.0 |MPI_SYNC
  |   2.8% |    58.511390 |         -- |    -- | 14,458,788.1 |MPI
  ```
+
+You might also check the step-by-step [example performance report](example_performance_report) provided.
 
 ## Additional information
 

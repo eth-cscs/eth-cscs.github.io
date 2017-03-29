@@ -3,34 +3,36 @@
 \usepackage[a4paper,includeheadfoot,top=1cm,bottom=2cm,left=2cm,right=2cm]{geometry}
 \usepackage{here}
 \usepackage{sectsty}
-\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
 \usepackage{graphicx}
 \usepackage{gnuplottex}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+\usepackage{authblk}
+\usepackage{caption}
 
-\title{Proposal title}
-\author{
-        PI \\
-        affiliation,
-            \and
-        CoPI\\
-        affiliation
-}
-\date{}
+\title{This is the title of the Proposal}
+\author[1]{Principal Investigator}
+\author[2]{First Collaborator}
+\author[1,2]{Last Collaborator}
+\affil[1]{Affiliation of the PI}
+\affil[2]{Other affiliation}
 
-%\sectionfont{\large\centering}
-%\subsectionfont{\large\centering}
-%\subsubsectionfont{\large\centering}
-%\paragraphfont{\large\centering}
+\date{}             
+
+% define section numbering: hidden
+\renewcommand\thesection{}
+% define secondary label of items in lists
+%\renewcommand{\labelitemii}{$\star$}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
- This is the abstract of the proposal \ldots
+ This is the abstract of the proposal: in this document we provide a template for CSCS Production Project Submission with guidelines, 
+focusing on sections \textbf{Representative benchmarks and Scaling} and \textbf{Performance Analysis} in particular.
 \end{abstract}
 
 \section{Background and Significance}
-The project proposal should be no longer than \emph{10 A4 pages} including graphs and references, and must contain the following information:
+The project proposal should be no longer than \textbf{10 A4 pages} including graphs and references, and must contain the following information:
 \begin{itemize}
  \item Abstract
  \item Background and significance
@@ -38,143 +40,182 @@ The project proposal should be no longer than \emph{10 A4 pages} including graph
  \item Description of the research methods, algorithms, and code
  \item Parallelization approach, memory requirements
  \item Representative benchmarks and scaling
- \item Performance analysis (link: see how to do it)
- \item Resource justification (annual node hours and disk space)
- \item Project plans: tasks and milestones
- \item Visualization, pre- and post-processing needs
- \item Previous results are mandatory! Please list allocations requested, granted and used in your previous project (if applicable)
- \item Research publications that resulted from these allocations
- \item Development and debugging requirements (not mandatory)
+ \item Performance analysis
+ \item Resource justification (annual node-hours and disk space)
+ \begin{itemize}
+  \item Visualization, pre- and post-processing needs
+  \item Development and debugging requirements
+ \end{itemize}
+ \item Project plan: tasks and milestones
+ \item Previous results 
 \end{itemize}
-Therefore you should follow the structure used in this template, which reflects the official requirements. 
-Please check the page with the general instructions for \href{http://www.cscs.ch/user_lab/allocation_schemes/submission100/index.html}{Proposal Submission} on the \href{www.cscs.ch}{CSCS Website} for more details. 
+Please follow the structure used in this template, which reflects the requirements reported on the page with the general instructions for \href{http://www.cscs.ch/user_lab/allocation_schemes/submission100/index.html}{Production Projects Submission}. 
 
 \section{Scientific Goals and Objectives}
 \ldots 
 
-\section{Research Method, Algorithms and Code}
-Please insert in this section a comprehensive explanation with a brief list of libraries used: fftw, parallel-hdf5, petsc, \ldots
+\section{Research Methods, Algorithms and Code}
+Please insert within this section a description of the methods and algorithms of the code that you plan to use in your computational study, 
+including a brief list of the main libraries that will be used. E.g.: fftw, parallel-hdf5, petsc, \ldots
 
-\section{Parallelisation Approach and Memory Requirements}
-Please report in this section the parallel approach employed to address the proposed computational study with the selected code.
-For instance report if using MPI distributed parallelism or hybrid MPI/OpenMP, including details like the type of MPI communication, 
-halo cell exchange and which part of the code is taking advantage of shared memory parallelism. 
-You should also point out which portions of the selected code used GPU or OpenACC/CUDA \ldots
+\section{Parallelization Approach and Memory Requirements}
+Please present in this section the parallel approach employed to address the proposed computational study with the selected code: 
+in general for community codes this information is available on the home page of the code itself.
+For instance, on the \href{www.cp2k.org}{CP2K home page} one can read that \emph{CP2K is written in Fortran 2003 and can be run 
+efficiently in parallel using a combination of multi-threading, MPI, and CUDA}.
+If you don't plan to use a community code, please report if the code makes used of MPI distributed parallelism or hybrid MPI/OpenMP, 
+which type of MPI communication has been employed and if the code is taking advantage of shared memory parallelism, 
+GPU accelerators or OpenACC/CUDA.
 
 \section{Representative Benchmarks and Scaling}
-Please report in this section the mandatory strong scaling tests performed using the selected code to address the proposed study 
-with a representative system to be investigated during the research work. 
-The scope of this test is to choose the most efficient job size to run the performance analysis on your representative system 
-that will be reported in the next section. 
-You should therefore select meaningful job sizes for your representative system, compatible with reasonably short runtimes: 
-the lowest number of nodes might be determined by memory and wall-time constraints, while the highest number of nodes tested 
-should allow you identify the job size at which you reach $\sim 50\%$ of the parallel efficiency, given by the ideal scaling. 
-Weak scaling tests might be provided as well, in addition to the srong scaling scalability data. 
+Please report in this section the results of the mandatory strong scaling tests performed with the selected code on a representative system 
+to be investigated during your research activity. 
+The goal is to choose the most efficient job size to run the performance analysis that will be reported in the next section. 
+You should therefore select meaningful job sizes to simulate the representative system, compatible with reasonably short runtimes: 
+the lowest number of nodes might be determined by memory and wall time constraints, while the highest number of nodes tested 
+should allow you identify the job size at which you reach $\sim 50\%$ of the parallel efficiency with respect to ideal scaling. 
+Weak scaling tests might be provided as well, in addition to the strong scaling data. 
 
-Figure~\ref{fig:scaling} shows the scalability plot for our example system: we start the scalability study with a job size of 8 nodes, 
-whose runtime will be used as reference to compute the speed-up of larger job sizes. 
-We then proceed doubling the number of nodes and checking the corresponding speed-up, until we are sure to have reached the $50\%$ 
-limit in parallel efficiency. 
+The wall time in seconds and the corresponding speed-up of the small example system shown in this template are reported 
+in Table~\ref{table:scaling}, while Figure~\ref{fig:scaling} shows the scaling plot: we start the scaling test 
+on 2 nodes, whose runtime has been used as a reference to compute the speed-up of larger job sizes. 
+We then proceed doubling the number of nodes and checking the corresponding speed-up, until we are sure to have reached the $\sim 50\%$ 
+limit in parallel efficiency (16 nodes in the small example below).
 
-\begin{figure}[H]
- \begin{center}
+\begin{table}[H]
+ \begin{minipage}{0.35\linewidth}
+ \centering
+  \begin{tabular}{@{}*3{r}@{}}
+   \hline \\
+   Nodes & Wall time (s) & Speed-up \\
+   \\ \hline \hline \\
+    2 & 1022 & 1.00 \\ 
+    4 &  476 & 2.15 \\
+    8 &  339 & 3.01 \\
+   16 &  210 & 4.87 \\
+   32 &  206 & 4.96 \\
+   \\ \hline
+  \end{tabular}
+  \caption{Wall time and speed-up}
+  \label{table:scaling}
+ \end{minipage}
+ \hfill
+ \begin{minipage}{0.65\linewidth}
+  \centering
   \begin{gnuplot}
    % gnuplot script file to create a scalability plot
    set terminal latex
    set xlabel "Number of Nodes"
-   set ylabel "Speed-up"
+   unset ytics 
+   set y2label "Speed-up" offset -15
+   set y2tics border mirror offset -5.5,0 2,2,14
    # plot legend
-   set key left
-   set size 1.,1.
-   plot "-" w linespoints title "Representative system", x/8 w lines lt 3 title "Ideal Speed-up"
-   8 1.0
-   16 1.9
-   32 3.7
-   64 6.0
-   128 7.5
-   e
-   8 1.0
-   16 1.75
-   32 3.0
-   64 5.0
-   128 7.0
+   set key center top
+   set size 0.85,0.85
+   plot "-" w linespoints linewidth 2 title "Representative benchmark", x/2 w lines lt 3 title "Ideal Speed-up"
+    2 1.00 
+    4 2.15
+    8 3.01
+   16 4.87 
+   32 4.96
   \end{gnuplot}
- \end{center}
- \caption{Scalability test: strong scaling efficiency vs. ideal speed-up for the representative system}
- \label{fig:scaling}
-\end{figure}
+  \captionof{figure}{Strong scaling vs. ideal speed-up}
+  \label{fig:scaling}
+ \end{minipage}
+\end{table}
 
 \section{Performance Analysis}
-We report in the present section a summary of the performance analysis conducted on the representative system 
-at the job size selected in the previous section, which reached $\sim 50\%$ parallel efficiency.
-We have followed the instructions available on the section 
+Please insert within the present section a summary of the performance analysis conducted on the representative system 
+at the optmila job size selected in the previous section, which reached $\sim 50\%$ parallel efficiency.
+You should have followed the instructions available on the section 
 \href{http://usertest.cscs.ch/scientific_computing/performance_report}{Performance Report} 
 of the \href{user.cscs.ch}{CSCS User Portal}, in order to instrument the executable of the selected code 
 with \emph{Cray Performance and Analysis Tools}. 
-The results of the run with the instrumented executable are the report file with extension \verb!.rpt! which we attach at the time of the 
-proposal submission and the larger apprentice file with extension \verb!.ap2!: 
-we will save both files on our \verb!$HOME! or \verb!$PROJECT! folder and make them readable to allow CSCS technical reviewers inspect them.  
-We have documented a single production system: in case your project is split into multiple production runs with the same resources requirements, 
-then please choose the most representative of them. Please find below the required summary data extracted from the report file:
+The results of the simulation run with the instrumented executable are the report text file with extension \verb!.rpt!, 
+and the larger apprentice binary file with extension \verb!.ap2!. 
+Please make these two files available for inspection by the reviewers, either by enclosing them at submission time or 
+indicating where they can be accessed for reading under your \verb!$HOME! or \verb!$PROJECT! (not \verb!$SCRATCH!).  
 
+The summary data can be extracted using the following commands on the report text file, named \verb!<report>.rpt! in the example:
 \begin{verbatim}
-Experiment:                   lite  lite/gpu     
-Number of PEs (MPI ranks):      16
-Numbers of PEs per Node:         1  PE on each of  16  Nodes
-Numbers of Threads per PE:   1,114
-Number of Cores per Socket:     12
-Execution start time:  Tue Mar 28 15:15:55 2017
-System name and speed:  nid02294  2601 MHz (approx)
-Intel haswell CPU  Family:  6  Model: 63  Stepping:  2
-
-
-Avg Process Time:     2,100 secs             
-High Memory:       13,977.3 MBytes     873.6 MBytes per PE
-I/O Read Rate:    67.110363 MBytes/sec       
-
-|  31.8% |   664.415775 |         -- |    -- |     35,648.0 |MPI_SYNC
-|   2.8% |    58.511390 |         -- |    -- | 14,458,788.1 |MPI
-
-|  59.2% | 1,236.266484 | 110.728787 |  8.8% |          1.0 |USER
+ grep -A 14 CrayPat/X <report>.rpt
+ grep \|USER <report>.rpt
+ grep \|MPI <report>.rpt
 \end{verbatim}
 
-\section{Resources Justification}
-The computation of the required time should start with the node hours required for a single timestep.
-As an example, the values in Table~\ref{table:derivation_node_hours} sum up to 107500 node hours.
+The summary should look like the example below: 
+\begin{verbatim}
+ CrayPat/X:  Version 6.4.5 Revision 87dd5b8  01/23/17 15:37:24
+ Experiment:                   lite  lite/gpu     
+ Number of PEs (MPI ranks):      16
+ Numbers of PEs per Node:         1  PE on each of  16  Nodes
+ Numbers of Threads per PE:   1,114
+ Number of Cores per Socket:     12
+ Execution start time:  Tue Mar 28 15:15:55 2017
+ System name and speed:  nid02294  2601 MHz (approx)
+ Intel haswell CPU  Family:  6  Model: 63  Stepping:  2
+ 
+ Avg Process Time:     2,100 secs             
+ High Memory:       13,977.3 MBytes     873.6 MBytes per PE
+ I/O Read Rate:    67.110363 MBytes/sec       
+ I/O Write Rate:   19.512511 MBytes/sec
+ 
+ |  59.2% | 1,236.266484 | 110.728787 |  8.8% |          1.0 |USER
+ 
+ |  31.8% |   664.415775 |         -- |    -- |     35,648.0 |MPI_SYNC
+ |   2.8% |    58.511390 |         -- |    -- | 14,458,788.1 |MPI
+\end{verbatim}
+
+\section{Resource Justification}
+The resource request of the annual amount of node-hours should start with the node-hours used for a single timestep 
+by the representative benchmark: the number of node-hours consumed by a simulation is computed multiplying 
+the number of nodes by the wall time expressed in hours. 
+Please note that CrayPAT tools might add a non negligible overhead to the wall time: please report within this section 
+if this happens in your case and then use the wall time of your scaling test to justify the request.
+
+In the small example used throughout this template, the optimal job size of the representative benchmark is 16 nodes and 
+the corresponding wall time reported in Table~\ref{table:scaling} is 210 s, which correspond to $\sim 0.933$ node-hours, 
+as a result of the multiplication $16 \mbox { nodes } \times \frac{210 s}{3600 \frac{s}{h}}$. 
+The benchmark is short and corresponds in general to a small number of iterations, while in a real production simulation 
+we will need to extend it to several iterations, that might correspond to timesteps or an equivalent measure. 
+
+Therefore we will need to estimate how many iterations will be needed to complete a simulation in production. 
+Furthermore, the project plan might contain multiples tasks, each of them requiring several sets of simulations to complete:
+therefore the annual resource request will sum up the corresponding number of node-hours obtained mulitplying all these factors. 
 \begin{table}[H]
  \begin{center}
-  \begin{tabular}{|c|c|c|}
-   \hline
-   & simulation type 1 & simulation type 2 \\ 
-   \hline
-   number of simulations & 2 & 3 \\
-   \hline
-   node hours per timestep & 1 & 1.5 \\
-   \hline
-   number of timesteps per simulation & 20000 & 15000 \\
-   \hline
-   node hours & 40000 & 67500 \\
-   \hline
+  \begin{tabular}{@{}*3{r}@{}}
+   \hline \hline
+   & First task & Second task \\ 
+   \hline \hline
+   Simulations per task & 2 & 4 \\
+   Iterations per simulation & 5000 & 10000 \\
+   node-hours per iteration & 0.933 & 0.933 \\
+   Total node-hours & 9333 & 37333 \\
+   \hline \hline
   \end{tabular}
  \end{center}
- \caption{Derivation of node hours}
- \label{table:derivation_node_hours}
+ \caption{Justification of resource request}
+ \label{table:resource_request}
 \end{table}
+The values reported in Table~\ref{table:resource_request} will sum up to a total of 46666 annual node-hours, resulting from the 
+sum of the node-hours estimated to complete the first and the second task of the project.
+
+You should insert in this section the request for long term storage as well, explaining your needs 
+based on the I/O pattern of the representative benchmark that is reported in the performance analysis. 
+ 
+\subsection{Visualization, pre- and post-processing}
+Please insert in this subsection the optional requirements for visualization, pre- and post-processing.
+
+\subsection{Development and debugging}
+Please insert in this subsection the optional requirements for development and debugging. 
 
 \section{Project Plans: Tasks and Milestones}
 \ldots
 
-\section{Visualization, pre- and post-processing}
-\ldots
-
 \section{Results from Previous Allocations}
-\ldots
-
-\section{Research publications from Previous Allocations}
-\ldots
-
-\section{Development and debugging requirements}
-\ldots 
+Please list allocations requested, granted and used in your previous project (if applicable). 
+You should also include a list of research publications that resulted from these allocations.
 
 \section*{References}
 \bibliographystyle{abbrv}

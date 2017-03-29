@@ -1,4 +1,4 @@
-# Example Performance Report
+# Example Performance Report File
 ```
 #################################################################
 #                                                               #
