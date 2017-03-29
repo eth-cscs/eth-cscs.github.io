@@ -133,5 +133,5 @@ Iterations per simulation | 5000 | 10000
 node-hours per iteration | 0.933 | 0.933
 Total node-hours | 9333 | 37333
 
-The justification of the resource request reported in the table above will sum up to a total of 46666 annual node-hours, resulting from the sum of the node-hours estimated to complete the first and the second task of the project.
+The resource request reported in the table above will sum up to a total of 46666 annual node-hours, resulting from the sum of the node-hours estimated to complete the first and the second task of the project.
 You should insert in this section the request for long term storage as well, explaining your needs based on the I/O pattern of the representative benchmark that is reported in the performance analysis.
