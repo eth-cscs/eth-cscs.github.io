@@ -13,24 +13,22 @@
 \author[1]{Principal Investigator}
 \author[2]{First Collaborator}
 \author[1,2]{Last Collaborator}
-\affil[1]{PI affiliation}
+\affil[1]{Affiliation of the PI}
 \affil[2]{Other affiliation}
 
 \date{}             
 
 % define section numbering: hidden
 \renewcommand\thesection{}
-%\sectionfont{\large\centering}
-%\subsectionfont{\large\centering}
-%\subsubsectionfont{\large\centering}
-%\paragraphfont{\large\centering}
+% define secondary label of items in lists
+%\renewcommand{\labelitemii}{$\star$}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
- This is the abstract of the proposal: in this document we provide a template for sections 
-\textbf{Representative benchmarks and Scaling} and \textbf{Performance Analysis} with guidelines \ldots
+ This is the abstract of the proposal: in this document we provide a template for CSCS Production Project Submission with guidelines, 
+focusing on sections \textbf{Representative benchmarks and Scaling} and \textbf{Performance Analysis} in particular.
 \end{abstract}
 
 \section{Background and Significance}
@@ -42,24 +40,25 @@ The project proposal should be no longer than \textbf{10 A4 pages} including gra
  \item Description of the research methods, algorithms, and code
  \item Parallelization approach, memory requirements
  \item Representative benchmarks and scaling
- \item Performance analysis (link: see how to do it)
- \item Resource justification (annual node hours and disk space)
- \item Project plans: tasks and milestones
- \item Visualization, pre- and post-processing needs
- \item Previous results are mandatory! Please list allocations requested, granted and used in your previous project (if applicable)
- \item Research publications that resulted from these allocations
- \item Development and debugging requirements (not mandatory)
+ \item Performance analysis
+ \item Resource justification (annual node-hours and disk space)
+ \begin{itemize}
+  \item Visualization, pre- and post-processing needs
+  \item Development and debugging requirements
+ \end{itemize}
+ \item Project plan: tasks and milestones
+ \item Previous results 
 \end{itemize}
 Please follow the structure used in this template, which reflects the requirements reported on the page with the general instructions for \href{http://www.cscs.ch/user_lab/allocation_schemes/submission100/index.html}{Production Projects Submission}. 
 
 \section{Scientific Goals and Objectives}
 \ldots 
 
-\section{Research Method, Algorithms and Code}
+\section{Research Methods, Algorithms and Code}
 Please insert within this section a description of the methods and algorithms of the code that you plan to use in your computational study, 
 including a brief list of the main libraries that will be used. E.g.: fftw, parallel-hdf5, petsc, \ldots
 
-\section{Parallelisation Approach and Memory Requirements}
+\section{Parallelization Approach and Memory Requirements}
 Please present in this section the parallel approach employed to address the proposed computational study with the selected code: 
 in general for community codes this information is available on the home page of the code itself.
 For instance, on the \href{www.cp2k.org}{CP2K home page} one can read that \emph{CP2K is written in Fortran 2003 and can be run 
@@ -80,13 +79,13 @@ Weak scaling tests might be provided as well, in addition to the strong scaling 
 The wall time in seconds and the corresponding speed-up of the small example system shown in this template are reported 
 in Table~\ref{table:scaling}, while Figure~\ref{fig:scaling} shows the scaling plot: we start the scaling test 
 on 2 nodes, whose runtime has been used as a reference to compute the speed-up of larger job sizes. 
-We then proceed doubling the number of nodes and checking the corresponding speed-up, until we are sure to have reached the $50\%$ 
-limit in parallel efficiency. 
+We then proceed doubling the number of nodes and checking the corresponding speed-up, until we are sure to have reached the $\sim 50\%$ 
+limit in parallel efficiency (16 nodes in the small example below).
 
 \begin{table}[H]
  \begin{minipage}{0.35\linewidth}
  \centering
-  \begin{tabular}{rrr}
+  \begin{tabular}{@{}*3{r}@{}}
    \hline \\
    Nodes & Wall time (s) & Speed-up \\
    \\ \hline \hline \\
@@ -167,43 +166,56 @@ The summary should look like the example below:
  |   2.8% |    58.511390 |         -- |    -- | 14,458,788.1 |MPI
 \end{verbatim}
 
-\section{Resources Justification}
-The resource request computation of the required time should start with the node hours needed for a single timestep.
-As an example, the values in Table~\ref{table:derivation_node_hours} sum up to 107500 node hours.
+\section{Resource Justification}
+The resource request of the annual amount of node-hours should start with the node-hours used for a single timestep 
+by the representative benchmark: the number of node-hours consumed by a simulation is computed multiplying 
+the number of nodes by the wall time expressed in hours. 
+Please note that CrayPAT tools might add a non negligible overhead to the wall time: please report within this section 
+if this happens in your case and then use the wall time of your scaling test to justify the request.
+
+In the small example used throughout this template, the optimal job size of the representative benchmark is 16 nodes and 
+the corresponding wall time reported in Table~\ref{table:scaling} is 210 s, which correspond to $\sim 0.933$ node-hours, 
+as a result of the multiplication $16 \mbox { nodes } \times \frac{210 s}{3600 \frac{s}{h}}$. 
+The benchmark is short and corresponds in general to a small number of iterations, while in a real production simulation 
+we will need to extend it to several iterations, that might correspond to timesteps or an equivalent measure. 
+
+Therefore we will need to estimate how many iterations will be needed to complete a simulation in production. 
+Furthermore, the project plan might contain multiples tasks, each of them requiring several sets of simulations to complete:
+therefore the annual resource request will sum up the corresponding number of node-hours obtained mulitplying all these factors. 
 \begin{table}[H]
  \begin{center}
-  \begin{tabular}{lrr}
+  \begin{tabular}{@{}*3{r}@{}}
    \hline \hline
-   & simulation type 1 & simulation type 2 \\ 
+   & First task & Second task \\ 
    \hline \hline
-   number of simulations & 2 & 3 \\
-   \hline
-   node hours per timestep & 1 & 1.5 \\
-   \hline
-   timesteps per simulation & 20000 & 15000 \\
-   \hline
-   total node hours & 40000 & 67500 \\
+   Simulations per task & 2 & 4 \\
+   Iterations per simulation & 5000 & 10000 \\
+   node-hours per iteration & 0.933 & 0.933 \\
+   Total node-hours & 9333 & 37333 \\
    \hline \hline
   \end{tabular}
  \end{center}
- \caption{Derivation of node hours}
- \label{table:derivation_node_hours}
+ \caption{Justification of resource request}
+ \label{table:resource_request}
 \end{table}
+The values reported in Table~\ref{table:resource_request} will sum up to a total of 46666 annual node-hours, resulting from the 
+sum of the node-hours estimated to complete the first and the second task of the project.
+
+You should insert in this section the request for long term storage as well, explaining your needs 
+based on the I/O pattern of the representative benchmark that is reported in the performance analysis. 
+ 
+\subsection{Visualization, pre- and post-processing}
+Please insert in this subsection the optional requirements for visualization, pre- and post-processing.
+
+\subsection{Development and debugging}
+Please insert in this subsection the optional requirements for development and debugging. 
 
 \section{Project Plans: Tasks and Milestones}
 \ldots
 
-\section{Visualization, pre- and post-processing}
-\ldots
-
 \section{Results from Previous Allocations}
-\ldots
-
-\section{Research publications from Previous Allocations}
-\ldots
-
-\section{Development and debugging requirements}
-\ldots 
+Please list allocations requested, granted and used in your previous project (if applicable). 
+You should also include a list of research publications that resulted from these allocations.
 
 \section*{References}
 \bibliographystyle{abbrv}
