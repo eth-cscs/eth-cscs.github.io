@@ -61,7 +61,7 @@ plot "-" w linespoints linewidth 2 title "H_{2}O benchmark", x/2 w lines lt 3 ti
 16 4.87 
 32 4.96
 ```
-The command `gnuplot < scaling.gp` will create an encapsulated postscript file with the following plot:
+The command `gnuplot < scaling.gp` will create an encapsulated postscript file with this plot:
 
 ![Strong scaling plot](scaling.png)
 
