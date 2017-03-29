@@ -18,10 +18,11 @@
 
 \date{}             
 
-% define section numbering: hidden
+% define section and subsection numbering: hidden
 \renewcommand\thesection{}
+\renewcommand\thesubsection{}
 % define secondary label of items in lists
-%\renewcommand{\labelitemii}{$\star$}
+\renewcommand{\labelitemii}{$\star$}
 
 \begin{document}
 \maketitle
@@ -126,7 +127,7 @@ limit in parallel efficiency (16 nodes in the small example below).
 
 \section{Performance Analysis}
 Please insert within the present section a summary of the performance analysis conducted on the representative system 
-at the optmila job size selected in the previous section, which reached $\sim 50\%$ parallel efficiency.
+at the optimal job size selected in the previous section, which reached $\sim 50\%$ parallel efficiency.
 You should have followed the instructions available on the section 
 \href{http://usertest.cscs.ch/scientific_computing/performance_report}{Performance Report} 
 of the \href{user.cscs.ch}{CSCS User Portal}, in order to instrument the executable of the selected code 
@@ -167,10 +168,10 @@ The summary should look like the example below:
 \end{verbatim}
 
 \section{Resource Justification}
-The resource request of the annual amount of node-hours should start with the node-hours used for a single timestep 
+The resource request of the annual amount of node-hours should be clearly linked with the node-hours used 
 by the representative benchmark: the number of node-hours consumed by a simulation is computed multiplying 
 the number of nodes by the wall time expressed in hours. 
-Please note that CrayPAT tools might add a non negligible overhead to the wall time: please report within this section 
+Please note that CrayPAT might add a non negligible overhead to the wall time: please report within this section 
 if this happens in your case and then use the wall time of your scaling test to justify the request.
 
 In the small example used throughout this template, the optimal job size of the representative benchmark is 16 nodes and 
