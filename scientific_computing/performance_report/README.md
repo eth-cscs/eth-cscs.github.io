@@ -62,8 +62,8 @@ wallclock time and configurations. All proposals can only be evaluated by the
 data that you provide: the better the data, the easier to pass the review process.
 
 If you use a scientific application supported by CSCS, we will provide the
-instrumented executable in a modulefile: please contact us in case the
-modulefile has not been provided yet.
+EasyBuild configuration file to create the modulefile with the instrumented executable: 
+please contact us if the EasyBuild recipe of a supported applications is not yet available.
 
 Advanced users can run a full performance analysis with CrayPAT if they wish,
 instrumenting their executable with the standard `perftools` module, as long as
