@@ -57,15 +57,15 @@ Please follow the structure used in this template, which reflects the requiremen
 
 \section{Research Methods, Algorithms and Code}
 Please insert within this section a description of the methods and algorithms of the code that you plan to use in your computational study, 
-including a brief list of the main libraries that will be used. E.g.: fftw, parallel-hdf5, petsc, \ldots
+including a brief list of the main scientific libraries that will be used.
 
 \section{Parallelization Approach and Memory Requirements}
 Please present in this section the parallel approach employed to address the proposed computational study with the selected code: 
 in general for community codes this information is available on the home page of the code itself.
 For instance, on the \href{www.cp2k.org}{CP2K home page} one can read that \emph{CP2K is written in Fortran 2003 and can be run 
 efficiently in parallel using a combination of multi-threading, MPI, and CUDA}.
-If you don't plan to use a community code, please report if the code makes used of MPI distributed parallelism or hybrid MPI/OpenMP, 
-which type of MPI communication has been employed and if the code is taking advantage of shared memory parallelism, 
+If you don't use a community code, please report if the code employs MPI distributed parallelism or hybrid MPI/OpenMP, 
+which type of MPI communication has been implemented and if the code is taking advantage of shared memory parallelism, 
 GPU accelerators or OpenACC/CUDA.
 
 \section{Representative Benchmarks and Scaling}
@@ -176,7 +176,7 @@ if this happens in your case and then use the wall time of your scaling test to 
 
 In the small example used throughout this template, the optimal job size of the representative benchmark is 16 nodes and 
 the corresponding wall time reported in Table~\ref{table:scaling} is 210 s, which correspond to $\sim 0.933$ node-hours, 
-as a result of the multiplication $16 \mbox { nodes } \times \frac{210 s}{3600 \frac{s}{h}}$. 
+as a result of the multiplication $16 \mbox { nodes } \times \frac{210 s}{3600 \frac{s}{hour}}$. 
 The benchmark is short and represents in general a small number of iterations (timesteps or an equivalent measure), while in a real production simulation we will need to extend it.
 
 Therefore we will need to estimate how many iterations will be needed to complete a simulation in production. 
