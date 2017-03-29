@@ -62,7 +62,7 @@ plot "-" w linespoints linewidth 2 title "H_{2}O benchmark", x/2 w lines lt 3 ti
 32 4.96
 ```
 The output is the following scaling plot:
-![Strong scaling plot](file://eth-cscs.github.io/scientific_computing/performance_report/example_performance_report/scaling.pdf)
+![Strong scaling plot](scaling.png)
 
 ## Performance Analysis
 
