@@ -46,7 +46,7 @@ Nodes | Wall time (s) | Speed-up
    16 |  210 | 4.87
    32 |  206 | 4.96
 
-[Strong scaling results](scaling.pdf) can be plotted against ideal scaling with this Gnuplot script (`scaling.gp`):
+Strong scaling results can be plotted against ideal scaling with this Gnuplot script (`scaling.gp`):
 ```gnuplot
 set terminal postscript eps enhanced color size 5.5,3.5
 set output "scaling.eps"
@@ -61,22 +61,21 @@ plot "-" w linespoints linewidth 2 title "Representative benchmark", x/2 w lines
 16 4.87 
 32 4.96
 ```
-The command `gnuplot < scaling.gp` will create an encapsulated postscript file with this plot:
+The command `gnuplot < scaling.gp` will create an encapsulated postscript file with [this plot](scaling.pdf):
 
 ![Strong scaling plot](scaling.png)
 
 ## Performance Analysis
 
-We will now run the executable of CP2K instrumented with CrayPAT on the optimal job size of 16 nodes determined above: the results will be the report text file with extension `.rpt`, and the larger apprentice binary file with extension `.ap2`.
-Since CP2K is in the list of [CSCS supported applications](/scientific_computing/supported_applications), the corresponding EasyBuild configuration file should already be available to build the corresponding module with the instrumented executable.
-Therefore we follow the instructions of the [EasyBuild framework](/scientific_computing/code_compilation/easybuild_framework) and build CP2K with the `pat` suffix:
+We can now run the performance analysis with the CP2K executable instrumented with CrayPAT, at the optimal job size of 16 nodes: the results will be the report text file with extension `.rpt` and the larger apprentice binary file with extension `.ap2`.
+CP2K is in the list of [CSCS supported applications](/scientific_computing/supported_applications), therefore the corresponding EasyBuild configuration file should already be available to build the modulefile providing the instrumented executable.
+Therefore we follow the instructions of the [EasyBuild framework](/scientific_computing/code_compilation/easybuild_framework) and build a CP2K modulefile with the `pat` suffix:
 ```bash
 module load daint-gpu 
 module load EasyBuild-custom
-eb -S CP2K*pat
 eb CP2K-4.1-CrayGNU-2016.11-cuda-8.0.54-pat-645-cuda.eb -r
 ```
-After the build, the module `CP2K/4.1-CrayGNU-2016.11-cuda-8.0.54-pat-645-cuda` will be in our `MODULEPATH`: we can therefore change the module command in the SLURM batch script to load this module instead of the default CP2K modulefile:
+After the build, the module `CP2K/4.1-CrayGNU-2016.11-cuda-8.0.54-pat-645-cuda` will be in our `MODULEPATH`: the module command in the batch script should load this module instead of the default CP2K modulefile:
 ```bash
 module load daint-gpu
 module load CP2K/4.1-CrayGNU-2016.11-cuda-8.0.54-pat-645-cuda
@@ -84,21 +83,20 @@ export PAT_RT_CALLSTACK=10
 ```
 The environment variable `PAT_RT_CALLSTACK` limits the number of callers recorded by CrayPAT during the performance analysis. 
 A value of zero disables all callstack tracing: please check `pat_help` after loading the perftools module for more details.
-In this case, a value of 10 will give us a wall time almost ten times larger with respect to our benchmark:
+In this case, a value of 10 will give us a wall time almost ten times larger with respect to our scaling test:
 ```text
-# perftools-cscs/645-cuda using 16 nodes
 daint 2017-03-28T15:15:52 1231599 	 Time=2077.973
 ```
-Therefore we will point out this large overhead in the resource request and we will use the value of our benchmark to justify the request. The two report files have been created in the working folder at the end of the performance analysis job:
+We will point out this large overhead and we will use the 16 nodes wall time of our scaling test to justify the resource request . The two report files have been created in the working folder at the end of the performance analysis job:
 ```text
--rw-r--r-- 1 lucamar csstaff  43M Mar 28 15:51 cp2k.psmp+16437-2294t.ap2
--rw-r--r-- 1 lucamar csstaff  11K Mar 28 15:51 cp2k.psmp+16437-2294t.rpt
+43M Mar 28 15:51 cp2k.psmp+16437-2294t.ap2
+11K Mar 28 15:51 cp2k.psmp+16437-2294t.rpt
 ```
-Given the relatively large size of the binary file `.ap2`, we will make them available for inspection by the reviewers in `$HOME` or `$PROJECT` (not `$SCRATCH`). The required summary data to be reported in the proposal can be extracted with the commands:
+Due to the relatively large size of the binary file `.ap2`, we will enclose only the text `.rpt` file at submission time but we will make both of them available for inspection in `$HOME` or `$PROJECT` (not `$SCRATCH`). The required summary data to be reported in the proposal can be extracted with the commands:
 ```bash
-grep -A 14 CrayPat/X <report>.rpt
-grep \|USER <report>.rpt
-grep \|MPI <report>.rpt
+grep -A 14 CrayPat/X cp2k.psmp+16437-2294t.rpt
+grep \|USER cp2k.psmp+16437-2294t.rpt
+grep \|MPI cp2k.psmp+16437-2294t.rpt
 ```
 The summary should look like the example below:
 ```text
@@ -127,8 +125,8 @@ Please check the complete [example performance report file](example_performance_
 ## Resource Justification
 
 The resource request of the annual amount of node-hours should be clearly linked with the node-hours used by the representative benchmark: the number of node-hours consumed by a simulation is computed multiplying the number of nodes by the wall time expressed in hours.
-In this small example CrayPAT adds a non negligible overhead to the wall time, that we report within this section and then use the wall time of our scaling test to justify the request. The optimal job size of the representative benchmark is 16 nodes and the corresponding wall time reported is 210 s, which correspond ∼ 0.933 node-hours, as a result of the multiplication `16 nodes × 210s / 3600s/hour`. 
-The benchmark is short and corresponds in general to a small number of iterations, while in a real production simulation we will need to extend it to several iterations, that might correspond to timesteps or an equivalent measure.
+In this small example CrayPAT adds a non negligible overhead to the wall time, that we report within this section: then we use the 16 nodes wall time of our scaling test to justify the request. The optimal job size of the representative benchmark is 16 nodes and the corresponding wall time reported is 210 s, which correspond to ∼ 0.933 node-hours, as a result of the multiplication `16 nodes × 210s / 3600s/hour`. 
+The benchmark is short and represents in general a small number of iterations (timesteps or an equivalent measure), while in a real production simulation we will need to extend it. Therefore we will need to estimate how many iterations will be needed to complete a simulation in production. Furthermore, the project plan might contain multiple tasks, each of them requiring several sets of simulations to complete: therefore the annual resource request will sum up the corresponding numbers of node-hours obtained multiplying all these factors.
 
 | First task | Second task
                 ---: | ---: | ---:
