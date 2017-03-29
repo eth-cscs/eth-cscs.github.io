@@ -45,7 +45,7 @@ Nodes | Wall time (s) | Speed-up
    16 |  210 | 4.87
    32 |  206 | 4.96
 
-Strong scaling results compared against the ideal scaling with a Gnuplot script:
+[Strong scaling results](scaling.pdf) can be plotted against the ideal scaling using the Gnuplot script below:
 ```gnuplot
 set terminal postscript eps enhanced color size 5.5,3.5
 set output "scaling.eps"
@@ -60,9 +60,6 @@ plot "-" w linespoints linewidth 2 title "H_{2}O benchmark", x/2 w lines lt 3 ti
 16 4.87 
 32 4.96
 ```
-
-![Strong scaling vs. ideal scaling](scaling.png)
-<img src="scaling.png" width="48">
 
 # Performance Analysis
 
