@@ -43,7 +43,6 @@ Please proceed through the following steps:
  System name and speed:  nid02294  2601 MHz (approx)
  Intel haswell CPU  Family:  6  Model: 63  Stepping:  2
  
- 
  Avg Process Time:     2,100 secs             
  High Memory:       13,977.3 MBytes     873.6 MBytes per PE
  I/O Read Rate:    67.110363 MBytes/sec       
