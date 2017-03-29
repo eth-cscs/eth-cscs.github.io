@@ -177,12 +177,11 @@ if this happens in your case and then use the wall time of your scaling test to 
 In the small example used throughout this template, the optimal job size of the representative benchmark is 16 nodes and 
 the corresponding wall time reported in Table~\ref{table:scaling} is 210 s, which correspond to $\sim 0.933$ node-hours, 
 as a result of the multiplication $16 \mbox { nodes } \times \frac{210 s}{3600 \frac{s}{h}}$. 
-The benchmark is short and corresponds in general to a small number of iterations, while in a real production simulation 
-we will need to extend it to several iterations, that might correspond to timesteps or an equivalent measure. 
+The benchmark is short and represents in general a small number of iterations (timesteps or an equivalent measure), while in a real production simulation we will need to extend it.
 
 Therefore we will need to estimate how many iterations will be needed to complete a simulation in production. 
 Furthermore, the project plan might contain multiples tasks, each of them requiring several sets of simulations to complete:
-therefore the annual resource request will sum up the corresponding number of node-hours obtained mulitplying all these factors. 
+therefore the annual resource request will sum up the corresponding numbers of node-hours obtained multiplying all these factors. 
 \begin{table}[H]
  \begin{center}
   \begin{tabular}{@{}*3{r}@{}}
