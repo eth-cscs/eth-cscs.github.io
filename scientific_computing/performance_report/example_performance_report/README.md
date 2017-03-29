@@ -123,7 +123,7 @@ Please check the complete [example performance report file](example_performance_
 ## Resource Justification
 
 The resource request of the annual amount of node-hours should be clearly linked with the node-hours used by the representative benchmark: the number of node-hours consumed by a simulation is computed multiplying the number of nodes by the wall time expressed in hours.
-In this small example CrayPAT adds a non negligible overhead to the wall time, that we report within this section and then use the wall time of our scaling test to justify the request. The optimal job size of the representative benchmark is 16 nodes and the corresponding wall time reported is 210 s, which correspond ∼ 0.933 node-hours, as a result of the multiplication `16 nodes × 210 s/3600 s/hour`. 
+In this small example CrayPAT adds a non negligible overhead to the wall time, that we report within this section and then use the wall time of our scaling test to justify the request. The optimal job size of the representative benchmark is 16 nodes and the corresponding wall time reported is 210 s, which correspond ∼ 0.933 node-hours, as a result of the multiplication `16 nodes × 210s / 3600s/hour`. 
 The benchmark is short and corresponds in general to a small number of iterations, while in a real production simulation we will need to extend it to several iterations, that might correspond to timesteps or an equivalent measure.
 
 | First task | Second task
