@@ -3,8 +3,7 @@
 As high-performance computing resources become larger and more heterogeneous,
 using them to their full potential for scientific research becomes increasingly
 challenging. 
-CSCS implements a review process of [production projects allocation](http://www.cscs.ch/user_lab/allocation_schemes/index.html) 
-with the evaluation of users application performance to improve the distribution of computing resources.
+CSCS implements a review process of [production projects allocation](http://www.cscs.ch/user_lab/allocation_schemes/submission100/index.html) with the evaluation of users application performance to improve the distribution of computing resources.
 
 [Cray Performance and Analysis Tools (CrayPAT)](/scientific_computing/code_analysis/craypat) are the recommended performance tools on Cray systems, providing detailed information about application performance for basic profiling, MPI/OpenMP tracing,  hardware performance counters, ...
 
