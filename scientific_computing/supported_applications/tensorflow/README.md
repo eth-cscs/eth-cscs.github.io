@@ -1,12 +1,12 @@
 # Tensorflow
 
-This document gives a quick introduction how to get a first test program in
-TensorFlow running. All instructions have been tested on Piz Daint only. As an
-example we use TensorFlow 1.0.0 but other versions might be available on the
+TensorFlow™ is an open source software library for numerical computation using data flow graphs. 
+This document gives a quick introduction how to get a first test program in TensorFlow running 
+on Piz Daint. As an example we use TensorFlow 1.0.0 but other versions might be available on the
 system. Use `module avail` to get an overview.
 
 
-# Loading the Module
+# Setup
 
 To use TensorFlow on Piz Daint you have to load the corresponding module:
 
@@ -66,7 +66,7 @@ I tensorflow/core/common_runtime/gpu/gpu_device.cc:1041] Creating TensorFlow dev
 Extracting data/train-images-idx3-ubyte.gz
 ```
 
-# Submiting a Job
+# Running on Piz Daint
 
 The following script exemplifies how to submit a TensorFlow job to the
 queing system. The script asks for 1 nodes, making 12 CPUs available to the 1
@@ -91,11 +91,7 @@ module load TensorFlow/1.0.0-CrayGNU-2016.11-cuda-8.0-Python-3.5.2
 srun python $SCRATCH/convolutional.py
 ```
 
-Say, this sbatch file is named `test-tf.sbatch`, then it is submitted to Slurm by
+# Further Documentation
 
-```bash
-sbatch test-tf.sbatch
-```
+[TensorFlow website](https://www.tensorflow.org/)
 
-A more detailed documentation on how to submit a job can be found
-[here](/getting_started/running_jobs).
