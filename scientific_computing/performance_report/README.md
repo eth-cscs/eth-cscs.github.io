@@ -30,7 +30,7 @@ Please proceed through the following steps:
  grep \|USER <report>.rpt
  grep \|MPI <report>.rpt
  ```
- The summary should look like the example below: please compare it with the complete [example performance report file](example_performance_report/example_performance_report_file.html).
+ The summary should look like the example below:
  ```text
  CrayPat/X:  Version 6.4.5 Revision 87dd5b8  01/23/17 15:37:24
  Experiment:                   lite  lite/gpu     
