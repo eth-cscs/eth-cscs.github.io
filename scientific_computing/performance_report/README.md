@@ -31,7 +31,22 @@ Please proceed through the following steps:
  grep \|USER <report>.rpt
  grep \|MPI <report>.rpt
  ```
- Please check as well the [example performance report file](example_performance_report_file.html) provided.
+ The summary should look like the example below: please check as well the complete [example performance report file](example_performance_report_file.html) provided.
+ ```
+ CrayPat/X:  Version 6.4.5 Revision 87dd5b8  01/23/17 15:37:24
+ Experiment:                   lite  lite/gpu     
+ Number of PEs (MPI ranks):      16
+ Numbers of PEs per Node:         1  PE on each of  16  Nodes
+ Numbers of Threads per PE:   1,114
+ Number of Cores per Socket:     12
+ Execution start time:  Tue Mar 28 15:15:55 2017
+ System name and speed:  nid02294  2601 MHz (approx)
+ Intel haswell CPU  Family:  6  Model: 63  Stepping:  2
+ Avg Process Time:     2,100 secs             
+ High Memory:       13,977.3 MBytes     873.6 MBytes per PE
+ I/O Read Rate:    67.110363 MBytes/sec       
+ I/O Write Rate:   19.512511 MBytes/sec
+ ```
 
 ## Additional information
 
