@@ -13,7 +13,8 @@ Please proceed through the following steps:
 
 1. first run a scaling test of your application before instrumenting the executable and report the scalability data and plot in the section __Representative Benchmarks and Scaling__ of your proposal, following the guidelines provided in the [performance report template](performance_report_template.pdf). You can use the [LaTeX template](performance_report_template.tex) to create the PDF file after loading the module `texlive` on the front-end Ela:
  ```bash
- pdflatex --shell-escape performance_report_template.tex (run it twice)
+ela:~$ module load texlive 
+ela:~$ pdflatex --shell-escape performance_report_template.tex (run it twice)
  ```
   Then select the most parallel efficient job size to run the performance analysis, on the basis of your scaling data;
  
