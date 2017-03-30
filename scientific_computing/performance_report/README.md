@@ -62,9 +62,10 @@ We strongly encourage you to choose meaningful and representative job sizes,
 wallclock time and configurations. All proposals can only be evaluated by the
 data that you provide: the better the data, the easier to pass the review process.
 
-If you use a scientific application supported by CSCS, we will provide the
-EasyBuild configuration file to create the modulefile with the instrumented executable: 
-please contact us if the EasyBuild recipe of a supported applications is not yet available.
+If you use a [supported application](/scientific_computing/supported_applications), 
+we will provide the configuration file to create the modulefile with the instrumented executable 
+within the [EasyBuild framework](/scientific_computing/code_compilation/easybuild_framework): 
+please contact us if the EasyBuild recipe of a supported application is not yet available.
 
 Advanced users can run a full performance analysis with CrayPAT if they wish,
 instrumenting their executable with the standard `perftools` module, as long as
