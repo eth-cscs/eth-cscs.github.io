@@ -82,8 +82,7 @@ module load CP2K/4.1-CrayGNU-2016.11-cuda-8.0.54-pat-645-cuda
 export PAT_RT_CALLSTACK=10
 ```
 The environment variable `PAT_RT_CALLSTACK` limits the number of callers recorded by CrayPAT during the performance analysis. 
-A value of zero disables all callstack tracing: please check `pat_help` after loading the perftools module for more details.
-In this case, a value of 10 will give us a wall time almost ten times larger with respect to our scaling test:
+The default is 100 and a value of zero disables all callstack tracing: please check `pat_help` after loading the perftools module for more details. In this case, even reducing the value to 10 still gave us a wall time almost ten times larger with respect to our scaling test:
 ```text
 daint 2017-03-28T15:15:52 1231599 	 Time=2077.973
 ```
