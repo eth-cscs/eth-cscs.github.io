@@ -70,6 +70,7 @@ The command `gnuplot < scaling.gp` will create an encapsulated postscript file w
 ## Performance Analysis
 
 We can now run the performance analysis with the CP2K executable instrumented with CrayPAT, at the optimal job size of 16 nodes: the results will be the report text file with extension `.rpt` and the larger apprentice binary file with extension `.ap2`.
+
 CP2K is in the list of [supported applications](/scientific_computing/supported_applications), therefore the corresponding EasyBuild recipe should already be available to build the modulefile with the instrumented executable.
 Therefore we follow the instructions of the [EasyBuild framework](/scientific_computing/code_compilation/easybuild_framework) and build the CP2K modulefile with the `pat` suffix:
 ```bash
@@ -125,8 +126,10 @@ Please check the complete [example performance report file](example_performance_
 
 ## Resource Justification
 
-The resource request of the annual amount of node-hours should be clearly linked with the node-hours used by the representative benchmark: the number of node-hours consumed by a simulation is computed multiplying the number of nodes by the wall time expressed in hours.
+The resource request of the annual amount of node-hours should be clearly linked with the node-hours used by the representative benchmark: the number of node-hours consumed by a simulation is computed multiplying the number of nodes by the wall time expressed in hours. 
+
 In this small example CrayPAT adds a non negligible overhead to the wall time, that we report within this section: then we use the 16 nodes wall time of our scaling test to justify the request. The optimal job size of the representative benchmark is 16 nodes and the corresponding wall time reported is 210 s, which correspond to ∼ 0.933 node-hours, as a result of the multiplication `16 nodes × 210s / 3600s/hour`. 
+
 The benchmark is short and represents in general a small number of iterations (timesteps or an equivalent measure), while in a real production simulation we will need to extend it. Therefore we will need to estimate how many iterations will be needed to complete a simulation in production. Furthermore, the project plan might contain multiple tasks, each of them requiring several sets of simulations to complete: therefore the annual resource request will sum up the corresponding numbers of node-hours obtained multiplying all these factors.
 
 | First task | Second task
