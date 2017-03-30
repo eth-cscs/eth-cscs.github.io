@@ -804,10 +804,6 @@ var DaintGPUPartition = function(name) {
         "high"   : 2,
         "debug"  : 2
     };
-
-    this.max_memory_per_node = {
-        "normal"  : 120
-    };
 };
 __cscs_bindPrototypeMethods(DaintGPUPartition, Partition);
 
@@ -839,8 +835,11 @@ var DaintMCPartition = function(name) {
 
     this.max_num_gpus = {};
 
-
     this.env_variables_ntasks = {};
+
+    this.max_memory_per_node = {
+        "normal"  : 120
+    };
 };
 __cscs_bindPrototypeMethods(DaintMCPartition, DaintGPUPartition);
 
