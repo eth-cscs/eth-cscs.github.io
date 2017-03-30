@@ -5,7 +5,7 @@ which might be used as a guideline to run the representative benchmarks, scaling
 
 The example is a small benchmark of the [CP2K](www.cp2k.org) software package, simulating the dynamics of a 
 water box featuring 256 molecules: basis set, input file, potential and SLURM submission script 
-can be retrieved downloading the [compressed tarball](benchmark.tar.gz):
+can be retrieved downloading the [tarball](benchmark.tar.gz):
 ```text
 Input files:
  GTH_BASIS_SETS
@@ -70,8 +70,8 @@ The command `gnuplot < scaling.gp` will create an encapsulated postscript file w
 ## Performance Analysis
 
 We can now run the performance analysis with the CP2K executable instrumented with CrayPAT, at the optimal job size of 16 nodes: the results will be the report text file with extension `.rpt` and the larger apprentice binary file with extension `.ap2`.
-CP2K is in the list of [CSCS supported applications](/scientific_computing/supported_applications), therefore the corresponding EasyBuild configuration file should already be available to build the modulefile providing the instrumented executable.
-Therefore we follow the instructions of the [EasyBuild framework](/scientific_computing/code_compilation/easybuild_framework) and build a CP2K modulefile with the `pat` suffix:
+CP2K is in the list of [supported applications](/scientific_computing/supported_applications), therefore the corresponding EasyBuild recipe should already be available to build the modulefile with the instrumented executable.
+Therefore we follow the instructions of the [EasyBuild framework](/scientific_computing/code_compilation/easybuild_framework) and build the CP2K modulefile with the `pat` suffix:
 ```bash
 module load daint-gpu 
 module load EasyBuild-custom
