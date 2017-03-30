@@ -51,6 +51,8 @@ Strong scaling results can be plotted against ideal scaling with this Gnuplot sc
 set terminal postscript eps enhanced color size 5.5,3.5
 set output "scaling.eps"
 set xlabel "Number of Nodes"
+set xrange [0:34]
+set xtics 0,4,32
 set ylabel "Speed-up"
 set key left
 set size 1.,1.
