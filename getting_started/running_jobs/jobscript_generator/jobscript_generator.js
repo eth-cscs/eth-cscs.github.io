@@ -804,6 +804,8 @@ var DaintGPUPartition = function(name) {
         "high"   : 2,
         "debug"  : 2
     };
+
+    this.max_memory_per_node = {};
 };
 __cscs_bindPrototypeMethods(DaintGPUPartition, Partition);
 
