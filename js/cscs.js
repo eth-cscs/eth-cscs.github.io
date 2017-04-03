@@ -122,7 +122,13 @@ namespace.setup_markdown_page_content = function(markdownFile) {
   namespace.__markdown_post_features();
 }
 
-// this function reads the news markdown and appends it to the cscs-markdown-content.
+/**
+ *  @description reads the news markdown and appends it to the cscs-markdown-content. 
+ *  number_of_news controls the number of news items to print. If negative, all news are printed.
+ *  @param {string} news_markdown_file
+ *  @param {number} number_of_news
+ *  @returns {void}
+ */
 namespace.read_news = function(news_markdown_file, number_of_news)
 {
   namespace.read_file_contents(news_markdown_file, function __populate_site_content(argument) {
@@ -149,8 +155,11 @@ namespace.read_news = function(news_markdown_file, number_of_news)
   });
 }
 
-// this function hides the right toc from the page and
-// makes it a two column page.
+/**
+ *  @description hides the right toc from the page and makes it a two column page.
+ *  @param {string} markdownFile
+ *  @returns {void}
+ */
 namespace.two_column_mode = function(markdownFile) {
 
   var markdown_div = $('#cscs-markdown-content');
@@ -193,8 +202,11 @@ namespace.two_column_mode = function(markdownFile) {
 //   });
 // }
 
-// this function starts the presentation mode
-// this mode destroys completely the page. so we refresh the page if the exit button is clicked
+/**
+ *  @description starts the presentation mode. this mode destroys completely the page. 
+ *  So we refresh the page if the exit button is clicked.
+ *  @returns {void}
+ */
 namespace.__show_in_presenter_mode= function() {
   document.getElementById("cscs-body-container").innerHTML = null;
 
@@ -219,15 +231,20 @@ namespace.__show_in_presenter_mode= function() {
   }
 }
 
-// protects cscs' e-mail from robots
+/**
+ *  @description protects cscs' e-mail from robots 
+ *  @returns {void}
+ */
 namespace.__email_protector = function() {
   // $("#cscs-email-protector").prepend('<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;%69%6E%66%6F%40%63%73%63%73%2E%63%68">Contact CSCS</a>');
   $("#cscs-email-protector").prepend('<a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#104;&#101;&#108;&#112;&#064;&#099;&#115;&#099;&#115;&#046;&#099;&#104;">Contact us</a>');
 }
 
-// this function wraps the markdown headers with a link
-// it does it on mouse hover. But it is not really needed
-// We could do it immediately without the need of hovering
+/**
+ *  @description wraps the markdown headers with a link it does it on mouse hover. 
+ *  But it is not really needed. We could do it immediately without the need of hovering
+ *  @returns {void}
+ */
 namespace.__mouseover_link = function() {
 
   $('#cscs-markdown-content').children("h1, h2").each(function(index, element) {
@@ -244,7 +261,10 @@ namespace.__mouseover_link = function() {
   });
 }
 
-// this function creates the toc based on the main markdown content
+/**
+ *  @description creates the toc based on the main markdown content.
+ *  @returns {void}
+ */
 namespace.__create_toc = function() {
   // TOC creation
   // $('#toc').TOC();
@@ -293,7 +313,10 @@ namespace.__create_toc = function() {
   }
 }
 
-// This function destroys the remark presentation and restores the CSCS website
+/**
+ *  @description destroys the remark presentation and restores the CSCS website. This should be deprecated
+ *  @returns {void}
+ */
 namespace.__exit_presentation_mode = function() {
   if(document.location.domain == null)
     window.location.assign(document.location.pathname);
@@ -301,7 +324,10 @@ namespace.__exit_presentation_mode = function() {
     window.location.assign(document.location = document.location.domain+document.location.pathname);
 }
 
-// this function changes the layout of table inside the main side markdown area
+/**
+ *  @description changes the layout of table inside the main side markdown area.
+ *  @returns {void}
+ */
 namespace.__change_table_layout = function() {
   $('#cscs-markdown-content').children("table").each(function(index, element) {
     $(element).addClass('table table-striped table-bordered' );
@@ -311,7 +337,10 @@ namespace.__change_table_layout = function() {
   });
 }
 
-// this function adds code highlight
+/**
+ *  @description highlights `pre code` blocks.
+ *  @returns {void}
+ */
 namespace.__highlight_code = function() {
   try {
     if(hljs != null) {
@@ -326,7 +355,10 @@ namespace.__highlight_code = function() {
   }
 }
 
-// this function prepends the domain to the navbar and left sidebar
+/**
+ *  @description prepends the domain to the navbar.
+ *  @returns {void}
+ */
 namespace.__prepend_domain_to_links = function()
 {
   var domain = "";
@@ -350,7 +382,11 @@ namespace.__prepend_domain_to_links = function()
   // });
 }
 
-// this is a helper function to get the position of the comments in the page
+/**
+ *  @description helper function to get the position of the comments in the page.
+ *  This is important for the news pages.
+ *  @returns {void}
+ */
 namespace.__getCommentsObject = function(element, comment) {
   var returnValue = null;
   $(element).contents().filter(function(){
