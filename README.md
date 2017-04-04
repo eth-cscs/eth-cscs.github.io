@@ -8,10 +8,9 @@ For a collection of all news [access the news archive](news).
 
 ---
 
-# Default module list 
+# Piz Daint default modules 
 
-For a collection of module defaults installed on Piz Daint, please access the 
-[default module list web site](/module_list).
+Please check Piz Daint [default modules](/module_list).
 
 ---
 
