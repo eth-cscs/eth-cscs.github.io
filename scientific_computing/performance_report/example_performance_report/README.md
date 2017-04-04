@@ -122,7 +122,7 @@ Please check the complete [example performance report file](example_performance_
 
 The resource request of the annual amount of node-hours should be clearly linked with the node-hours used by the representative benchmark: the number of node-hours consumed by a simulation is computed multiplying the number of nodes by the wall time expressed in hours. 
 
-CrayPAT adds an overhead to the wall time, therefore you cannot use that timing to justify your request: we use the 16 nodes wall time of our scaling test instead. The optimal job size of the representative benchmark is 16 nodes and the corresponding wall time reported is 210 s, which correspond to ∼ 0.933 node-hours, as a result of the multiplication `16 nodes × 210s / 3600s/hour`. 
+CrayPAT adds an overhead to the wall time, therefore you cannot use that timing to justify your request: we use the 16 nodes wall time of our scaling test instead. The optimal job size of the representative benchmark is 16 nodes and the corresponding wall time reported is 210 s, which correspond to ∼ 0.933 node-hours, as a result of the multiplication `16 nodes × 210 s / 3600 s/hour`. 
 
 The benchmark is short and represents in general a small number of iterations (cycles, timesteps or an equivalent measure), while in a real production simulation we will need to extend it. Therefore we will need to estimate how many iterations will be needed to complete a simulation in production. Furthermore, the project plan might contain multiple tasks, each of them requiring several sets of simulations to complete: therefore the annual resource request will sum up the corresponding numbers of node-hours obtained multiplying these factors.
 
