@@ -1,6 +1,8 @@
-function setup_news() {
+var news =  {};
+(function(namespace) {
+namespace.setup = function() {
 
-  cscs_read_news($('#selectYear').val() + ".md", -1);
+  cscs.read_news($('#selectYear').val() + ".md", -1);
 
   $('#selectYear').change(function () {
     // removing the old news first
@@ -12,6 +14,7 @@ function setup_news() {
     lastOne.remove();
 
     // adding  the news
-    cscs_read_news($(this).val() + ".md", -1);
+    cscs.read_news($(this).val() + ".md", -1);
   });
 }
+})(news);
