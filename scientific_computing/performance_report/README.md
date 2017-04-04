@@ -23,8 +23,11 @@ ela:~$ pdflatex --shell-escape performance_report_template.tex (run it twice)
  module load daint-gpu
  module load perftools-cscs/645-cuda
  ```
- You should load the module `perftools-cscs/645-nogpu` or `perftools-cscs/645-openacc` instead if your code does not make use of the GPU or if it uses OpenACC respectively. Then build your application as usual with the module loaded: the binary file created is instrumented and can be used in your batch script to run at the optimal job size and produce the performance report files, without the need to load the perftools modulefile again;
-
+ You should load the module `perftools-cscs/645-nogpu` or `perftools-cscs/645-openacc` instead if your code does not make use of the GPU or if it uses OpenACC respectively. Then build your application as usual with the module loaded: the binary file created is instrumented and can be used in your batch script to run at the optimal job size and produce the performance report files, without the need to load the perftools modulefile again. If you use a [supported application](/scientific_computing/supported_applications), we will provide the modulefile with with the instrumented executable under the following path:
+ ```bash
+ module use /apps/daint/UES/6.0.UP02/craypat/easybuild/modules/all
+ ```
+ 
 1. when the performance analysis job terminates successfully, you should find in your working folder two files with extension `.rpt` (report text file) and `.ap2` (apprentice binary file). Please make these two files available for inspection, either by enclosing them at submission time or indicating within the section __Performance Analysis__ of your proposal where they can be accessed under `$HOME` or `$PROJECT` (not `$SCRATCH`). Please report within this section a summary of the performance data extracted from the report text file, using the following commands:
  ```bash
  grep -A 7 CrayPat/X <report>.rpt
@@ -60,11 +63,6 @@ The first command extracts general information on the job, then we extract the s
 We strongly encourage you to choose meaningful and representative job sizes,
 wallclock time and configurations. All proposals can only be evaluated by the
 data that you provide: the better the data, the easier to pass the review process.
-
-If you use a [supported application](/scientific_computing/supported_applications), 
-we will provide the configuration file to create the modulefile with the instrumented executable 
-within the [EasyBuild framework](/scientific_computing/code_compilation/easybuild_framework): 
-please contact us if the EasyBuild recipe of a supported application is not yet available.
 
 Advanced users can run a full performance analysis with CrayPAT if they wish,
 instrumenting their executable with the standard `perftools` module, as long as
