@@ -74,19 +74,18 @@ GPU accelerators or OpenACC/CUDA.
 
 \section{Representative Benchmarks and Scaling}
 Please report in this section the results of the mandatory strong scaling tests performed with the 
-selected code on the representative system to be investigated during your research activity. 
-The goal is to choose the most efficient job size to run the performance analysis that will be 
-reported in the next section. 
+selected code: please report scaling data and plot for every representative system of your project. 
+The goal is to choose the most efficient job sizes to run the performance analysis. 
 
-You should therefore select meaningful job sizes to simulate the representative system, 
-compatible with reasonably short runtimes: the lowest number of nodes is determined in general 
-by memory and wall time constraints, while the highest node counts should let you identify 
-the job size at which you reach $\sim 50\%$ of the parallel efficiency with respect to ideal scaling. 
+You should select meaningful job sizes to simulate the representative systems, compatible with 
+reasonably short runtimes: the lowest number of nodes is determined in general by memory and wall time 
+constraints, while the highest node counts should let you identify the job size at which you 
+reach $\sim 50\%$ of the parallel efficiency with respect to ideal scaling. 
 Weak scaling tests might be provided as well, in addition to the required strong scaling data. 
 
-The wall time in seconds and the corresponding speed-up are reported in Table~\ref{table:scaling}. 
-Figure~\ref{fig:scaling} shows the scaling plot: we start the scaling test on 2 nodes, taking this 
-runtime as a reference to compute the speed-up of larger job sizes. 
+Table~\ref{table:scaling} reports the wall time in seconds and the corresponding speed-up for a single 
+representative system. Figure~\ref{fig:scaling} shows the scaling plot: we started the scaling test on 
+2 nodes, taking this runtime as a reference to compute the speed-up of larger job sizes. 
 We then proceed doubling the number of nodes and checking the corresponding speed-up, until we are 
 sure to have reached the $\sim 50\%$ limit in parallel efficiency (16 nodes in the small example below).
 
@@ -137,24 +136,25 @@ sure to have reached the $\sim 50\%$ limit in parallel efficiency (16 nodes in t
 \end{table}
 
 \section{Performance Analysis}
-Please report here a summary of the performance analysis conducted on the representative system 
-at the optimal job size selected in the previous section, which reached $\sim 50\%$ parallel efficiency.
+Please report here a summary of the performance analysis conducted on each representative system 
+at the optimal job sizes selected in the previous section, which reached $\sim 50\%$ parallel efficiency.
 You should have already instrumented the executable with \emph{Cray Performance and Analysis Tools}, 
-following the instructions of the \href{http://usertest.cscs.ch/scientific_computing/performance_report}{Performance Report}
+following the instructions of \href{http://usertest.cscs.ch/scientific_computing/performance_report}{Performance Report}.
  
-The performance anlysis job will create a report text file with extension \verb!.rpt! 
+The performance analysis job will create a report text file with extension \verb!.rpt! 
 and a larger apprentice binary file with extension \verb!.ap2!. 
 Please make these two files available for inspection, either by enclosing them at submission time or 
 indicating where they can be accessed for reading under \verb!$HOME! or \verb!$PROJECT! (not \verb!$SCRATCH!).  
 
 The summary data can be extracted using the following commands on the report text file:
 \begin{verbatim}
- grep -A 14 CrayPat/X <report>.rpt
+ grep -A 7 CrayPat/X <report>.rpt
  grep \|USER <report>.rpt
  grep \|MPI <report>.rpt
+ grep \|Total <report>.rpt
 \end{verbatim}
 
-The summary should look like the example below: 
+The summary should look like the example below:
 \begin{verbatim}
  CrayPat/X:  Version 6.4.5 Revision 87dd5b8  01/23/17 15:37:24
  Experiment:                   lite  lite/gpu     
@@ -164,38 +164,38 @@ The summary should look like the example below:
  Number of Cores per Socket:     12
  Execution start time:  Tue Mar 28 15:15:55 2017
  System name and speed:  nid02294  2601 MHz (approx)
- Intel haswell CPU  Family:  6  Model: 63  Stepping:  2
- 
- Avg Process Time:     2,100 secs             
- High Memory:       13,977.3 MBytes     873.6 MBytes per PE
- I/O Read Rate:    67.110363 MBytes/sec       
- I/O Write Rate:   19.512511 MBytes/sec
- 
+
  |  59.2% | 1,236.266484 | 110.728787 |  8.8% |          1.0 |USER
- 
+
  |  31.8% |   664.415775 |         -- |    -- |     35,648.0 |MPI_SYNC
  |   2.8% |    58.511390 |         -- |    -- | 14,458,788.1 |MPI
+
+ 100.0% | 2,086.808412 |         -- |    -- | 18,723,148.8 |Total
+ 100.0% | 1.89 |  105,946 |   287.62 | 75,246 |Total
+ 56.092035 | 3,764.356845 |  67.110363 | 62,097,047.0 |    63.57 |Total
+ 0.151159 | 2.949494 |  19.512511 | 74,334.0 |    41.61 |Total
 \end{verbatim}
 
+The first command extracts general information on the job, then we extract the statistics of USER and MPI functions; 
+the last command reports the Total of each Table (functions, accelerator, read and write statistics).
+
 \section{Resource Justification}
-The equest of the annual amount of node-hours should be clearly linked with the node-hours used 
-by the representative benchmark: the number of node-hours consumed by a simulation is computed 
+The request of the annual amount of node-hours should be clearly linked with the node-hours used 
+by the representative benchmarks: the number of node-hours consumed by a simulation is computed 
 multiplying the number of nodes by the wall time expressed in hours. 
-Please note that CrayPAT might add a non negligible overhead to the wall time: please report 
-within this section if this happens in your case and then use the wall time of your scaling test 
-to justify the request.
+CrayPAT adds an overhead to the wall time, therefore you cannot use that timing to justify your request.
 
 In the small example used throughout this template, the optimal job size of the representative 
 benchmark is 16 nodes and the corresponding wall time reported in Table~\ref{table:scaling} is 
 210 s, which correspond to $\sim 0.933$ node-hours, as a result of the multiplication 
 $16 \mbox { nodes } \times \frac{210 s}{3600 \frac{s}{hour}}$. 
-The benchmark is short and represents in general a small number of iterations (timesteps or 
+The benchmark is short and represents in general a small number of iterations (cycles, timesteps or 
 an equivalent measure), while in a real production simulation we will need to extend it.
 
 Therefore we will estimate how many iterations should be necessary to complete a simulation 
 in production. Furthermore, the project plan might contain multiple tasks, each of them requiring 
 several sets of simulations to complete: the annual resource request will sum up the corresponding 
-node-hours obtained multiplying all these factors reported in Table~\ref{table:resource_request}. 
+node-hours obtained multiplying all the factors reported in Table~\ref{table:resource_request}. 
 \begin{table}[H]
  \begin{center}
   \begin{tabular}{@{}*3{r}@{}}
@@ -212,13 +212,12 @@ node-hours obtained multiplying all these factors reported in Table~\ref{table:r
  \caption{Justification of the resource request}
  \label{table:resource_request}
 \end{table}
-The resource request of this small example will sum up to a total of 46666 annual node-hours, resulting from the 
-sum of the node-hours estimated to complete the first and the second task of the project 
-(Table~\ref{table:resource_request}), in agreement with the description that should be inserted in 
-the next section. 
+The resource request of this small example will sum up to a total of 46666 annual node-hours, 
+summing the node-hours estimated to complete the first and the second task of the project 
+(Table~\ref{table:resource_request}), in agreement with the \textbf{Project Plan}.
 
 You should present in this section your request for long term storage as well, explaining your needs 
-based on the I/O pattern of the representative benchmark that is reported in the performance analysis. 
+based on the I/O pattern of the representative benchmarks reported by the performance analysis. 
  
 \subsection{Visualization, pre- and post-processing}
 Please insert in this subsection the optional requirements for visualization, pre- and post-processing.
