@@ -1,0 +1,22 @@
+# daint-gpu: 12c/cn + 1P100/cn 
+# NAMD/2.11-CrayIntel-2016.11-cuda-8.0.054
+# cn / speedup / ideal speedup / efficiency(%) / wallt(seconds) / cores /ptl
+1   1.0 1   100     83.9    12
+2   1.5 2   77      54.2    24  
+4   2.2 4   56      37.5    48  todo
+8   3.0 8   37      28.3    96
+# 16  3.4 16  21      24.5    192
+# 32  3.8 32  12      22.3    384   85.9
+# 64  3.2 64  5       26.0    768
+
+
+# daint-mc: 36c/cn
+# NAMD/2.11-CrayIntel-2016.11
+# cn / speedup / ideal speedup / efficiency(%) / wallt(seconds) / cores /ptl
+1   1.0 1   100  267.4   36
+2   1.9 2   94   141.6   72
+4   3.3 4   83   80.7    144
+8   5.2 8   65   51.6    288
+#16  6.5 16  41   41.2    576
+#32  7.2 32  22   37.2    1152  77.6
+#64  6.1 64  10   43.7    2304
