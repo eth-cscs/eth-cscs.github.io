@@ -71,25 +71,19 @@ The command `gnuplot < scaling.gp` will create an encapsulated postscript file w
 
 We can now run the performance analysis with the CP2K executable instrumented with CrayPAT, at the optimal job size of 16 nodes: the results will be the report text file with extension `.rpt` and the larger apprentice binary file with extension `.ap2`.
 
-CP2K is in the list of [supported applications](/scientific_computing/supported_applications), therefore the corresponding EasyBuild recipe should already be available to build the modulefile with the instrumented executable.
-Therefore we follow the instructions of the [EasyBuild framework](/scientific_computing/code_compilation/easybuild_framework) and build the CP2K modulefile with the `pat` suffix:
-```bash
-module load daint-gpu 
-module load EasyBuild-custom
-eb CP2K-4.1-CrayGNU-2016.11-cuda-8.0.54-pat-645-cuda.eb -r
-```
-After the build, the module `CP2K/4.1-CrayGNU-2016.11-cuda-8.0.54-pat-645-cuda` will be in our `MODULEPATH`: the module command in the batch script should load this module instead of the default CP2K modulefile:
+CP2K is in the list of [supported applications](/scientific_computing/supported_applications), therefore the modulefile with the instrumented executable should be available in the `MODULEPATH` after typing `module use /apps/daint/UES/6.0.UP02/craypat/easybuild/modules/all` in the SLURM batch script:
 ```bash
 module load daint-gpu
+module use /apps/daint/UES/6.0.UP02/craypat/easybuild/modules/all
 module load CP2K/4.1-CrayGNU-2016.11-cuda-8.0.54-pat-645-cuda
 export PAT_RT_CALLSTACK=10
 ```
 The environment variable `PAT_RT_CALLSTACK` limits the number of callers recorded by CrayPAT during the performance analysis. 
-The default is 100 and a value of zero disables all callstack tracing: please check `pat_help` after loading the perftools module for more details. In this case, even reducing the value to 10 still gave us a wall time almost ten times larger with respect to our scaling test:
+The default is 100 and a value of zero disables all callstack tracing: please check `pat_help` after loading the perftools module for more details. Even reducing the value to 10 the wall time is almost ten times larger with respect to our scaling test:
 ```text
 daint 2017-03-28T15:15:52 1231599 	 Time=2077.973
 ```
-We will point out this large overhead and we will use the 16 nodes wall time of our scaling test to justify the resource request . The two report files have been created in the working folder at the end of the performance analysis job:
+Anyway we don't need this runtime, as we have to use the 16 nodes wall time of our scaling test to justify the resource request. The two report files have been created in the working folder at the end of the performance analysis job:
 ```text
 43M Mar 28 15:51 cp2k.psmp+16437-2294t.ap2
 11K Mar 28 15:51 cp2k.psmp+16437-2294t.rpt
@@ -99,6 +93,7 @@ Due to the relatively large size of the binary file `.ap2`, we will enclose only
 grep -A 14 CrayPat/X cp2k.psmp+16437-2294t.rpt
 grep \|USER cp2k.psmp+16437-2294t.rpt
 grep \|MPI cp2k.psmp+16437-2294t.rpt
+grep \|Total cp2k.psmp+16437-2294t.rpt
 ```
 The summary should look like the example below:
 ```text
@@ -110,17 +105,16 @@ Numbers of Threads per PE:   1,114
 Number of Cores per Socket:     12
 Execution start time:  Tue Mar 28 15:15:55 2017
 System name and speed:  nid02294  2601 MHz (approx)
-Intel haswell CPU  Family:  6  Model: 63  Stepping:  2
-
-Avg Process Time:     2,100 secs             
-High Memory:       13,977.3 MBytes     873.6 MBytes per PE
-I/O Read Rate:    67.110363 MBytes/sec       
-I/O Write Rate:   19.512511 MBytes/sec
 
 |  59.2% | 1,236.266484 | 110.728787 |  8.8% |          1.0 |USER
 
 |  31.8% |   664.415775 |         -- |    -- |     35,648.0 |MPI_SYNC
 |   2.8% |    58.511390 |         -- |    -- | 14,458,788.1 |MPI
+
+ 100.0% | 2,086.808412 |         -- |    -- | 18,723,148.8 |Total
+ 100.0% | 1.89 |  105,946 |   287.62 | 75,246 |Total
+ 56.092035 | 3,764.356845 |  67.110363 | 62,097,047.0 |    63.57 |Total
+ 0.151159 | 2.949494 |  19.512511 | 74,334.0 |    41.61 |Total
 ```
 Please check the complete [example performance report file](example_performance_report_file.html) produced by CrayPAT.
 
@@ -128,9 +122,9 @@ Please check the complete [example performance report file](example_performance_
 
 The resource request of the annual amount of node-hours should be clearly linked with the node-hours used by the representative benchmark: the number of node-hours consumed by a simulation is computed multiplying the number of nodes by the wall time expressed in hours. 
 
-In this small example CrayPAT adds a non negligible overhead to the wall time, that we report within this section: then we use the 16 nodes wall time of our scaling test to justify the request. The optimal job size of the representative benchmark is 16 nodes and the corresponding wall time reported is 210 s, which correspond to ∼ 0.933 node-hours, as a result of the multiplication `16 nodes × 210s / 3600s/hour`. 
+CrayPAT adds an overhead to the wall time, therefore you cannot use that timing to justify your request: we use the 16 nodes wall time of our scaling test instead. The optimal job size of the representative benchmark is 16 nodes and the corresponding wall time reported is 210 s, which correspond to ∼ 0.933 node-hours, as a result of the multiplication `16 nodes × 210s / 3600s/hour`. 
 
-The benchmark is short and represents in general a small number of iterations (timesteps or an equivalent measure), while in a real production simulation we will need to extend it. Therefore we will need to estimate how many iterations will be needed to complete a simulation in production. Furthermore, the project plan might contain multiple tasks, each of them requiring several sets of simulations to complete: therefore the annual resource request will sum up the corresponding numbers of node-hours obtained multiplying all these factors.
+The benchmark is short and represents in general a small number of iterations (cycles, timesteps or an equivalent measure), while in a real production simulation we will need to extend it. Therefore we will need to estimate how many iterations will be needed to complete a simulation in production. Furthermore, the project plan might contain multiple tasks, each of them requiring several sets of simulations to complete: therefore the annual resource request will sum up the corresponding numbers of node-hours obtained multiplying these factors.
 
 | First task | Second task
                 ---: | ---: | ---:
@@ -139,6 +133,6 @@ Iterations per simulation | 5000 | 10000
 node-hours per iteration | 0.933 | 0.933
 Total node-hours | 9333 | 37333
 
-The resource request reported in the table above will sum up to a total of 46666 annual node-hours, resulting from the sum of the node-hours estimated to complete the first and the second task of the project.
+The resource request reported in the table above will sum up to a total of 46666 annual node-hours, summing the node-hours estimated to complete the first and the second task of the project.
 
-You should insert in this section the request for long term storage as well, explaining your needs based on the I/O pattern of the representative benchmark that is reported in the performance analysis.
+You should insert in this section the request for long term storage as well, explaining your needs based on the I/O pattern of the representative benchmark that is reported by the performance analysis.
