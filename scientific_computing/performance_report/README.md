@@ -57,7 +57,9 @@ ela:~$ pdflatex --shell-escape performance_report_template.tex (run it twice)
  56.092035 | 3,764.356845 |  67.110363 | 62,097,047.0 |    63.57 |Total
  0.151159 | 2.949494 |  19.512511 | 74,334.0 |    41.61 |Total
 ```
-The first command extracts general information on the job, then we extract the statistics of `USER` and `MPI` functions; the last command reports the `Total` of each Table (functions, accelerator, read and write statistics). You might also check the step-by-step [example performance report](example_performance_report) provided.
+The first command extracts general information on the job, then we extract the statistics of `USER` and `MPI` functions; the last command reports the `Total` of each Table (functions, accelerator, read and write statistics). 
+
+Please check as well the step-by-step [example performance report](example_performance_report).
 
 ## Additional information
 
