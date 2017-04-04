@@ -2,11 +2,18 @@
  * @author Victor Holanda Rusu (CSCS)
  *
  */
+var cscs =  {};
+(function(namespace) {
+
 var __cscsMarkDown = "";
 
-// this function reads file contents based on http request
-// it should be used by all markdown based pages
-function cscs_read_file_contents(filename, callback)
+/**
+ *  @description reads file contents based on http request. it should be used by all markdown based pages
+ *  @param {string} filename
+ *  @param {function} callback
+ *  @returns {void}
+ */
+namespace.read_file_contents = function (filename, callback)
 {
   var rawFile = new XMLHttpRequest();
   rawFile.open("GET", filename, false);
@@ -26,16 +33,20 @@ function cscs_read_file_contents(filename, callback)
   rawFile.send(null);
 }
 
-// this function gets the base html and parses the sidebar using the same markdown used by remark.js
-// before changing the markdown one needs to verify if it is compatible with the
-// presentation mode
-function cscs_setup_site_content(navbarfile, sidebarfile) {
+/**
+ *  @description gets the base html and parses the sidebar using the same markdown used by remark.js
+ *  before changing the markdown one needs to verify if it is compatible with the presentation mode
+ *  @param {string} navbarfile
+ *  @param {string} sidebarfile
+ *  @returns {void}
+ */
+namespace.setup_site_content = function(navbarfile, sidebarfile) {
 
-  cscs_read_file_contents(navbarfile, function __populate_site_content(argument) {
+  namespace.read_file_contents(navbarfile, function __populate_site_content(argument) {
     document.getElementById("cscs-site-content").innerHTML = argument;
   });
 
-  cscs_read_file_contents(sidebarfile, function cscs_populate_site_content(argument) {
+  namespace.read_file_contents(sidebarfile, function cscs_populate_site_content(argument) {
 
     marked.setOptions({
       gfm: true,
@@ -65,26 +76,34 @@ function cscs_setup_site_content(navbarfile, sidebarfile) {
   }
 
   var presenterMode = document.getElementById('start-cscs-presenter-mode');
-  presenterMode.onclick = __cscs_show_in_presenter_mode;
+  presenterMode.onclick = namespace.__show_in_presenter_mode;
 
-  __cscs_email_protector();
-  __cscs_prepend_domain_to_links();
+  namespace.__email_protector();
+  namespace.__prepend_domain_to_links();
 }
 
-function __cscs_markdown_post_features() {
-  __cscs_mouseover_link();
-  __cscs_create_toc();
-  __cscs_change_table_layout();
-  __cscs_highlight_code();
+/**
+ *  @description this is a wrapper to a selection of functions that need to be called after
+ *  the main markdown is rendered
+ */
+namespace.__markdown_post_features = function() {
+  namespace.__mouseover_link();
+  namespace.__create_toc();
+  namespace.__change_table_layout();
+  namespace.__highlight_code();
 }
 
-// this function parses the markdown using the same markdown used by remark.js
-// before changing the markdown one needs to verify if it is compatible with the
-// presentation mode
-function cscs_setup_markdown_page_content(markdownFile) {
+/**
+ *  @description parses the main website markdown using the same markdown used by remark.js
+ *  before changing the markdown one needs to verify if it is compatible with the presentation mode
+  * @param {string} navbarfile
+  * @param {string} sidebarfile
+  * @returns {void}
+  */
+namespace.setup_markdown_page_content = function(markdownFile) {
   __cscsMarkDown = markdownFile;
 
-  cscs_read_file_contents(markdownFile, function __populate_site_content(argument) {
+  namespace.read_file_contents(markdownFile, function __populate_site_content(argument) {
 
     marked.setOptions({
       gfm: true,
@@ -100,21 +119,27 @@ function cscs_setup_markdown_page_content(markdownFile) {
       document.getElementById("cscs-markdown-content").innerHTML = content;
     });
   });
-  __cscs_markdown_post_features();
+  namespace.__markdown_post_features();
 }
 
-// this function reads the news markdown and appends it to the cscs-markdown-content.
-function cscs_read_news(news_markdown_file, number_of_news)
+/**
+ *  @description reads the news markdown and appends it to the cscs-markdown-content. 
+ *  number_of_news controls the number of news items to print. If negative, all news are printed.
+ *  @param {string} news_markdown_file
+ *  @param {number} number_of_news
+ *  @returns {void}
+ */
+namespace.read_news = function(news_markdown_file, number_of_news)
 {
-  cscs_read_file_contents(news_markdown_file, function __populate_site_content(argument) {
+  namespace.read_file_contents(news_markdown_file, function __populate_site_content(argument) {
     marked(argument, function (err, content) {
       if (err) throw err;
 
       $('#toc').children().remove();
 
-      var theStart = __cscs_getCommentsObject('#cscs-markdown-content', ' start-news ');
+      var theStart = namespace.__getCommentsObject('#cscs-markdown-content', ' start-news ');
       $(content).insertAfter(theStart);
-      var theEnd = __cscs_getCommentsObject('#cscs-markdown-content', ' end-news ');
+      var theEnd = namespace.__getCommentsObject('#cscs-markdown-content', ' end-news ');
 
       if(Number(number_of_news) > 0) {
         var lastOne = $(theEnd).prev();
@@ -125,14 +150,17 @@ function cscs_read_news(news_markdown_file, number_of_news)
           lastOne.remove();
         }
       }
-      __cscs_markdown_post_features();
+      namespace.__markdown_post_features();
     });
   });
 }
 
-// this function hides the right toc from the page and
-// makes it a two column page.
-function cscs_two_column_mode(markdownFile) {
+/**
+ *  @description hides the right toc from the page and makes it a two column page.
+ *  @param {string} markdownFile
+ *  @returns {void}
+ */
+namespace.two_column_mode = function(markdownFile) {
 
   var markdown_div = $('#cscs-markdown-content');
   if (markdown_div.hasClass('col-md-7') == true) {
@@ -146,7 +174,7 @@ function cscs_two_column_mode(markdownFile) {
 
 // function cscs_get_modulelist(link, regex, shash_at = 0, elementid = "cscs-markdown-content")
 // {
-//   cscs_read_file_contents(link, function __populate_site_content(argument) {
+//   read_file_contents(link, function __populate_site_content(argument) {
 //     var pattern = regex;
 //     var parsed_module = "";
 
@@ -174,9 +202,12 @@ function cscs_two_column_mode(markdownFile) {
 //   });
 // }
 
-// this function starts the presentation mode
-// this mode destroys completely the page. so we refresh the page if the exit button is clicked
-function __cscs_show_in_presenter_mode() {
+/**
+ *  @description starts the presentation mode. this mode destroys completely the page. 
+ *  So we refresh the page if the exit button is clicked.
+ *  @returns {void}
+ */
+namespace.__show_in_presenter_mode= function() {
   document.getElementById("cscs-body-container").innerHTML = null;
 
   try {
@@ -200,16 +231,21 @@ function __cscs_show_in_presenter_mode() {
   }
 }
 
-// protects cscs' e-mail from robots
-function __cscs_email_protector() {
+/**
+ *  @description protects cscs' e-mail from robots 
+ *  @returns {void}
+ */
+namespace.__email_protector = function() {
   // $("#cscs-email-protector").prepend('<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;%69%6E%66%6F%40%63%73%63%73%2E%63%68">Contact CSCS</a>');
   $("#cscs-email-protector").prepend('<a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#104;&#101;&#108;&#112;&#064;&#099;&#115;&#099;&#115;&#046;&#099;&#104;">Contact us</a>');
 }
 
-// this function wraps the markdown headers with a link
-// it does it on mouse hover. But it is not really needed
-// We could do it immediately without the need of hovering
-function __cscs_mouseover_link() {
+/**
+ *  @description wraps the markdown headers with a link it does it on mouse hover. 
+ *  But it is not really needed. We could do it immediately without the need of hovering
+ *  @returns {void}
+ */
+namespace.__mouseover_link = function() {
 
   $('#cscs-markdown-content').children("h1, h2").each(function(index, element) {
     $(element).hover(
@@ -225,8 +261,11 @@ function __cscs_mouseover_link() {
   });
 }
 
-// this function creates the toc based on the main markdown content
-function __cscs_create_toc() {
+/**
+ *  @description creates the toc based on the main markdown content.
+ *  @returns {void}
+ */
+namespace.__create_toc = function() {
   // TOC creation
   // $('#toc').TOC();
   $('#toc').TOC("#cscs-markdown-content", {
@@ -274,16 +313,22 @@ function __cscs_create_toc() {
   }
 }
 
-// This function destroys the remark presentation and restores the CSCS website
-function __cscs_exit_presentation_mode() {
+/**
+ *  @description destroys the remark presentation and restores the CSCS website. This should be deprecated
+ *  @returns {void}
+ */
+namespace.__exit_presentation_mode = function() {
   if(document.location.domain == null)
     window.location.assign(document.location.pathname);
   else
     window.location.assign(document.location = document.location.domain+document.location.pathname);
 }
 
-// this function changes the layout of table inside the main side markdown area
-function __cscs_change_table_layout() {
+/**
+ *  @description changes the layout of table inside the main side markdown area.
+ *  @returns {void}
+ */
+namespace.__change_table_layout = function() {
   $('#cscs-markdown-content').children("table").each(function(index, element) {
     $(element).addClass('table table-striped table-bordered' );
     $(this).wrap(function() {
@@ -292,8 +337,11 @@ function __cscs_change_table_layout() {
   });
 }
 
-// this function adds code highlight
-function __cscs_highlight_code() {
+/**
+ *  @description highlights `pre code` blocks.
+ *  @returns {void}
+ */
+namespace.__highlight_code = function() {
   try {
     if(hljs != null) {
       $("head").append('<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">');
@@ -307,8 +355,11 @@ function __cscs_highlight_code() {
   }
 }
 
-// this function prepends the domain to the navbar and left sidebar
-function __cscs_prepend_domain_to_links()
+/**
+ *  @description prepends the domain to the navbar.
+ *  @returns {void}
+ */
+namespace.__prepend_domain_to_links = function()
 {
   var domain = "";
 
@@ -331,8 +382,12 @@ function __cscs_prepend_domain_to_links()
   // });
 }
 
-// this is a helper function to get the position of the comments in the page
-function __cscs_getCommentsObject(element, comment) {
+/**
+ *  @description helper function to get the position of the comments in the page.
+ *  This is important for the news pages.
+ *  @returns {void}
+ */
+namespace.__getCommentsObject = function(element, comment) {
   var returnValue = null;
   $(element).contents().filter(function(){
     return this.nodeType == 8;
@@ -344,3 +399,4 @@ function __cscs_getCommentsObject(element, comment) {
   });
   return returnValue;
 }
+})(cscs);
