@@ -27,9 +27,10 @@ ela:~$ pdflatex --shell-escape performance_report_template.tex (run it twice)
 
 1. when the performance analysis job terminates successfully, you should find in your working folder two files with extension `.rpt` (report text file) and `.ap2` (apprentice binary file). Please make these two files available for inspection, either by enclosing them at submission time or indicating within the section __Performance Analysis__ of your proposal where they can be accessed under `$HOME` or `$PROJECT` (not `$SCRATCH`). Please report within this section a summary of the performance data extracted from the report text file, using the following commands:
  ```bash
- grep -A 14 CrayPat/X <report>.rpt
+ grep -A 7 CrayPat/X <report>.rpt
  grep \|USER <report>.rpt
  grep \|MPI <report>.rpt
+ grep \|Total <report>.rpt
  ```
  The summary should look like the example below:
  ```text
@@ -41,20 +42,18 @@ ela:~$ pdflatex --shell-escape performance_report_template.tex (run it twice)
  Number of Cores per Socket:     12
  Execution start time:  Tue Mar 28 15:15:55 2017
  System name and speed:  nid02294  2601 MHz (approx)
- Intel haswell CPU  Family:  6  Model: 63  Stepping:  2
- 
- Avg Process Time:     2,100 secs             
- High Memory:       13,977.3 MBytes     873.6 MBytes per PE
- I/O Read Rate:    67.110363 MBytes/sec       
- I/O Write Rate:   19.512511 MBytes/sec
  
  |  59.2% | 1,236.266484 | 110.728787 |  8.8% |          1.0 |USER
  
  |  31.8% |   664.415775 |         -- |    -- |     35,648.0 |MPI_SYNC
  |   2.8% |    58.511390 |         -- |    -- | 14,458,788.1 |MPI
- ```
 
-You might also check the step-by-step [example performance report](example_performance_report) provided.
+ 100.0% | 2,086.808412 |         -- |    -- | 18,723,148.8 |Total
+ 100.0% | 1.89 |  105,946 |   287.62 | 75,246 |Total
+ 56.092035 | 3,764.356845 |  67.110363 | 62,097,047.0 |    63.57 |Total
+ 0.151159 | 2.949494 |  19.512511 | 74,334.0 |    41.61 |Total
+```
+The first command extracts general information on the job, then we extract the statistics of `USER` and `MPI` functions; the last command reports the `Total` of each Table (functions, accelerator, read and write statistics). You might also check the step-by-step [example performance report](example_performance_report) provided.
 
 ## Additional information
 
